@@ -17,6 +17,7 @@
     <modules>
         <module>uaa</module>
         <module>gateway</module>
+        <module>microservice</module>
     </modules>
 
 </project>
