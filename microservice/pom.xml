@@ -5,9 +5,9 @@
 
     <groupId>com.example.microservice</groupId>
     <artifactId>microservice</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>Microservice</name>
+    <name>microservice</name>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
