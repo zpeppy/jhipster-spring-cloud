@@ -39,7 +39,9 @@ public class OAuth2AuthenticationConfiguration extends ResourceServerConfigurerA
             .antMatchers("/auth/login").permitAll()
             .antMatchers("/auth/logout").authenticated()
             .and()
-            .apply(refreshTokenSecurityConfigurerAdapter());
+            .apply(refreshTokenSecurityConfigurerAdapter())
+            .and()
+            .csrf().disable();
     }
 
     /**
