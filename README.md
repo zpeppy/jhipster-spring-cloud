@@ -10,7 +10,7 @@
 
 - openzipkin/zipkin:2, spring-cloud-starter-zipkin:2.2.2.RELEASE
 
-- grafana/grafana:8.5.2, prom/prometheus:v2.35.0
+- prom/prometheus:v2.35.0, grafana/grafana:8.5.2
 
 ### 启动服务
 
@@ -83,31 +83,49 @@ docker run --name nacos -e MODE=standalone -p 8848:8848 -d nacos/nacos-server:v2
 docker run -d --name zipkin -p 9411:9411 openzipkin/zipkin:2
 ```
 
-###### grafana
-```docker
-docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.2
-```
-
 ###### prometheus
 ```docker
 docker run -d --name=prometheus -p 9090:9090 -v /docker/prometheus/config:/etc/prometheus prom/prometheus:v2.35.0
 ```
 - 创建 /docker/prometheus/config/prometheus.yml
 ```yaml
+# global config
 global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
-  
-rule_files:
-  
-scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-    - targets: ['127.0.0.1:9090']
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
 
-  - job_name: 'spring-actuator'
-    metrics_path: '/actuator/prometheus'
-    scrape_interval: 5s
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+rule_files:
+# - "first_rules.yml"
+# - "second_rules.yml"
+
+scrape_configs:
+  # 配置监控的 Job
+  - job_name: 'prometheus'
+    # 拉取监控数据的地址 --> 完整路径即为 targets[i]/metrics_path, 本 Job 即为 http://localhost:9090/metrics
+    metrics_path: '/metrics'
     static_configs:
-    - targets: ['127.0.0.1:8080']
+      # 监控的目标 -- 这里配置的是监控 prometheus 自身
+      - targets: ['localhost:9090']
+        # 添加一个标示
+        labels:
+          instance: prometheus
+
+  - job_name: 'microservice'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8081']
+        labels:
+          instance: microservice
+```
+
+###### grafana
+```docker
+docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.2
 ```
