@@ -151,8 +151,6 @@ Vgateway/src/main/java/com/example/gateway/web/filter/RefreshTokenFilterConfigur
 [microservice/src/main/java/com/example/microservice/web/rest/MicroserviceKafkaResource.java,d\4\d4618b63cdf56e9c6488f97c0ac7f4f2d8348fef
 z
 Jmicroservice/src/main/java/com/example/microservice/ApplicationWebXml.java,a\3\a31c058c9230729d7df82a5d07ccffdb725a4e0f
-x
-Hmicroservice/src/main/java/com/example/microservice/MicroserviceApp.java,0\7\07b0196014b423f29afec13887743a9ce0dfcdc1
 A
 gateway/README.md,1\3\1346325b858510bbbb6826b0216fc9f295c98a4a
 7
@@ -165,3 +163,9 @@ D
 microservice/pom.xml,9\d\9d04c8973d2461b76873fda133f92de213b7d56c
 ;
 uaa/pom.xml,5\a\5a569b2025dd07ef0649331a39b2e28b20da21d3
+?
+gateway/pom.xml,4\b\4b316bc60d1cfae51045f6fc8e58a8ae31f03ff3
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+x
+Hmicroservice/src/main/java/com/example/microservice/MicroserviceApp.java,0\7\07b0196014b423f29afec13887743a9ce0dfcdc1

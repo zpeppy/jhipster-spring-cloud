@@ -18,6 +18,7 @@ logging:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
     com.example.microservice: DEBUG
+    com.alibaba.nacos.client: ERROR
 
 eureka:
   instance:
