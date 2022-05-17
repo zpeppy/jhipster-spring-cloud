@@ -14,6 +14,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.HashSet;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+@EnableSwagger2
 @Configuration
 @Profile(JHipsterConstants.SPRING_PROFILE_SWAGGER)
 public class OpenApiConfiguration {
