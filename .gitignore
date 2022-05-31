@@ -1,0 +1,8 @@
+# JetBrains
+.idea
+
+# Maven
+target
+uaa/target
+gateway/target
+microservice/target

@@ -4,15 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.example</groupId>
-        <artifactId>jhipster-spring-cloud</artifactId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <groupId>com.example</groupId>
+        <artifactId>dependencies</artifactId>
+        <version>${revision}</version>
+        <relativePath>../dependencies/pom.xml</relativePath>
     </parent>
 
-    <groupId>com.example.uaa</groupId>
+    <groupId>com.example</groupId>
     <artifactId>uaa</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
     <name>uaa</name>
 
