@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CorsFilter;
 
@@ -34,10 +33,10 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-            .csrf()
-            .ignoringAntMatchers("/h2-console/**")
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .and()
+            .csrf().disable()
+            // .ignoringAntMatchers("/h2-console/**")
+            // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            // .and()
             .addFilterBefore(corsFilter, CsrfFilter.class)
             .headers()
             .frameOptions()

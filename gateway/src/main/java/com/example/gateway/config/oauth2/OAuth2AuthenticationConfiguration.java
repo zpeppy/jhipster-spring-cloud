@@ -36,13 +36,12 @@ public class OAuth2AuthenticationConfiguration extends ResourceServerConfigurerA
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/auth/login").permitAll()
             .antMatchers("/auth/logout").authenticated()
             .and()
-            .apply(refreshTokenSecurityConfigurerAdapter())
-            .and()
-            .csrf().disable();
+            .apply(refreshTokenSecurityConfigurerAdapter());
     }
 
     /**
