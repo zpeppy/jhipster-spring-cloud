@@ -1,5 +1,6 @@
 package com.example.gateway.config.oauth2;
 
+import com.example.common.config.oauth2.OAuth2Properties;
 import com.example.gateway.security.oauth2.CookieTokenExtractor;
 import com.example.gateway.security.oauth2.OAuth2AuthenticationService;
 import com.example.gateway.security.oauth2.OAuth2CookieHelper;

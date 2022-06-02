@@ -1,12 +1,9 @@
 package com.example.microservice.config;
 
-import com.example.microservice.config.oauth2.OAuth2JwtAccessTokenConverter;
-import com.example.microservice.config.oauth2.OAuth2Properties;
-import com.example.microservice.security.oauth2.OAuth2SignatureVerifierClient;
-import com.example.microservice.security.AuthoritiesConstants;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
+import com.example.common.config.oauth2.OAuth2JwtAccessTokenConverter;
+import com.example.common.config.oauth2.OAuth2Properties;
+import com.example.common.security.AuthoritiesConstants;
+import com.example.common.security.oauth2.OAuth2SignatureVerifierClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,8 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableResourceServer
@@ -38,10 +33,10 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
             .headers()
             .frameOptions()
             .disable()
-        .and()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+            .and()
             .authorizeRequests()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
@@ -60,11 +55,4 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
         return new OAuth2JwtAccessTokenConverter(oAuth2Properties, signatureVerifierClient);
     }
 
-    @Bean
-    @Qualifier("loadBalancedRestTemplate")
-    public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {
-        RestTemplate restTemplate = new RestTemplate();
-        customizer.customize(restTemplate);
-        return restTemplate;
-    }
 }

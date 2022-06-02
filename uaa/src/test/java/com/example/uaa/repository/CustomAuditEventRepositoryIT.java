@@ -1,11 +1,10 @@
 package com.example.uaa.repository;
 
-import com.example.uaa.UaaApp;
-
+import com.example.common.config.Constants;
+import com.example.common.config.audit.AuditEventConverter;
+import com.example.common.domain.PersistentAuditEvent;
 import com.example.uaa.RedisTestContainerExtension;
-import com.example.uaa.config.Constants;
-import com.example.uaa.config.audit.AuditEventConverter;
-import com.example.uaa.domain.PersistentAuditEvent;
+import com.example.uaa.UaaApp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.example.uaa.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration tests for {@link CustomAuditEventRepository}.

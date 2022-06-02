@@ -1,6 +1,6 @@
 package com.example.gateway.security.oauth2;
 
-import com.example.gateway.config.oauth2.OAuth2Properties;
+import com.example.common.config.oauth2.OAuth2Properties;
 import com.example.gateway.web.filter.RefreshTokenFilter;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.Assertions;

@@ -1,6 +1,6 @@
 package com.example.gateway.security.oauth2;
 
-import com.example.gateway.config.oauth2.OAuth2Properties;
+import com.example.common.config.oauth2.OAuth2Properties;
 import io.github.jhipster.config.JHipsterProperties;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;

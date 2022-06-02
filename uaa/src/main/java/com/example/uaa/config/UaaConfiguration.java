@@ -1,6 +1,6 @@
 package com.example.uaa.config;
 
-import com.example.uaa.security.AuthoritiesConstants;
+import com.example.common.security.AuthoritiesConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,17 +71,17 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
             http
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-            .and()
+                .and()
                 .csrf()
                 .disable()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers()
                 .frameOptions()
                 .disable()
-            .and()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/activate").permitAll()
@@ -128,7 +128,7 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
             .secret(passwordEncoder.encode(uaaProperties.getWebClientConfiguration().getSecret()))
             .scopes("openid")
             .autoApprove(true)
-            .authorizedGrantTypes("implicit","refresh_token", "password", "authorization_code")
+            .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
             .accessTokenValiditySeconds(accessTokenValidity)
             .refreshTokenValiditySeconds(refreshTokenValidity)
             .and()
@@ -162,6 +162,7 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
 
     /**
      * Apply the token converter (and enhancer) for token store.
+     *
      * @return the {@link JwtTokenStore} managing the tokens.
      */
     @Bean
@@ -179,8 +180,8 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = new KeyStoreKeyFactory(
-             new ClassPathResource(uaaProperties.getKeyStore().getName()), uaaProperties.getKeyStore().getPassword().toCharArray())
-             .getKeyPair(uaaProperties.getKeyStore().getAlias());
+            new ClassPathResource(uaaProperties.getKeyStore().getName()), uaaProperties.getKeyStore().getPassword().toCharArray())
+            .getKeyPair(uaaProperties.getKeyStore().getAlias());
         converter.setKeyPair(keyPair);
         return converter;
     }
@@ -188,6 +189,6 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess(
-                "isAuthenticated()");
+            "isAuthenticated()");
     }
 }

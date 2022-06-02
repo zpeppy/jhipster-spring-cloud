@@ -1,16 +1,17 @@
 package com.example.uaa.service;
 
-import com.example.uaa.config.Constants;
+import com.example.common.config.Constants;
+import com.example.common.exception.EmailAlreadyUsedException;
+import com.example.common.exception.InvalidPasswordException;
+import com.example.common.exception.UsernameAlreadyUsedException;
+import com.example.common.security.AuthoritiesConstants;
+import com.example.common.security.SecurityUtils;
 import com.example.uaa.domain.Authority;
 import com.example.uaa.domain.User;
 import com.example.uaa.repository.AuthorityRepository;
 import com.example.uaa.repository.UserRepository;
-import com.example.uaa.security.AuthoritiesConstants;
-import com.example.uaa.security.SecurityUtils;
 import com.example.uaa.service.dto.UserDTO;
-
 import io.github.jhipster.security.RandomUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -127,7 +128,7 @@ public class UserService {
 
     private boolean removeNonActivatedUser(User existingUser) {
         if (existingUser.getActivated()) {
-             return false;
+            return false;
         }
         userRepository.delete(existingUser);
         userRepository.flush();
@@ -287,6 +288,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     @Transactional(readOnly = true)

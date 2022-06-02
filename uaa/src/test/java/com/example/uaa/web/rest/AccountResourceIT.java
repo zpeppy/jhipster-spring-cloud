@@ -1,36 +1,38 @@
 package com.example.uaa.web.rest;
 
+import com.example.common.config.Constants;
+import com.example.common.security.AuthoritiesConstants;
 import com.example.uaa.UaaApp;
-import com.example.uaa.config.Constants;
 import com.example.uaa.domain.User;
 import com.example.uaa.repository.AuthorityRepository;
 import com.example.uaa.repository.UserRepository;
-import com.example.uaa.security.AuthoritiesConstants;
 import com.example.uaa.service.UserService;
 import com.example.uaa.service.dto.PasswordChangeDTO;
 import com.example.uaa.service.dto.UserDTO;
 import com.example.uaa.web.rest.vm.KeyAndPasswordVM;
 import com.example.uaa.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.example.uaa.web.rest.AccountResourceIT.TEST_USER_LOGIN;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -592,7 +594,7 @@ public class AccountResourceIT {
 
         restAccountMockMvc.perform(post("/api/account/change-password")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1"+currentPassword, "new password")))
+            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new password")))
             .with(csrf()))
             .andExpect(status().isBadRequest());
 

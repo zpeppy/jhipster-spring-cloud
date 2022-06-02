@@ -85,12 +85,20 @@
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <!-- jhipster-needle-maven-property -->
 
+        <!-- maven -->
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <!-- spring-cloud-alibaba-dependencies -->
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
         <!-- swagger-ui -->
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <!-- log4j -->
         <log4j.version>2.17.2</log4j.version>
+        <!-- lombok -->
+        <lombok.version>1.18.24</lombok.version>
+        <!-- fastjson -->
+        <fastjson.version>2.0.5</fastjson.version>
+        <!-- servlet -->
+        <servlet.version>4.0.1</servlet.version>
     </properties>
 
     <dependencyManagement>
@@ -411,6 +419,28 @@
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!-- javax -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

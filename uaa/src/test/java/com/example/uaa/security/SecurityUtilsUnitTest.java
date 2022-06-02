@@ -1,5 +1,7 @@
 package com.example.uaa.security;
 
+import com.example.common.security.AuthoritiesConstants;
+import com.example.common.security.SecurityUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

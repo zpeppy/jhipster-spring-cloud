@@ -1,8 +1,8 @@
 package com.example.uaa.service;
 
-import io.github.jhipster.config.JHipsterProperties;
-import com.example.uaa.config.audit.AuditEventConverter;
+import com.example.common.config.audit.AuditEventConverter;
 import com.example.uaa.repository.PersistenceAuditEventRepository;
+import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -44,7 +44,7 @@ public class AuditEventService {
 
     /**
      * Old audit events should be automatically deleted after 30 days.
-     *
+     * <p>
      * This is scheduled to get fired at 12:00 (am).
      */
     @Scheduled(cron = "0 0 12 * * ?")

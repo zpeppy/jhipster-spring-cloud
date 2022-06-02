@@ -1,7 +1,7 @@
 package com.example.uaa.service;
 
 import com.example.uaa.RedisTestContainerExtension;
-import com.example.uaa.domain.PersistentAuditEvent;
+import com.example.common.domain.PersistentAuditEvent;
 import com.example.uaa.repository.PersistenceAuditEventRepository;
 import com.example.uaa.UaaApp;
 import io.github.jhipster.config.JHipsterProperties;

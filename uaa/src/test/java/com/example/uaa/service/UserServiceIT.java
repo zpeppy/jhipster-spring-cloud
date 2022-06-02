@@ -1,14 +1,12 @@
 package com.example.uaa.service;
 
+import com.example.common.config.Constants;
 import com.example.uaa.RedisTestContainerExtension;
 import com.example.uaa.UaaApp;
-import com.example.uaa.config.Constants;
 import com.example.uaa.domain.User;
 import com.example.uaa.repository.UserRepository;
 import com.example.uaa.service.dto.UserDTO;
-
 import io.github.jhipster.security.RandomUtil;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +21,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 

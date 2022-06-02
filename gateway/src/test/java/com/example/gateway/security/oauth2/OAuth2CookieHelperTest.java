@@ -1,6 +1,6 @@
 package com.example.gateway.security.oauth2;
 
-import com.example.gateway.config.oauth2.OAuth2Properties;
+import com.example.common.config.oauth2.OAuth2Properties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;

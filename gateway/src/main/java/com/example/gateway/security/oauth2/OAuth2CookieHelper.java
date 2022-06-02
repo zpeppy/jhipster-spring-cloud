@@ -1,7 +1,8 @@
 package com.example.gateway.security.oauth2;
 
-import com.example.gateway.config.oauth2.OAuth2Properties;
-
+import com.example.common.config.oauth2.OAuth2Properties;
+import org.apache.http.conn.util.PublicSuffixMatcher;
+import org.apache.http.conn.util.PublicSuffixMatcherLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.json.JsonParser;
@@ -23,8 +24,6 @@ import java.util.Map;
 
 import static org.apache.http.conn.util.InetAddressUtils.isIPv4Address;
 import static org.apache.http.conn.util.InetAddressUtils.isIPv6Address;
-import org.apache.http.conn.util.PublicSuffixMatcher;
-import org.apache.http.conn.util.PublicSuffixMatcherLoader;
 
 /**
  * Helps with OAuth2 cookie handling.

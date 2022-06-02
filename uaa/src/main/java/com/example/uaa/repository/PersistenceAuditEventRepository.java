@@ -1,6 +1,6 @@
 package com.example.uaa.repository;
 
-import com.example.uaa.domain.PersistentAuditEvent;
+import com.example.common.domain.PersistentAuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

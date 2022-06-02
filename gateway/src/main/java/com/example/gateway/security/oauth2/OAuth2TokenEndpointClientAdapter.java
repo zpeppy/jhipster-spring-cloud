@@ -1,14 +1,10 @@
 package com.example.gateway.security.oauth2;
 
-import com.example.gateway.config.oauth2.OAuth2Properties;
+import com.example.common.config.oauth2.OAuth2Properties;
 import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.util.LinkedMultiValueMap;
@@ -76,7 +72,7 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
         log.debug("contacting OAuth2 token endpoint to refresh OAuth2 JWT tokens");
         ResponseEntity<OAuth2AccessToken> responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity,
-                                                                                      OAuth2AccessToken.class);
+            OAuth2AccessToken.class);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             log.debug("failed to refresh tokens: {}", responseEntity.getStatusCodeValue());
             throw new HttpClientErrorException(responseEntity.getStatusCode());
