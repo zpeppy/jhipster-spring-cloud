@@ -4,9 +4,9 @@
 
 - jhipster:v6.10.5, jhipster/jhipster-registry:v6.8.0
 
-- spring-boot:2.2.7.RELEASE, spring-cloud:Hoxton.SR4
+- spring-boot:2.2.7.RELEASE, spring-cloud:Hoxton.SR4, spring-cloud-alibaba:2.2.6.RELEASE
 
-- nacos/nacos-server:v2.1.0, spring-cloud-starter-alibaba-nacos-config:2.2.3.RELEASE
+- nacos/nacos-server:v2.1.0
 
 - openzipkin/zipkin:2, spring-cloud-starter-zipkin:2.2.2.RELEASE
 
@@ -23,7 +23,7 @@ docker run -d --name mysql -v /docker/mysql/data:/var/lib/mysql -v /docker/mysql
 ###### postgresql
 
 ```docker
-docker run --name postgresql -e POSTGRES_PASSWORD=postgres_user -e PGDATA=/var/lib/postgresql/data/pgdata -v /docker/postgres/data:/var/lib/postgresql/data -p 5432:5432 -d postgres:14.2
+docker run --name postgresql -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v /docker/postgres/data:/var/lib/postgresql/data -p 5432:5432 -d postgres:14.2
 ```
 
 ###### redis
@@ -34,54 +34,67 @@ docker run -v /docker/redis/config:/usr/local/etc/redis -v D/docker/redis/data:/
 
 ###### rabbitmq
 
-```
+```docker
 docker run --name rabbitmq -v /docker/rabbitmq/data:/var/lib/rabbitmq -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -p 15672:15672 -p 5672:5672 -d rabbitmq:3.9.17-management
 ```
 
 ###### elasticsearch
 
-```
+```docker
 docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -v /docker/elasticsearch/config:/usr/share/elasticsearch/config -v /docker/elasticsearch/data:/usr/share/elasticsearch/data -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms1g -Xmx1g" -d elasticsearch:6.8.16
 ```
 
-- 在Windows的Docker desktop下使用ES，通常会遇到内存不足的问题。
-- max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-- 使用WSL作为后端，调整的方式是通过命令行wsl进入docker-desktop的终端，然后通过Linux的sysctl命令调整系统参数。
-- wsl -d docker-desktop
-- sysctl -w vm.max_map_count=262144
-- 退出后重启docker-desktop，再次启动es，成功！
+- 在 Windows 的 Docker desktop 下使用 ES，通常会遇到内存不足的问题。
+  ```shell
+  max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+  ```
+- 使用 WSL 作为后端，调整的方式是通过命令行 wsl 进入 docker-desktop 的终端，然后通过 Linux 的 sysctl 命令调整系统参数。
+  ```shell
+  wsl -d docker-desktop
+  sysctl -w vm.max_map_count=262144
+  ```
+- 退出后重启 docker-desktop，再次启动 es，成功！
 
-- ERROR Could not register mbeans java.security.AccessControlException: access denied ("
-  javax.management.MBeanTrustPermission" "register")
-- ERROR Unable to unregister MBeans java.security.AccessControlException: access denied ("
-  javax.management.MBeanServerPermission" "createMBeanServer")
-- 原因是elasticsearch使用了SecurityManager。
-- 解决的办法有两种：
-- 1.根据错误提示，在java security manager配置白名单。
-- access denied ("javax.management.MBeanTrustPermission" "register")
-- 在JAVA_HOME的conf/security目录下的java.policy中添加如下一行：
-- permission javax.management.MBeanTrustPermission "register"
+---
+
+- 访问拒绝错误
+  ```shell
+  ERROR Could not register mbeans java.security.AccessControlException: access denied ("
+    javax.management.MBeanTrustPermission" "register")
+  ERROR Unable to unregister MBeans java.security.AccessControlException: access denied ("
+    javax.management.MBeanServerPermission" "createMBeanServer")
+  ```
+- 原因是 elasticsearch 使用了 SecurityManager。解决的办法有两种：
+- 1.根据错误提示，在 java security manager 配置白名单。access denied ("javax.management.MBeanTrustPermission" "register")。 在 JAVA_HOME
+  的 conf/security 目录下的 java.policy 中添加如下一行：
+  ```shell
+  permission javax.management.MBeanTrustPermission "register"
+  ```
 - 2.添加启动JVM参数。
-- -Dlog4j2.disable.jmx=true
+  ```shell
+  -Dlog4j2.disable.jmx=true
+  ```
 
 ###### clickhouse
 
 ```docker
-docker run -d --name clickhouse-config-server -p 8123:8123 -p 9009:9009 -p 9000:9000 --ulimit nofile=262144:262144 -v /docker/clickhouse/data:/var/lib/clickhouse -v /docker/clickhouse/config:/etc/clickhouse-server -v /docker/clickhouse/logs:/var/log/clickhouse-server yandex/clickhouse-server:22.4.5.9
+docker run -d --name clickhouse-server -p 8123:8123 -p 9009:9009 -p 9000:9000 --ulimit nofile=262144:262144 -v /docker/clickhouse/data:/var/lib/clickhouse -v /docker/clickhouse/config:/etc/clickhouse-server -v /docker/clickhouse/logs:/var/log/clickhouse-server yandex/clickhouse-server:22.4.5.9
 ```
 
-- 先不使用配置文件挂载 docker run -d --name clickhouse-server -p 8123:8123 -p 9009:9009 -p 9000:9000 --ulimit nofile=262144:262144
-  -v /docker/clickhouse/data:/var/lib/clickhouse -v /docker/clickhouse/logs:/var/log/clickhouse-server
-  yandex/clickhouse-server:22.4.5.9
+- 先不使用配置文件挂载，直接使用 docker run 查看环境变量及挂载路径
 
-- 错误 <Warning> Application: Listen [::1]:8123 failed: Poco::Exception. Code: 1000, e.code() = 99, e.displayText() = Net
+- 错误信息
+  ```shell
+  <Warning> Application: Listen [::1]:8123 failed: Poco::Exception. Code: 1000, e.code() = 99, e.displayText() = Net
   Exception: Cannot assign requested address: [::1]:8123 (version 21.6.3.14 (official build)). If it is an IPv6 or IPv4
   address and your host has disabled IPv6 or IPv4, then consider to specify not disabled IPv4 or IPv6 address to listen
   in <listen_host> element of configuration file. Example for disabled IPv6: <listen_host>0.0.0.0</listen_host> .
   Example for disabled IPv4: <listen_host>::</listen_host>
-- 错误 <Error> Application: DB::Exception: Listen [::]:8123 failed: Poco::Exception. Code: 1000, e.code() = 0,
+  
+  <Error> Application: DB::Exception: Listen [::]:8123 failed: Poco::Exception. Code: 1000, e.code() = 0,
   e.displayText() = DNS error: EAI: Address family for hostname not supported (version 21.6.3.14 (official build))
-- 本机没有开放ipv6，只能对ipv4生效。在/etc/clickhouse-server/config.xml中，把<listen_host> 改成0.0.0.0 或者 ::
+  ```
+- 原因：本机没有开放 ipv6，只能对 ipv4生效。在 /etc/clickhouse-server/config.xml中，把 <listen_host> 改成 0.0.0.0 或者 ::
 
 ###### seata
 
@@ -89,7 +102,7 @@ docker run -d --name clickhouse-config-server -p 8123:8123 -p 9009:9009 -p 9000:
 docker run --name seata-server -p 8091:8091 -v /docker/seata-server/config:/seata-server/resources seataio/seata-server:1.4.2
 ```
 
-- seata-server -e SEATA_CONFIG_NAME=file:/seata-server/resources
+- 修改环境变量：seata-server -e SEATA_CONFIG_NAME=file:/seata-server/resources
 
 ###### nacos
 
