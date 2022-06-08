@@ -1,35 +1,28 @@
 package com.example.uaa.service.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 /**
  * A DTO representing a password change required data - current and new password.
  */
-public class PasswordChangeDTO {
+@ApiModel(value = "密码", description = "密码")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class PasswordChangeDTO implements Serializable {
+
+    private static final long serialVersionUID = 6031182957650404921L;
+
+    @ApiModelProperty("当前密码")
     private String currentPassword;
+
+    @ApiModelProperty("新密码")
     private String newPassword;
 
-    public PasswordChangeDTO() {
-        // Empty constructor needed for Jackson.
-    }
-
-    public PasswordChangeDTO(String currentPassword, String newPassword) {
-        this.currentPassword = currentPassword;
-        this.newPassword = newPassword;
-    }
-
-    public String getCurrentPassword() {
-
-        return currentPassword;
-    }
-
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
 }

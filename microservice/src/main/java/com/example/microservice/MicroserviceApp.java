@@ -66,7 +66,7 @@ public class MicroserviceApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        System.setProperty("es.set.netty.runtime.available.processors", "false");
+        // System.setProperty("es.set.netty.runtime.available.processors", "false");
 
         SpringApplication app = new SpringApplication(MicroserviceApp.class);
         DefaultProfileUtil.addDefaultProfile(app);

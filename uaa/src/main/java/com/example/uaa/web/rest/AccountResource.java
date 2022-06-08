@@ -12,6 +12,8 @@ import com.example.uaa.service.dto.PasswordChangeDTO;
 import com.example.uaa.service.dto.UserDTO;
 import com.example.uaa.web.rest.vm.KeyAndPasswordVM;
 import com.example.uaa.web.rest.vm.ManagedUserVM;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import java.util.Optional;
 /**
  * REST controller for managing the current user's account.
  */
+@Api(value = "账号", tags = "账号")
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
@@ -53,18 +56,19 @@ public class AccountResource {
     /**
      * {@code POST  /register} : register the user.
      *
-     * @param managedUserVM the managed user View Model.
+     * @param managedUserVm the managed user View Model.
      * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password is incorrect.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
+    @ApiOperation(value = "注册", tags = "账号")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
-        if (!checkPasswordLength(managedUserVM.getPassword())) {
+    public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVm) {
+        if (!checkPasswordLength(managedUserVm.getPassword())) {
             throw new InvalidPasswordException();
         }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+        User user = userService.registerUser(managedUserVm, managedUserVm.getPassword());
         mailService.sendActivationEmail(user);
     }
 
@@ -74,6 +78,7 @@ public class AccountResource {
      * @param key the activation key.
      * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be activated.
      */
+    @ApiOperation(value = "查询启用的账号", tags = "账号")
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<User> user = userService.activateRegistration(key);
@@ -88,6 +93,7 @@ public class AccountResource {
      * @param request the HTTP request.
      * @return the login if the user is authenticated.
      */
+    @ApiOperation(value = "查询是否认证并返回用户名", tags = "账号")
     @GetMapping("/authenticate")
     public String isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
@@ -100,6 +106,7 @@ public class AccountResource {
      * @return the current user.
      * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
      */
+    @ApiOperation(value = "查询当前账号信息", tags = "账号")
     @GetMapping("/account")
     public UserDTO getAccount() {
         return userService.getUserWithAuthorities()
@@ -114,6 +121,7 @@ public class AccountResource {
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws RuntimeException          {@code 500 (Internal Server Error)} if the user login wasn't found.
      */
+    @ApiOperation(value = "新增账号", tags = "账号")
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
         String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
@@ -135,6 +143,7 @@ public class AccountResource {
      * @param passwordChangeDto current and new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the new password is incorrect.
      */
+    @ApiOperation(value = "修改密码", tags = "账号")
     @PostMapping(path = "/account/change-password")
     public void changePassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
         if (!checkPasswordLength(passwordChangeDto.getNewPassword())) {
@@ -148,6 +157,7 @@ public class AccountResource {
      *
      * @param mail the mail of the user.
      */
+    @ApiOperation(value = "通过邮箱重置密码", tags = "账号")
     @PostMapping(path = "/account/reset-password/init")
     public void requestPasswordReset(@RequestBody String mail) {
         Optional<User> user = userService.requestPasswordReset(mail);
@@ -167,6 +177,7 @@ public class AccountResource {
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
      * @throws RuntimeException         {@code 500 (Internal Server Error)} if the password could not be reset.
      */
+    @ApiOperation(value = "重置密码", tags = "账号")
     @PostMapping(path = "/account/reset-password/finish")
     public void finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {

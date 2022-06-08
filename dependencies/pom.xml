@@ -94,7 +94,8 @@
         <!-- log4j -->
         <log4j.version>2.17.2</log4j.version>
         <!-- lombok -->
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.6</lombok.version>
+        <lombok-maven-plugin.version>1.18.6.0</lombok-maven-plugin.version>
         <!-- fastjson -->
         <fastjson.version>2.0.5</fastjson.version>
         <!-- servlet -->

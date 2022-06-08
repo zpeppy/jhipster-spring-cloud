@@ -18,6 +18,7 @@ logging:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
     com.example.uaa: DEBUG
+    com.alibaba.nacos: INFO
 
 eureka:
   instance:

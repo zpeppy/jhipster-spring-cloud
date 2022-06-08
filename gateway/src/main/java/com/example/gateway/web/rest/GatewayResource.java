@@ -2,6 +2,8 @@ package com.example.gateway.web.rest;
 
 import com.example.common.security.AuthoritiesConstants;
 import com.example.gateway.web.rest.vm.RouteVM;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
@@ -17,6 +19,7 @@ import java.util.List;
 /**
  * REST controller for managing Gateway configuration.
  */
+@Api(value = "路由", tags = "路由")
 @RestController
 @RequestMapping("/api/gateway")
 public class GatewayResource {
@@ -36,18 +39,19 @@ public class GatewayResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of routes.
      */
+    @ApiOperation(value = "查询路由列表", tags = "路由")
     @GetMapping("/routes")
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<List<RouteVM>> activeRoutes() {
         List<Route> routes = routeLocator.getRoutes();
-        List<RouteVM> routeVMs = new ArrayList<>();
+        List<RouteVM> routeVms = new ArrayList<>();
         routes.forEach(route -> {
-            RouteVM routeVM = new RouteVM();
-            routeVM.setPath(route.getFullPath());
-            routeVM.setServiceId(route.getId());
-            routeVM.setServiceInstances(discoveryClient.getInstances(route.getLocation()));
-            routeVMs.add(routeVM);
+            RouteVM routeVm = new RouteVM();
+            routeVm.setPath(route.getFullPath());
+            routeVm.setServiceId(route.getId());
+            routeVm.setServiceInstances(discoveryClient.getInstances(route.getLocation()));
+            routeVms.add(routeVm);
         });
-        return ResponseEntity.ok(routeVMs);
+        return ResponseEntity.ok(routeVms);
     }
 }

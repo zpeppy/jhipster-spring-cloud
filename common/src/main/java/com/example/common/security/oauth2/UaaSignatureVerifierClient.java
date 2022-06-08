@@ -39,12 +39,12 @@ public class UaaSignatureVerifierClient implements OAuth2SignatureVerifierClient
      * @return the public key used to verify JWT tokens; or {@code null}.
      */
     @Override
-    public SignatureVerifier getSignatureVerifier() throws Exception {
+    public SignatureVerifier getSignatureVerifier() {
         try {
-            HttpEntity<Void> request = new HttpEntity<Void>(new HttpHeaders());
+            HttpEntity<Void> request = new HttpEntity<>(new HttpHeaders());
             String key = (String) restTemplate
-                .exchange(getPublicKeyEndpoint(), HttpMethod.GET, request, Map.class).getBody()
-                .get("value");
+                    .exchange(getPublicKeyEndpoint(), HttpMethod.GET, request, Map.class).getBody()
+                    .get("value");
             return new RsaVerifier(key);
         } catch (IllegalStateException ex) {
             log.warn("could not contact UAA to get public key");

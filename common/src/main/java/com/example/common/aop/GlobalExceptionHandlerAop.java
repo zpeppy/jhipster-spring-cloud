@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 /**
  * 全局异常统一处理
  * <p>
- * {@link GlobalExceptionHandlerService} 类实现必须使用 {@link Component} 注解注入, 不能使用 {@link Bean} 注入.
+ * {@link GlobalExceptionHandlerService} 实现类必须使用 {@link Component} 注解注入, 不能使用 {@link Bean} 注入.
  *
  * @author peppy
  */
@@ -46,7 +46,7 @@ public class GlobalExceptionHandlerAop {
         try {
             proceed = pjp.proceed(args);
         } catch (Exception ex) {
-            // 保存错误信息, 只处理 Exception 级别异常
+            // 只处理 Exception 级别异常
             globalExceptionHandlerService.exceptionHandler(method, args, ex);
         }
         return proceed;
