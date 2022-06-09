@@ -1,6 +1,6 @@
 # Gateway 使用文档
 
-### 网关服务
+### 网关服务, 微服务统一入口
 
 认证管理接口: `com.example.gateway.web.rest.AuthResource`
 
