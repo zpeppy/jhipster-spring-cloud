@@ -1,8 +1,8 @@
 # Spring Cloud Project
 
-### 环境配置说明文档
+### 开发环境配置说明文档
 
-[环境配置](doc/EnvironmentConfig.md)
+[开发环境配置](doc/EnvironmentConfig.md)
 
 ### 组件及服务说明文档
 

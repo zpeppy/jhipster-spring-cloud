@@ -8,7 +8,7 @@
 
 - nacos/nacos-server:v2.1.0
 
-- openzipkin/zipkin:2, spring-cloud-starter-zipkin:2.2.2.RELEASE
+- openzipkin/zipkin:2
 
 - prom/prometheus:v2.35.0, grafana/grafana:8.5.2
 
@@ -70,7 +70,7 @@ docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -v /docker/elasticsear
   ```shell
   permission javax.management.MBeanTrustPermission "register"
   ```
-- 2.添加启动JVM参数。
+- 2.添加启动 JVM 参数。
   ```shell
   -Dlog4j2.disable.jmx=true
   ```
@@ -149,10 +149,10 @@ scrape_configs:
     static_configs:
       # 监控的目标 -- 这里配置的是监控 prometheus 自身
       - targets: [ 'localhost:9090' ]
-        # 添加一个标示
+        # 添加一个标识
         labels:
           instance: prometheus
-
+  # 监控其他微服务
   - job_name: 'microservice'
     metrics_path: '/actuator/prometheus'
     static_configs:
