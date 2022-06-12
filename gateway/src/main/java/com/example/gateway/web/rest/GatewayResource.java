@@ -18,6 +18,8 @@ import java.util.List;
 
 /**
  * REST controller for managing Gateway configuration.
+ *
+ * @author peppy
  */
 @Api(value = "路由", tags = "路由")
 @RestController
@@ -27,7 +29,6 @@ public class GatewayResource {
     private final RouteLocator routeLocator;
 
     private final DiscoveryClient discoveryClient;
-
 
     public GatewayResource(RouteLocator routeLocator, DiscoveryClient discoveryClient) {
         this.routeLocator = routeLocator;

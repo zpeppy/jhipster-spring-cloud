@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Client talking to UAA's token endpoint to do different OAuth2 grants.
+ *
+ * @author peppy
  */
 @Component
 public class UaaTokenEndpointClient extends OAuth2TokenEndpointClientAdapter implements OAuth2TokenEndpointClient {

@@ -17,6 +17,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * 资源服务器配置
+ *
+ * @author peppy
+ */
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)

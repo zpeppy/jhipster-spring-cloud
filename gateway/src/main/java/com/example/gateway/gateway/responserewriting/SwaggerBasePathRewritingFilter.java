@@ -17,6 +17,8 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * Zuul filter to rewrite micro-services Swagger URL Base Path.
+ *
+ * @author peppy
  */
 public class SwaggerBasePathRewritingFilter extends SendResponseFilter {
 

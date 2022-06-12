@@ -1,7 +1,6 @@
 package com.example.gateway.web.filter;
 
 import com.example.gateway.security.oauth2.OAuth2AuthenticationService;
-
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
@@ -11,6 +10,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 /**
  * Configures a {@link RefreshTokenFilter} to refresh access tokens if they are about to expire.
  *
+ * @author peppy
  * @see RefreshTokenFilter
  */
 public class RefreshTokenFilterConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {

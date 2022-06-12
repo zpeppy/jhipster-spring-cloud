@@ -27,6 +27,8 @@ import static org.apache.http.conn.util.InetAddressUtils.isIPv6Address;
 
 /**
  * Helps with OAuth2 cookie handling.
+ *
+ * @author peppy
  */
 public class OAuth2CookieHelper {
     /**
@@ -199,22 +201,26 @@ public class OAuth2CookieHelper {
      * @return true, if the session is expired.
      */
     public boolean isSessionExpired(Cookie refreshCookie) {
-        if (isRememberMe(refreshCookie)) {       //no session expiration for "remember me"
+        //no session expiration for "remember me"
+        if (isRememberMe(refreshCookie)) {
             return false;
         }
         //read non-remember-me session length in secs
         int validity = oAuth2Properties.getWebClientConfiguration().getSessionTimeoutInSeconds();
-        if (validity < 0) {           //no session expiration configured
+        //no session expiration configured
+        if (validity < 0) {
             return false;
         }
         Integer iat = getClaim(refreshCookie.getValue(), "iat", Integer.class);
-        if (iat == null) {           //token creating timestamp in secs is missing, session does not expire
+        //token creating timestamp in secs is missing, session does not expire
+        if (iat == null) {
             return false;
         }
         int now = (int) (System.currentTimeMillis() / 1000L);
         int sessionDuration = now - iat;
         log.debug("session duration {} secs, will timeout at {}", sessionDuration, validity);
-        return sessionDuration > validity;            //session has expired
+        //session has expired
+        return sessionDuration > validity;
     }
 
     /**
@@ -251,7 +257,8 @@ public class OAuth2CookieHelper {
     private void setCookieProperties(Cookie cookie, boolean isSecure, String domain) {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-        cookie.setSecure(isSecure);       //if the request comes per HTTPS set the secure option on the cookie
+        //if the request comes per HTTPS set the secure option on the cookie
+        cookie.setSecure(isSecure);
         if (domain != null) {
             cookie.setDomain(domain);
         }

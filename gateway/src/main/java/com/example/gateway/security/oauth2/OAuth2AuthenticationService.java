@@ -17,6 +17,8 @@ import java.util.Map;
  * Manages authentication cases for OAuth2 updating the cookies holding access and refresh tokens accordingly.
  * <p>
  * It can authenticate users, refresh the token cookies should they expire and log users out.
+ *
+ * @author peppy
  */
 public class OAuth2AuthenticationService {
 
@@ -25,7 +27,7 @@ public class OAuth2AuthenticationService {
     /**
      * Number of milliseconds to cache refresh token grants so we don't have to repeat them in case of parallel requests.
      */
-    private static final long REFRESH_TOKEN_VALIDITY_MILLIS = 10000l;
+    private static final long REFRESH_TOKEN_VALIDITY_MILLIS = 10000L;
 
     /**
      * Used to contact the OAuth2 token endpoint.
@@ -95,13 +97,16 @@ public class OAuth2AuthenticationService {
         //check if non-remember-me session has expired
         if (cookieHelper.isSessionExpired(refreshCookie)) {
             log.info("session has expired due to inactivity");
-            logout(request, response);       //logout to clear cookies in browser
-            return stripTokens(request);            //don't include cookies downstream
+            //logout to clear cookies in browser
+            logout(request, response);
+            //don't include cookies downstream
+            return stripTokens(request);
         }
         OAuth2Cookies cookies = getCachedCookies(refreshCookie.getValue());
         synchronized (cookies) {
             //check if we have a result from another thread already
-            if (cookies.getAccessTokenCookie() == null) {            //no, we are first!
+            //no, we are first!
+            if (cookies.getAccessTokenCookie() == null) {
                 //send a refresh_token grant to UAA, getting new tokens
                 String refreshCookieValue = OAuth2CookieHelper.getRefreshTokenValue(refreshCookie);
                 OAuth2AccessToken accessToken = authorizationClient.sendRefreshGrant(refreshCookieValue);

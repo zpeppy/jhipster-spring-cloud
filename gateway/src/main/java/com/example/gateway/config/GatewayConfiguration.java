@@ -1,13 +1,17 @@
 package com.example.gateway.config;
 
-import io.github.jhipster.config.JHipsterProperties;
-
 import com.example.gateway.gateway.accesscontrol.AccessControlFilter;
 import com.example.gateway.gateway.responserewriting.SwaggerBasePathRewritingFilter;
+import io.github.jhipster.config.JHipsterProperties;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * gateway 过滤器配置
+ *
+ * @author peppy
+ */
 @Configuration
 public class GatewayConfiguration {
 

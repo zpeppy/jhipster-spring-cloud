@@ -24,7 +24,7 @@ import java.util.Map;
  * Authentication endpoint for web client.
  * Used to authenticate a user using OAuth2 access tokens or log him out.
  *
- * @author markus.oellinger
+ * @author peppy
  */
 @Api(value = "认证", tags = "认证")
 @RestController

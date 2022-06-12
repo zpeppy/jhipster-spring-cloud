@@ -23,6 +23,8 @@ import java.io.IOException;
 
 /**
  * Filters incoming requests and refreshes the access token before it expires.
+ *
+ * @author peppy
  */
 public class RefreshTokenFilter extends GenericFilterBean {
     /**
@@ -77,7 +79,8 @@ public class RefreshTokenFilter extends GenericFilterBean {
         HttpServletRequest newHttpServletRequest = httpServletRequest;
         //get access token from cookie
         Cookie accessTokenCookie = OAuth2CookieHelper.getAccessTokenCookie(httpServletRequest);
-        if (mustRefreshToken(accessTokenCookie)) {        //we either have no access token, or it is expired, or it is about to expire
+        //we either have no access token, or it is expired, or it is about to expire
+        if (mustRefreshToken(accessTokenCookie)) {
             //get the refresh token cookie and, if present, request new tokens
             Cookie refreshCookie = OAuth2CookieHelper.getRefreshTokenCookie(httpServletRequest);
             if (refreshCookie != null) {
@@ -113,6 +116,7 @@ public class RefreshTokenFilter extends GenericFilterBean {
         if (token.isExpired() || token.getExpiresIn() < REFRESH_WINDOW_SECS) {
             return true;
         }
-        return false;       //access token is still fine
+        //access token is still fine
+        return false;
     }
 }

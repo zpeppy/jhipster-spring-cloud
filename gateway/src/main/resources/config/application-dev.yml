@@ -25,7 +25,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+      defaultZone: http://admin:${jhipster.registry.password}@registry:8761/eureka/
 
 spring:
   profiles:
@@ -119,7 +119,7 @@ jhipster:
       client-id: internal
       client-secret: internal
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://127.0.0.1:8080
+    base-url: http://mail:8080
   metrics:
     logs: # Reports metrics in the logs
       enabled: false
@@ -128,7 +128,7 @@ jhipster:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
       enabled: false
-      host: localhost
+      host: logstash
       port: 5000
       queue-size: 512
   audit-events:

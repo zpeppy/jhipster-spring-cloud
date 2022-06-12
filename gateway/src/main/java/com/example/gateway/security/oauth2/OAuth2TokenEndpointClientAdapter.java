@@ -15,6 +15,8 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Default base class for an {@link OAuth2TokenEndpointClient}.
  * Individual implementations for a particular OAuth2 provider can use this as a starting point.
+ *
+ * @author peppy
  */
 public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEndpointClient {
     private final Logger log = LoggerFactory.getLogger(OAuth2TokenEndpointClientAdapter.class);

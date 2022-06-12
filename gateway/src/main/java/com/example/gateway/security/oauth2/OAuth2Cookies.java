@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Holds the access token and refresh token cookies.
+ *
+ * @author peppy
  */
 class OAuth2Cookies {
     private Cookie accessTokenCookie;
