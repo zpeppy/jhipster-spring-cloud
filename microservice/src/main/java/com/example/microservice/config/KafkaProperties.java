@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * kafka 配置属性类
+ *
+ * @author peppy
+ */
 @Configuration
 @ConfigurationProperties(prefix = "kafka")
 public class KafkaProperties {

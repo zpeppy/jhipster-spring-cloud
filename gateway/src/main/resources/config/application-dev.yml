@@ -62,7 +62,7 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
   mail:
-    host: localhost
+    host: mail
     port: 25
     username:
     password:

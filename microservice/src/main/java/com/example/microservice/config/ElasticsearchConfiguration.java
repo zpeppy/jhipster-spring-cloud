@@ -4,6 +4,11 @@ import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchPr
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * ES 配置
+ *
+ * @author peppy
+ */
 @Configuration
 @EnableConfigurationProperties(ElasticsearchProperties.class)
 public class ElasticsearchConfiguration {

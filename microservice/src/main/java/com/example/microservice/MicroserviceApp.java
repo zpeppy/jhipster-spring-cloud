@@ -1,7 +1,6 @@
 package com.example.microservice;
 
 import com.example.common.client.OAuth2InterceptedFeignConfiguration;
-import com.example.common.config.oauth2.OAuth2Properties;
 import com.example.microservice.config.ApplicationProperties;
 import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
@@ -23,13 +22,16 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * @author peppy
+ */
 @EnableDiscoveryClient
 @ComponentScan(
     value = "com.example",
     excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = OAuth2InterceptedFeignConfiguration.class)
 )
 @SpringBootApplication
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, OAuth2Properties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class MicroserviceApp {
 
     private static final Logger log = LoggerFactory.getLogger(MicroserviceApp.class);

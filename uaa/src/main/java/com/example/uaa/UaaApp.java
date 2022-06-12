@@ -1,6 +1,5 @@
 package com.example.uaa;
 
-import com.example.common.config.oauth2.OAuth2Properties;
 import com.example.uaa.config.ApplicationProperties;
 import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
@@ -27,7 +26,7 @@ import java.util.Collection;
 @EnableDiscoveryClient
 @ComponentScan("com.example")
 @SpringBootApplication
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, OAuth2Properties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class UaaApp {
 
     private static final Logger log = LoggerFactory.getLogger(UaaApp.class);
