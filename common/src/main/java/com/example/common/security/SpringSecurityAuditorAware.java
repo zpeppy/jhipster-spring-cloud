@@ -8,6 +8,8 @@ import java.util.Optional;
 
 /**
  * Implementation of {@link AuditorAware} based on Spring Security.
+ *
+ * @author peppy
  */
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<String> {

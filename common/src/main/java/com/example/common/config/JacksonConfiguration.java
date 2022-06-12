@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
+/**
+ * @author peppy
+ */
 @Configuration
 public class JacksonConfiguration {
 

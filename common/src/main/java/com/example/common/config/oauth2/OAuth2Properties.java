@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * OAuth2 properties define properties for OAuth2-based microservices.
+ * <p>
+ * oauth2 配置属性
+ *
+ * @author peppy
  */
 @Primary
 @Component

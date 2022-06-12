@@ -1,8 +1,14 @@
 # JetBrains
 .idea
+common/common.iml
+dependencies/dependencies.iml
+gateway/gateway.iml
+microservice/microservice.iml
+uaa/uaa.iml
+jhipster-spring-cloud.iml
 
 # Maven
 target
-uaa/target
 gateway/target
 microservice/target
+uaa/target

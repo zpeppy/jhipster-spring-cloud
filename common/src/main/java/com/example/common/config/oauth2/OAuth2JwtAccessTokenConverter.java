@@ -12,6 +12,10 @@ import java.util.Map;
 
 /**
  * Improved {@link JwtAccessTokenConverter} that can handle lazy fetching of public verifier keys.
+ * <p>
+ * jwt access token 处理
+ *
+ * @author peppy
  */
 public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
     private final Logger log = LoggerFactory.getLogger(OAuth2JwtAccessTokenConverter.class);

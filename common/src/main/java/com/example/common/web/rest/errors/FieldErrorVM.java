@@ -5,6 +5,9 @@ import lombok.Getter;
 
 import java.io.Serializable;
 
+/**
+ * @author peppy
+ */
 @Getter
 @AllArgsConstructor
 public class FieldErrorVM implements Serializable {

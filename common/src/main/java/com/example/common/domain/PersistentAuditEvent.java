@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * Persist AuditEvent managed by the Spring Boot actuator.
  *
+ * @author peppy
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
 @Data

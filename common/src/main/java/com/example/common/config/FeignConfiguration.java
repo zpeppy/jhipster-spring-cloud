@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * feign 日志级别配置
+ *
+ * @author peppy
+ */
 @Configuration
 @EnableFeignClients(basePackages = "com.example")
 @Import(FeignClientsConfiguration.class)

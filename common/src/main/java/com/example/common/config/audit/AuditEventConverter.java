@@ -1,12 +1,18 @@
 package com.example.common.config.audit;
 
 import com.example.common.domain.PersistentAuditEvent;
+import com.google.common.collect.Maps;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * 审计事件处理
+ *
+ * @author peppy
+ */
 @Component
 public class AuditEventConverter {
 
@@ -48,7 +54,7 @@ public class AuditEventConverter {
      * @return a map of {@link String}, {@link Object}.
      */
     public Map<String, Object> convertDataToObjects(Map<String, String> data) {
-        Map<String, Object> results = new HashMap<>();
+        Map<String, Object> results = Maps.newHashMap();
 
         if (data != null) {
             for (Map.Entry<String, String> entry : data.entrySet()) {
@@ -66,7 +72,7 @@ public class AuditEventConverter {
      * @return a map of {@link String}, {@link String}.
      */
     public Map<String, String> convertDataToStrings(Map<String, Object> data) {
-        Map<String, String> results = new HashMap<>();
+        Map<String, String> results = Maps.newHashMap();
 
         if (data != null) {
             for (Map.Entry<String, Object> entry : data.entrySet()) {

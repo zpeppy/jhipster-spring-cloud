@@ -11,7 +11,11 @@ import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
 
-
+/**
+ * spring.profiles.active=cloud 时 hikari 数据库连接池配置
+ *
+ * @author peppy
+ */
 @Configuration
 @Profile(JHipsterConstants.SPRING_PROFILE_CLOUD)
 public class CloudDatabaseConfiguration extends AbstractCloudConfig {

@@ -8,6 +8,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * {@link EntityScan} 配置实体类包扫描路径
+ * <p>
+ * {@link EnableJpaRepositories} 配置 jpa 仓库类包扫描路径
+ * <p>
+ * {@link EnableElasticsearchRepositories} 配置 es 仓库类包扫描路径
+ *
+ * @author peppy
+ */
 @EntityScan("com.example.*.domain")
 @Configuration
 @EnableJpaRepositories("com.example.*.repository")

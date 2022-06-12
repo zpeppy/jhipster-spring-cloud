@@ -1,6 +1,6 @@
 package com.example.common.aop;
 
-import com.example.common.service.GlobalExceptionHandlerService;
+import com.example.common.service.ExceptionHandlerService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,25 +16,25 @@ import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
 /**
- * 全局异常统一处理
+ * 拦截异常统一处理
  * <p>
- * {@link GlobalExceptionHandlerService} 实现类必须使用 {@link Component} 注解注入, 不能使用 {@link Bean} 注入.
+ * {@link ExceptionHandlerService} 实现类必须使用 {@link Component} 注解注入, 不能使用 {@link Bean} 注入.
  *
  * @author peppy
  */
 @Order
-@ConditionalOnBean(GlobalExceptionHandlerService.class)
+@ConditionalOnBean(ExceptionHandlerService.class)
 @Slf4j
 @Component
 @Aspect
-public class GlobalExceptionHandlerAop {
+public class ExceptionHandlerAop {
 
     @Resource
-    private GlobalExceptionHandlerService globalExceptionHandlerService;
+    private ExceptionHandlerService exceptionHandlerService;
 
-    @Pointcut("@within(com.example.common.annotation.GlobalExceptionHandler) || @annotation(com.example.common.annotation.GlobalExceptionHandler)")
+    @Pointcut("@within(com.example.common.annotation.ExceptionHandler) || @annotation(com.example.common.annotation.ExceptionHandler)")
     public void pointcut() {
-
+        // 切入点方法
     }
 
     @Around("pointcut()")
@@ -47,7 +47,7 @@ public class GlobalExceptionHandlerAop {
             proceed = pjp.proceed(args);
         } catch (Exception ex) {
             // 只处理 Exception 级别异常
-            globalExceptionHandlerService.exceptionHandler(method, args, ex);
+            exceptionHandlerService.exceptionHandler(method, args, ex);
         }
         return proceed;
     }

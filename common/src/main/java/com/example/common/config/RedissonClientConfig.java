@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 分布式锁配置
+ * RedissonClient 配置
  *
  * @author peppy
  */
@@ -55,6 +55,12 @@ public class RedissonClientConfig {
         return Redisson.create(config);
     }
 
+    /**
+     * 转换节点
+     *
+     * @param nodeAddress 节点地址集合
+     * @return 节点数组
+     */
     private String[] nodeAddress(List<String> nodeAddress) {
         return nodeAddress.stream().map(node -> String.format(NODE_ADDRESS, node)).toArray(String[]::new);
     }

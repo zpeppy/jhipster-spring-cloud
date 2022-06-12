@@ -34,7 +34,7 @@ public class LockAop {
 
     @Pointcut("@within(com.example.common.annotation.Lock) || @annotation(com.example.common.annotation.Lock)")
     public void pointcut() {
-
+        // 切入点方法
     }
 
     /**
@@ -77,7 +77,7 @@ public class LockAop {
      * @return 锁名称
      * @throws NoSuchAlgorithmException 不匹配算法异常
      */
-    private static String getLockName(Lock annotation, Object[] args) throws NoSuchAlgorithmException {
+    private String getLockName(Lock annotation, Object[] args) throws NoSuchAlgorithmException {
         return annotation.prefixName() + DELIMITER + MD5Utils.md5(args);
     }
 }

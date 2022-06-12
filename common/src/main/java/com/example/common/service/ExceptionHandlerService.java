@@ -7,11 +7,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
- * 全局异常统一处理
+ * 拦截异常统一处理
  *
  * @author peppy
  */
-public interface GlobalExceptionHandlerService {
+public interface ExceptionHandlerService {
 
     /**
      * 处理错误信息

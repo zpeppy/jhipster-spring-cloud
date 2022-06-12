@@ -7,6 +7,7 @@ import org.springframework.security.jwt.crypto.sign.SignatureVerifier;
  * Implementations will have to contact the OAuth2 authorization server to fetch the public key
  * and use it to build a {@link SignatureVerifier} in a server specific way.
  *
+ * @author peppy
  * @see UaaSignatureVerifierClient
  */
 public interface OAuth2SignatureVerifierClient {

@@ -9,13 +9,13 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 全局异常统一处理器
+ * 拦截异常统一处理
  *
  * @author peppy
  */
 @Target({TYPE, METHOD})
 @Retention(RUNTIME)
 @Documented
-public @interface GlobalExceptionHandler {
+public @interface ExceptionHandler {
 
 }

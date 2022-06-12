@@ -6,6 +6,11 @@ import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequest
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 
+/**
+ * feign 请求拦截器配置, 提供默认 token 信息
+ *
+ * @author peppy
+ */
 public class OAuth2InterceptedFeignConfiguration {
 
     private final LoadBalancedResourceDetails loadBalancedResourceDetails;

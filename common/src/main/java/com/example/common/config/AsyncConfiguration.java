@@ -15,6 +15,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
+/**
+ * 异步, 调度线程池配置
+ *
+ * @author peppy
+ */
 @Configuration
 @EnableAsync
 @EnableScheduling

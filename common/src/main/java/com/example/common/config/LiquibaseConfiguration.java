@@ -18,6 +18,11 @@ import org.springframework.core.env.Profiles;
 import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 
+/**
+ * Liquibase 配置
+ *
+ * @author peppy
+ */
 @Configuration
 public class LiquibaseConfiguration {
 
