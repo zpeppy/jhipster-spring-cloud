@@ -59,6 +59,8 @@ import java.util.Optional;
  * </ul>
  * <p>
  * Another option would be to have a specific JPA entity graph to handle this case.
+ *
+ * @author peppy
  */
 @Api(value = "用户", tags = "用户")
 @RestController

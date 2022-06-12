@@ -3,6 +3,7 @@ package com.example.uaa.repository;
 import com.example.common.config.Constants;
 import com.example.common.config.audit.AuditEventConverter;
 import com.example.common.domain.PersistentAuditEvent;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -12,12 +13,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * An implementation of Spring Boot's {@link AuditEventRepository}.
+ *
+ * @author peppy
  */
 @Repository
 public class CustomAuditEventRepository implements AuditEventRepository {
@@ -50,7 +52,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void add(AuditEvent event) {
         if (!AUTHORIZATION_FAILURE.equals(event.getType()) &&
             !Constants.ANONYMOUS_USER.equals(event.getPrincipal())) {
@@ -69,7 +71,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
      * Truncate event data that might exceed column length.
      */
     private Map<String, String> truncate(Map<String, String> data) {
-        Map<String, String> results = new HashMap<>();
+        Map<String, String> results = Maps.newHashMap();
 
         if (data != null) {
             for (Map.Entry<String, String> entry : data.entrySet()) {

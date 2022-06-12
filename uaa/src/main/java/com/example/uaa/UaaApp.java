@@ -21,6 +21,9 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * @author peppy
+ */
 @EnableDiscoveryClient
 @ComponentScan("com.example")
 @SpringBootApplication

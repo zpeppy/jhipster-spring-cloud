@@ -20,9 +20,11 @@ import java.util.Optional;
  * Service for managing audit events.
  * <p>
  * This is the default implementation to support SpringBoot Actuator {@code AuditEventRepository}.
+ *
+ * @author peppy
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class AuditEventService {
 
     private final Logger log = LoggerFactory.getLogger(AuditEventService.class);
@@ -33,9 +35,8 @@ public class AuditEventService {
 
     private final AuditEventConverter auditEventConverter;
 
-    public AuditEventService(
-        PersistenceAuditEventRepository persistenceAuditEventRepository,
-        AuditEventConverter auditEventConverter, JHipsterProperties jhipsterProperties) {
+    public AuditEventService(PersistenceAuditEventRepository persistenceAuditEventRepository,
+                             AuditEventConverter auditEventConverter, JHipsterProperties jhipsterProperties) {
 
         this.persistenceAuditEventRepository = persistenceAuditEventRepository;
         this.auditEventConverter = auditEventConverter;

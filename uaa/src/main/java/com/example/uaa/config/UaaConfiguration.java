@@ -36,6 +36,11 @@ import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * 授权服务器配置
+ *
+ * @author peppy
+ */
 @Configuration
 @EnableAuthorizationServer
 public class UaaConfiguration extends AuthorizationServerConfigurerAdapter implements ApplicationContextAware {
@@ -51,6 +56,9 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * 资源服务器配置
+     */
     @EnableResourceServer
     public static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
@@ -97,7 +105,7 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
         }
 
         @Override
-        public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        public void configure(ResourceServerSecurityConfigurer resources) {
             resources.resourceId("jhipster-uaa").tokenStore(tokenStore);
         }
     }
@@ -153,7 +161,8 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
             .authenticationManager(authenticationManager)
             .tokenStore(tokenStore())
             .tokenEnhancer(tokenEnhancerChain)
-            .reuseRefreshTokens(false);             //don't reuse or we will run into session inactivity timeouts
+            //don't reuse or we will run into session inactivity timeouts
+            .reuseRefreshTokens(false);
     }
 
     @Autowired
@@ -187,8 +196,7 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess(
-            "isAuthenticated()");
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 }

@@ -29,9 +29,11 @@ import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.
+ *
+ * @author peppy
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
@@ -146,7 +148,8 @@ public class UserService {
         }
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+            // default language
+            user.setLangKey(Constants.DEFAULT_LANGUAGE);
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
@@ -238,8 +241,7 @@ public class UserService {
             });
     }
 
-
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void changePassword(String currentClearTextPassword, String newPassword) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
@@ -295,7 +297,6 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
-
 
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());

@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 /**
  * View Model object for storing the user's key and password.
+ *
+ * @author peppy
  */
 @ApiModel(value = "账号密码", description = "账号密码")
 @Data

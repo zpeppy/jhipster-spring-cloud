@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 /**
  * A DTO representing a password change required data - current and new password.
+ *
+ * @author peppy
  */
 @ApiModel(value = "密码", description = "密码")
 @NoArgsConstructor

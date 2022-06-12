@@ -26,6 +26,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
+ *
+ * @author peppy
  */
 @Api(value = "账号", tags = "账号")
 @RestController

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * Properties for UAA-based OAuth2 security.
+ * <p>
+ * 读取 uaa 配置
+ *
+ * @author peppy
  */
 @Component
 @ConfigurationProperties(prefix = "uaa", ignoreUnknownFields = false)

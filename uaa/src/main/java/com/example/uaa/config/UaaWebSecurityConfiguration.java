@@ -15,6 +15,11 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 
 import javax.annotation.PostConstruct;
 
+/**
+ * 认证配置
+ *
+ * @author peppy
+ */
 @Configuration
 public class UaaWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -28,7 +33,7 @@ public class UaaWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @PostConstruct
-    public void init() throws Exception {
+    public void init() {
         try {
             authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
@@ -50,7 +55,7 @@ public class UaaWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
             .antMatchers("/app/**/*.{js,html}")

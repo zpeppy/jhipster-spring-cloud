@@ -13,11 +13,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
  * Authenticate a user from the database.
+ * <p>
+ * 查询用户账号及角色信息
+ *
+ * @author peppy
  */
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
@@ -31,7 +36,7 @@ public class DomainUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
 
@@ -56,7 +61,6 @@ public class DomainUserDetailsService implements UserDetailsService {
             .map(authority -> new SimpleGrantedAuthority(authority.getName()))
             .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(user.getLogin(),
-            user.getPassword(),
-            grantedAuthorities);
+            user.getPassword(), grantedAuthorities);
     }
 }
