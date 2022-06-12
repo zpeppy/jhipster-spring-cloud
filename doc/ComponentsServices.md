@@ -177,3 +177,36 @@ docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.2
 127.0.0.1 nacos
 127.0.0.1 zipkin
 ```
+
+### 通过二进制包方式安装服务
+
+##### jhipster-registry：
+
+点击下载 [jhipster-registry-6.8.0.jar](https://github.com/jhipster/jhipster-registry/releases/download/v6.8.0/jhipster-registry-6.8.0.jar)
+
+##### mysql：
+
+点击下载 [mysql-8.0.29-winx64.zip](https://dev.mysql.com/downloads/file/?id=511178)
+
+##### redis：
+
+点击下载 [redis-7.0.1.tar.gz](https://github.com/redis/redis/archive/7.0.1.tar.gz)
+
+##### nacos：
+
+点击下载 [nacos-server-2.1.0.zip](https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.zip)
+或者 [nacos-server-2.1.0.tar.gz](https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.tar.gz)
+
+##### zipkin：
+
+点击下载 [zipkin-server-2.23.16-exec.jar](https://search.maven.org/remote_content?g=io.zipkin&a=zipkin-server&v=2.23.16&c=exec)
+
+##### prometheus:
+
+点击下载 [prometheus-2.36.1.windows-amd64.zip](https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.windows-amd64.zip)
+或者 [prometheus-2.36.1.linux-amd64.tar.gz](https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.linux-amd64.tar.gz)
+
+##### grafana:
+
+点击下载 [grafana-enterprise-8.5.5.windows-amd64.zip](https://dl.grafana.com/enterprise/release/grafana-enterprise-8.5.5.windows-amd64.zip)
+或者点击进入官网下载页面 [grafana download](https://grafana.com/grafana/download)

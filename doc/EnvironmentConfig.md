@@ -1,7 +1,8 @@
 # 开发环境配置
 
+- 安装 JDK 1.8 版本, 配置系统环境变量
 - 安装 IDEA 2021.1+ 版本
-- 安装 Maven 3.6.x 版本, 修改 `apache-maven-3.6.1/conf/settings.xml` 配置文件, 添加 aliyun Maven 镜像仓库配置
+- 安装 Maven 3.6.x 版本, 配置系统环境变量, 修改 `apache-maven-3.6.1/conf/settings.xml` 配置文件, 添加 aliyun Maven 镜像仓库配置
   ```xml
   <mirror>
       <id>aliyun</id>
