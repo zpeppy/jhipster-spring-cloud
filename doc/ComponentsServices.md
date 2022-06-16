@@ -178,35 +178,101 @@ docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.2
 127.0.0.1 zipkin
 ```
 
-### 通过二进制包方式安装服务
+### 通过二进制包方式安装, 启动服务
 
-##### jhipster-registry：
+##### jhipster-registry
 
-点击下载 [jhipster-registry-6.8.0.jar](https://github.com/jhipster/jhipster-registry/releases/download/v6.8.0/jhipster-registry-6.8.0.jar)
+- 下载 jar 包:
+  [jhipster-registry-6.8.0.jar](https://github.com/jhipster/jhipster-registry/releases/download/v6.8.0/jhipster-registry-6.8.0.jar)
+- 使用命令行启动服务
 
-##### mysql：
+```shell
+java -Xms512m -Xmx512m -jar ./jhipster-registry-6.8.0.jar --spring.security.user.password=admin --jhipster.security.authentication.jwt.secret=my-secret-key-which-should-be-changed-in-production-and-be-base64-encoded --spring.cloud.config.server.composite.0.type=native --spring.cloud.config.server.composite.0.search-locations=file:./central-config
+```
 
-点击下载 [mysql-8.0.29-winx64.zip](https://dev.mysql.com/downloads/file/?id=511178)
+- 登录 [registry](http://registry:8761) 后台, 账号密码: admin / admin
 
-##### redis：
+##### mysql
 
-点击下载 [redis-7.0.1.tar.gz](https://github.com/redis/redis/archive/7.0.1.tar.gz)
+- 下载压缩包:
+  [mysql-8.0.29-winx64.zip](https://dev.mysql.com/downloads/file/?id=511178)
 
-##### nacos：
+##### redis
 
-点击下载 [nacos-server-2.1.0.zip](https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.zip)
-或者 [nacos-server-2.1.0.tar.gz](https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.tar.gz)
+- 下载压缩包:
+  [redis-7.0.1.tar.gz](https://github.com/redis/redis/archive/7.0.1.tar.gz)
+  或者使用命令下载
 
-##### zipkin：
+```shell
+wget https://download.redis.io/releases/redis-7.0.1.tar.gz
+```
 
-点击下载 [zipkin-server-2.23.16-exec.jar](https://search.maven.org/remote_content?g=io.zipkin&a=zipkin-server&v=2.23.16&c=exec)
+- 安装, 启动服务端
 
-##### prometheus:
+```shell
+cd redis-7.0.1
+# make 构建之前, 安装 C 语言环境(CentOS 自带, 其他 Linux 需要安装)
+yum install gcc-c++
+# 编译源码
+make
+# 安装
+make install PREFIX=/usr/local/redis
+# 进去 redis 安装目录
+cd /usr/local/redis/
+# 修改配置, 将 daemonize 改为 yes
+vim redis.conf
+# 启动服务端, 指定配置文件
+./bin/redis-server redis.conf
+# 查询后台进程
+ps -aux | grep redis
+# 关闭服务端
+./bin/redis-server shutdown
+# 启动客户端
+./bin/redis-cli [-h 127.0.0.1 -p 6379]
+# 关闭客户端
+./bin/redis-cli shutdown
+```
 
-点击下载 [prometheus-2.36.1.windows-amd64.zip](https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.windows-amd64.zip)
-或者 [prometheus-2.36.1.linux-amd64.tar.gz](https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.linux-amd64.tar.gz)
+##### nacos
 
-##### grafana:
+- 下载压缩包:
+  [nacos-server-2.1.0.zip](https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.zip)
+  或者
+  [nacos-server-2.1.0.tar.gz](https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.tar.gz)
 
-点击下载 [grafana-enterprise-8.5.5.windows-amd64.zip](https://dl.grafana.com/enterprise/release/grafana-enterprise-8.5.5.windows-amd64.zip)
-或者点击进入官网下载页面 [grafana download](https://grafana.com/grafana/download)
+- 启动服务
+
+```shell
+unzip nacos-server-2.1.0.zip
+cd nacos/bin
+# Linux
+sh startup.sh -m standalone
+# windows
+startup.cmd -m standalone
+```
+
+- 登录 [nacos](http://nacos:8848/nacos) 后台, 账号密码: nacos / nacos
+
+##### zipkin
+
+- 下载 jar 包:
+  [zipkin-server-2.23.16-exec.jar](https://search.maven.org/remote_content?g=io.zipkin&a=zipkin-server&v=2.23.16&c=exec)
+- 启动服务
+
+```shell
+java -Xms512m -Xmx512m -jar zipkin-server-2.23.16-exec.jar
+```
+
+##### prometheus
+
+- 下载压缩包:
+  [prometheus-2.36.1.windows-amd64.zip](https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.windows-amd64.zip)
+  或者
+  [prometheus-2.36.1.linux-amd64.tar.gz](https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.linux-amd64.tar.gz)
+
+##### grafana
+
+- 下载压缩包:
+  [grafana-enterprise-8.5.5.windows-amd64.zip](https://dl.grafana.com/enterprise/release/grafana-enterprise-8.5.5.windows-amd64.zip)
+  或者
+  [其他版本](https://grafana.com/grafana/download)

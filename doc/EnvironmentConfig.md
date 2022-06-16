@@ -21,3 +21,7 @@
   > ![idea-refresh-maven.png](images/idea-refresh-maven.png)
 - 选择指定服务点击启动
   > ![idea-start-service.png](images/idea-start-service.png)
+- 如遇启动报错
+  > ![idea-run-error](images/idea-run-error.png)
+    - 编辑启动配置, 改成图中所示选项
+  > ![idea-run-config](images/idea-run-config.png)
