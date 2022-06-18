@@ -13,13 +13,13 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Default base class for an {@link OAuth2TokenEndpointClient}.
- * Individual implementations for a particular OAuth2 provider can use this as a starting point.
+ * 调用 uaa 的认证方法实现
  *
  * @author peppy
  */
 public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEndpointClient {
     private final Logger log = LoggerFactory.getLogger(OAuth2TokenEndpointClientAdapter.class);
+
     protected final RestTemplate restTemplate;
     protected final JHipsterProperties jHipsterProperties;
     protected final OAuth2Properties oAuth2Properties;
@@ -31,11 +31,11 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
     }
 
     /**
-     * Sends a password grant to the token endpoint.
+     * 通过用户名密码模式授权
      *
-     * @param username the username to authenticate.
-     * @param password his password.
-     * @return the access token.
+     * @param username 用户名
+     * @param password 密码
+     * @return token 信息
      */
     @Override
     public OAuth2AccessToken sendPasswordGrant(String username, String password) {
@@ -49,7 +49,7 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(formParams, reqHeaders);
         log.debug("contacting OAuth2 token endpoint to login user: {}", username);
         ResponseEntity<OAuth2AccessToken>
-            responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity, OAuth2AccessToken.class);
+                responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity, OAuth2AccessToken.class);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             log.debug("failed to authenticate user with OAuth2 token endpoint, status: {}", responseEntity.getStatusCodeValue());
             throw new HttpClientErrorException(responseEntity.getStatusCode());
@@ -59,10 +59,10 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
     }
 
     /**
-     * Sends a refresh grant to the token endpoint using the current refresh token to obtain new tokens.
+     * 向 uaa 发送 refresh_token 刷新令牌
      *
-     * @param refreshTokenValue the refresh token to use to obtain new tokens.
-     * @return the new, refreshed access token.
+     * @param refreshTokenValue refresh token
+     * @return 新的 access token 和 refresh token
      */
     @Override
     public OAuth2AccessToken sendRefreshGrant(String refreshTokenValue) {
@@ -74,7 +74,7 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
         log.debug("contacting OAuth2 token endpoint to refresh OAuth2 JWT tokens");
         ResponseEntity<OAuth2AccessToken> responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity,
-            OAuth2AccessToken.class);
+                OAuth2AccessToken.class);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             log.debug("failed to refresh tokens: {}", responseEntity.getStatusCodeValue());
             throw new HttpClientErrorException(responseEntity.getStatusCode());
@@ -86,6 +86,11 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
 
     protected abstract void addAuthentication(HttpHeaders reqHeaders, MultiValueMap<String, String> formParams);
 
+    /**
+     * 获取配置文件中用户名密码模式的 clientSecret
+     *
+     * @return clientSecret
+     */
     protected String getClientSecret() {
         String clientSecret = oAuth2Properties.getWebClientConfiguration().getSecret();
         if (clientSecret == null) {
@@ -94,6 +99,11 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
         return clientSecret;
     }
 
+    /**
+     * 获取配置文件中用户名密码模式的 clientId
+     *
+     * @return clientId
+     */
     protected String getClientId() {
         String clientId = oAuth2Properties.getWebClientConfiguration().getClientId();
         if (clientId == null) {
@@ -103,9 +113,9 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
     }
 
     /**
-     * Returns the configured OAuth2 token endpoint URI.
+     * 获取配置文件中访问 uaa 的 OAuth2 token 接口的地址
      *
-     * @return the OAuth2 token endpoint URI.
+     * @return token 接口的地址
      */
     protected String getTokenEndpoint() {
         String tokenEndpointUrl = jHipsterProperties.getSecurity().getClientAuthorization().getAccessTokenUri();

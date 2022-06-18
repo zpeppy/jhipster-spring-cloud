@@ -22,23 +22,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Filters incoming requests and refreshes the access token before it expires.
+ * 在 token 过期前, 刷新 access token 的过滤器
  *
  * @author peppy
  */
 public class RefreshTokenFilter extends GenericFilterBean {
     /**
-     * Number of seconds before expiry to start refreshing access tokens so we don't run into race conditions when forwarding
-     * requests downstream. Otherwise, access tokens may still be valid when we check here but may then be expired
-     * when relayed to another microservice a wee bit later.
+     * 刷新时间(单位: 秒)
      */
     private static final int REFRESH_WINDOW_SECS = 30;
 
     private final Logger log = LoggerFactory.getLogger(RefreshTokenFilter.class);
 
-    /**
-     * The {@link OAuth2AuthenticationService} is doing the actual work. We are just a simple filter after all.
-     */
     private final OAuth2AuthenticationService authenticationService;
     private final TokenStore tokenStore;
 
@@ -48,11 +43,11 @@ public class RefreshTokenFilter extends GenericFilterBean {
     }
 
     /**
-     * Check access token cookie and refresh it, if it is either not present, expired or about to expire.
+     * 如果 token 过期则刷新
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         try {
@@ -65,17 +60,15 @@ public class RefreshTokenFilter extends GenericFilterBean {
     }
 
     /**
-     * Refresh the access and refresh tokens if they are about to expire.
+     * 如果 access token 和 refresh token 过期则刷新
      *
-     * @param httpServletRequest  the servlet request holding the current cookies. If no refresh cookie is present,
-     *                            then we are out of luck.
-     * @param httpServletResponse the servlet response that gets the new set-cookie headers, if they had to be
-     *                            refreshed.
-     * @return a new request to use downstream that contains the new cookies, if they had to be refreshed.
-     * @throws InvalidTokenException if the tokens could not be refreshed.
+     * @param httpServletRequest  请求对象
+     * @param httpServletResponse 响应对象
+     * @return 处理后的请求对象
+     * @throws InvalidTokenException 如果刷新失败则抛异常
      */
     public HttpServletRequest refreshTokensIfExpiring(HttpServletRequest httpServletRequest, HttpServletResponse
-        httpServletResponse) {
+            httpServletResponse) {
         HttpServletRequest newHttpServletRequest = httpServletRequest;
         //get access token from cookie
         Cookie accessTokenCookie = OAuth2CookieHelper.getAccessTokenCookie(httpServletRequest);
@@ -101,11 +94,10 @@ public class RefreshTokenFilter extends GenericFilterBean {
     }
 
     /**
-     * Check if we must refresh the access token.
-     * We must refresh it, if we either have no access token, or it is expired, or it is about to expire.
+     * 校验是否必须刷新 token
      *
-     * @param accessTokenCookie the current access token.
-     * @return true, if it must be refreshed; false, otherwise.
+     * @param accessTokenCookie 包含 access token 的 cookie
+     * @return 是否必须刷新
      */
     private boolean mustRefreshToken(Cookie accessTokenCookie) {
         if (accessTokenCookie == null) {

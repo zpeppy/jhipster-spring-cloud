@@ -1,6 +1,8 @@
 package com.example.common.web.rest.errors;
 
 /**
+ * 账号已存在异常
+ *
  * @author peppy
  */
 public class LoginAlreadyUsedException extends BadRequestAlertException {

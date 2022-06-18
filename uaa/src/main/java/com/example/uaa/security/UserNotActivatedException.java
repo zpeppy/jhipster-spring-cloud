@@ -3,7 +3,7 @@ package com.example.uaa.security;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * This exception is thrown in case of a not activated user trying to authenticate.
+ * 如果用户为激活状态访问则抛此异常
  *
  * @author peppy
  */

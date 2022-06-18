@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A DTO representing a user, with his authorities.
+ * 用户信息 DTO
  *
  * @author peppy
  */
@@ -93,8 +93,8 @@ public class UserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream()
-            .map(Authority::getName)
-            .collect(Collectors.toSet());
+                .map(Authority::getName)
+                .collect(Collectors.toSet());
     }
 
 }

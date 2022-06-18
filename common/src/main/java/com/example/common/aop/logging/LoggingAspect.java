@@ -11,15 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
 /**
- * Aspect for logging execution of service and repository Spring components.
- * <p>
- * By default, it only runs with the "dev" profile.
- * <p>
- * 日志拦截统一处理
+ * 日志统一拦截处理
  *
  * @author peppy
  */
@@ -33,40 +32,40 @@ public class LoggingAspect {
     }
 
     /**
-     * Pointcut that matches all repositories, services and Web REST endpoints.
+     * 拦截 {@link Repository}, {@link Service}, {@link RestController} 标注的类下所有方法
      */
     @Pointcut("within(@org.springframework.stereotype.Repository *)" +
             " || within(@org.springframework.stereotype.Service *)" +
             " || within(@org.springframework.web.bind.annotation.RestController *)")
     public void springBeanPointcut() {
-        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+        //
     }
 
     /**
-     * Pointcut that matches all Spring beans in the application's main packages.
+     * 拦截 {@code com.example.*.repository}, {@code com.example.*.service}, {@code com.example.*.web.rest} 包下所有类及方法
      */
     @Pointcut("within(com.example.*.repository..*)" +
             " || within(com.example.*.service..*)" +
             " || within(com.example.*.web.rest..*)")
     public void applicationPackagePointcut() {
-        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+        //
     }
 
     /**
-     * Retrieves the {@link Logger} associated to the given {@link JoinPoint}.
+     * 获取 {@link Logger} 对象
      *
-     * @param joinPoint join point we want the logger for.
-     * @return {@link Logger} associated to the given {@link JoinPoint}.
+     * @param joinPoint 拦截点信息
+     * @return {@link Logger} 对象
      */
     private Logger logger(JoinPoint joinPoint) {
         return LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringTypeName());
     }
 
     /**
-     * Advice that logs methods throwing exceptions.
+     * 拦截异常通知
      *
-     * @param joinPoint join point for advice.
-     * @param e         exception.
+     * @param joinPoint 拦截点信息
+     * @param e         异常
      */
     @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
@@ -90,11 +89,11 @@ public class LoggingAspect {
     }
 
     /**
-     * Advice that logs when a method is entered and exited.
+     * 环绕通知
      *
-     * @param joinPoint join point for advice.
-     * @return result.
-     * @throws Throwable throws {@link IllegalArgumentException}.
+     * @param joinPoint 拦截点信息
+     * @return 目标方法执行结果
+     * @throws Throwable 抛出 {@link IllegalArgumentException} 异常
      */
     @Around("applicationPackagePointcut() && springBeanPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {

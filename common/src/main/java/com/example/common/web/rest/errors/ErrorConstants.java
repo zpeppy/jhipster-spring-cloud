@@ -3,6 +3,8 @@ package com.example.common.web.rest.errors;
 import java.net.URI;
 
 /**
+ * 错误常量信息
+ *
  * @author peppy
  */
 public final class ErrorConstants {

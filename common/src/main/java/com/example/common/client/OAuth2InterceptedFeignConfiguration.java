@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 
 /**
- * feign 请求拦截器配置, 提供默认 token 信息
+ * feign 请求拦截器配置, 服务内部机器调用提供默认 token 信息
  *
  * @author peppy
  */

@@ -1,6 +1,8 @@
 package com.example.common.exception;
 
 /**
+ * 账号已存在异常
+ *
  * @author peppy
  */
 public class UsernameAlreadyUsedException extends RuntimeException {

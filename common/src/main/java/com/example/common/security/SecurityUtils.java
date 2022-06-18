@@ -10,8 +10,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * Utility class for Spring Security.
- * <p>
  * 获取登陆账号信息
  *
  * @author peppy
@@ -22,9 +20,9 @@ public final class SecurityUtils {
     }
 
     /**
-     * Get the login of the current user.
+     * 获取当前登录的用户账号信息
      *
-     * @return the login of the current user.
+     * @return 用户账号信息
      */
     public static Optional<String> getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -43,11 +41,10 @@ public final class SecurityUtils {
         return null;
     }
 
-
     /**
-     * Check if a user is authenticated.
+     * 校验当前用户是否通过认证
      *
-     * @return true if the user is authenticated, false otherwise.
+     * @return 是否通过认证
      */
     public static boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -56,12 +53,10 @@ public final class SecurityUtils {
     }
 
     /**
-     * If the current user has a specific authority (security role).
-     * <p>
-     * The name of this method comes from the {@code isUserInRole()} method in the Servlet API.
+     * 校验当前用户是否有某个角色
      *
-     * @param authority the authority to check.
-     * @return true if the current user has the authority, false otherwise.
+     * @param authority 角色名称
+     * @return 是否有某个角色
      */
     public static boolean isCurrentUserInRole(String authority) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

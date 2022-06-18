@@ -1,9 +1,7 @@
 package com.example.common.security;
 
 /**
- * Constants for Spring Security authorities.
- * <p>
- * 角色常量
+ * Spring Security 角色常量
  *
  * @author peppy
  */

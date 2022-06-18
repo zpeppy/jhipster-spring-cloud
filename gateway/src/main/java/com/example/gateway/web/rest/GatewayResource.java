@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * REST controller for managing Gateway configuration.
+ * 查询网关配置信息接口
  *
  * @author peppy
  */
@@ -35,11 +35,6 @@ public class GatewayResource {
         this.discoveryClient = discoveryClient;
     }
 
-    /**
-     * {@code GET  /routes} : get the active routes.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of routes.
-     */
     @ApiOperation(value = "查询路由列表", tags = "路由")
     @GetMapping("/routes")
     @Secured(AuthoritiesConstants.ADMIN)

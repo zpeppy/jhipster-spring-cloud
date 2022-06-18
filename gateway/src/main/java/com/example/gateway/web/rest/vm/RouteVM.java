@@ -9,8 +9,6 @@ import org.springframework.cloud.client.ServiceInstance;
 import java.util.List;
 
 /**
- * View Model that stores a route managed by the Gateway.
- *
  * @author peppy
  */
 @ApiModel(value = "路由信息", description = "路由信息")

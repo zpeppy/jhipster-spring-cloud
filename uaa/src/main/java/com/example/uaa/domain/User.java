@@ -19,8 +19,6 @@ import java.time.Instant;
 import java.util.*;
 
 /**
- * A user.
- * <p>
  * 用户实体类
  *
  * @author peppy
@@ -90,9 +88,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "uaa_user_authority",
-        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+            name = "uaa_user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
@@ -132,17 +130,17 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
-            .add("id=" + id)
-            .add("login='" + login + "'")
-            .add("firstName='" + firstName + "'")
-            .add("lastName='" + lastName + "'")
-            .add("email='" + email + "'")
-            .add("activated=" + activated)
-            .add("langKey='" + langKey + "'")
-            .add("imageUrl='" + imageUrl + "'")
-            .add("activationKey='" + activationKey + "'")
-            .add("resetKey='" + resetKey + "'")
-            .add("resetDate=" + resetDate)
-            .toString();
+                .add("id=" + id)
+                .add("login='" + login + "'")
+                .add("firstName='" + firstName + "'")
+                .add("lastName='" + lastName + "'")
+                .add("email='" + email + "'")
+                .add("activated=" + activated)
+                .add("langKey='" + langKey + "'")
+                .add("imageUrl='" + imageUrl + "'")
+                .add("activationKey='" + activationKey + "'")
+                .add("resetKey='" + resetKey + "'")
+                .add("resetDate=" + resetDate)
+                .toString();
     }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 import static io.github.jhipster.config.logging.LoggingUtils.*;
 
 /**
- * Configures the console and Logstash log appenders from the app properties
+ * console 和 Logstash 日志配置
  *
  * @author peppy
  */

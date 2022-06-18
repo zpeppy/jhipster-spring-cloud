@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Client talking to UAA's token endpoint to do different OAuth2 grants.
+ * 客户端访问 uaa token 接口的实现类
  *
  * @author peppy
  */
@@ -30,7 +30,9 @@ public class UaaTokenEndpointClient extends OAuth2TokenEndpointClientAdapter imp
     }
 
     /**
-     * @return a Basic authorization header to be used to talk to UAA.
+     * 获取请求 uaa token 接口的 clientId 和 clientSecret
+     *
+     * @return clientId:clientSecret
      */
     protected String getAuthorizationHeader() {
         String clientId = getClientId();

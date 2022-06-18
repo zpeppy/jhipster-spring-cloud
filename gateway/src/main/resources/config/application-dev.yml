@@ -1,18 +1,4 @@
-# ===================================================================
-# Spring Boot configuration for the "dev" profile.
-#
-# This configuration overrides the application.yml file.
-#
-# More information on profiles: https://www.jhipster.tech/profiles/
-# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
+# 日志配置
 logging:
   level:
     ROOT: DEBUG
@@ -20,12 +6,13 @@ logging:
     com.example.gateway: DEBUG
     com.alibaba.nacos: INFO
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@registry:8761/eureka/
+# eureka 配置
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    service-url:
+#      defaultZone: http://admin:${jhipster.registry.password}@registry:8761/eureka/
 
 spring:
   profiles:
@@ -61,13 +48,13 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-  mail:
-    host: mail
-    port: 25
-    username:
-    password:
-  messages:
-    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  #  mail:
+  #    host: mail
+  #    port: 25
+  #    username:
+  #    password:
+  #  messages:
+  #    cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
   sleuth:
@@ -83,12 +70,7 @@ spring:
 server:
   port: 8080
 
-# ===================================================================
-# JHipster specific properties
-#
-# Full reference is available at: https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
+# jhipster 配置, JHipsterProperties 配置属性类会读取下面配置值
 jhipster:
   gateway:
     rate-limiting:
@@ -113,6 +95,7 @@ jhipster:
     allow-credentials: true
     max-age: 1800
   security:
+    # 客户端模式
     client-authorization:
       access-token-uri: http://uaa/oauth/token
       token-service-id: uaa
@@ -124,6 +107,7 @@ jhipster:
     logs: # Reports metrics in the logs
       enabled: false
       report-frequency: 60 # in seconds
+  # logstash 配置
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
@@ -133,6 +117,8 @@ jhipster:
       queue-size: 512
   audit-events:
     retention-period: 30 # Number of days before audit events are deleted.
+
+# uaa oauth2 配置
 oauth2:
   signature-verification:
     public-key-endpoint-uri: http://uaa/oauth/token_key
@@ -140,6 +126,7 @@ oauth2:
     ttl: 3600000
     #max. rate at which public keys will be fetched (in ms)
     public-key-refresh-rate-limit: 10000
+  # 用户名密码模式
   web-client-configuration:
     #keep in sync with UAA configuration
     client-id: web_app
@@ -147,13 +134,6 @@ oauth2:
     # Controls session expiration due to inactivity (ignored for remember-me).
     # Negative values disable session inactivity expiration.
     session-timeout-in-seconds: 1800
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://www.jhipster.tech/common-application-properties/
-# ===================================================================
 
+# ApplicationProperties 配置类会获取 application 下配置值
 # application:

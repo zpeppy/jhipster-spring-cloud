@@ -1,11 +1,10 @@
 # ===================================================================
-# Activate this profile to enable TLS and HTTP/2.
+# 使用 TLS 和 HTTP/2
 #
-# JHipster has generated a self-signed certificate, which will be used to encrypt traffic.
-# As your browser will not understand this certificate, you will need to import it.
+# 自动生成的 keystore.p12 签名, 浏览器无法识别, 需要导入
 #
-# Another (easiest) solution with Chrome is to enable the "allow-insecure-localhost" flag
-# at chrome://flags/#allow-insecure-localhost
+# 谷歌浏览器启用 "allow-insecure-localhost"
+# 打开: chrome://flags/#allow-insecure-localhost
 # ===================================================================
 server:
   ssl:

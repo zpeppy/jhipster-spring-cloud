@@ -1,6 +1,8 @@
 package com.example.common.web.rest.errors;
 
 /**
+ * 邮箱已存在异常
+ *
  * @author peppy
  */
 public class EmailAlreadyUsedException extends BadRequestAlertException {

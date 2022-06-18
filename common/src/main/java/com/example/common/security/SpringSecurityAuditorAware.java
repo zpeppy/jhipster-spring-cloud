@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
- * Implementation of {@link AuditorAware} based on Spring Security.
+ * 基于 Spring Security 实现的 {@link AuditorAware} 审计
  *
  * @author peppy
  */

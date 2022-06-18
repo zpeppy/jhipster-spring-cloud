@@ -6,19 +6,16 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Extracts the access token from a cookie.
- * Falls back to a {@code BearerTokenExtractor} extracting information from the Authorization header, if no
- * cookie was found.
+ * 从 cookie 中提取 token
  *
  * @author peppy
  */
 public class CookieTokenExtractor extends BearerTokenExtractor {
     /**
-     * Extract the JWT access token from the request, if present.
-     * If not, then it falls back to the {@link BearerTokenExtractor} behaviour.
+     * 从 request 中获取 jwt access token
      *
-     * @param request the request containing the cookies.
-     * @return the extracted JWT token; or {@code null}.
+     * @param request request 对象
+     * @return jwt access token 或者 {@code null}
      */
     @Override
     protected String extractToken(HttpServletRequest request) {

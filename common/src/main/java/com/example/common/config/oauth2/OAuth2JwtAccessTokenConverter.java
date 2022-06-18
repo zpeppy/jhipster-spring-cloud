@@ -11,9 +11,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import java.util.Map;
 
 /**
- * Improved {@link JwtAccessTokenConverter} that can handle lazy fetching of public verifier keys.
- * <p>
- * jwt access token 处理
+ * jwt access token 增强处理
  *
  * @author peppy
  */
@@ -23,7 +21,7 @@ public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
     private final OAuth2Properties oAuth2Properties;
     private final OAuth2SignatureVerifierClient signatureVerifierClient;
     /**
-     * When did we last fetch the public key?
+     * 最后获取公钥时间戳
      */
     private long lastKeyFetchTimestamp;
 
@@ -34,18 +32,16 @@ public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
     }
 
     /**
-     * Try to decode the token with the current public key.
-     * If it fails, contact the OAuth2 server to get a new public key, then try again.
-     * We might not have fetched it in the first place or it might have changed.
+     * 使用公钥解码 token, 如果解码失败请重新获取公钥
      *
-     * @param token the JWT token to decode.
-     * @return the resulting claims.
-     * @throws InvalidTokenException if we cannot decode the token.
+     * @param token jwt token
+     * @return 解码后的结果
+     * @throws InvalidTokenException 解码异常
      */
     @Override
     protected Map<String, Object> decode(String token) {
         try {
-            //check if our public key and thus SignatureVerifier have expired
+            // 检查公钥是否过期
             long ttl = oAuth2Properties.getSignatureVerification().getTtl();
             if (ttl > 0 && System.currentTimeMillis() - lastKeyFetchTimestamp > ttl) {
                 throw new InvalidTokenException("public key expired");
@@ -60,9 +56,9 @@ public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
     }
 
     /**
-     * Fetch a new public key from the AuthorizationServer.
+     * 尝试从 uaa 获取新的公钥
      *
-     * @return true, if we could fetch it; false, if we could not.
+     * @return 是否成功获取
      */
     private boolean tryCreateSignatureVerifier() {
         long t = System.currentTimeMillis();
@@ -84,9 +80,9 @@ public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
     }
 
     /**
-     * Extract JWT claims and set it to OAuth2Authentication decoded details.
-     * Here is how to get details:
-     *
+     * 获取解码后的明文信息
+     * <p>
+     * 获取方式:
      * <pre>
      * <code>
      *  SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -103,8 +99,8 @@ public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
      * </code>
      *  </pre>
      *
-     * @param claims OAuth2JWTToken claims.
-     * @return {@link OAuth2Authentication}.
+     * @param claims token 明文信息
+     * @return {@link OAuth2Authentication} 对象
      */
     @Override
     public OAuth2Authentication extractAuthentication(Map<String, ?> claims) {

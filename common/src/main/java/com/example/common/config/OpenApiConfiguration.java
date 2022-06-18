@@ -24,6 +24,8 @@ import java.util.HashSet;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 /**
+ * swagger 配置
+ *
  * @author peppy
  */
 @EnableSwagger2

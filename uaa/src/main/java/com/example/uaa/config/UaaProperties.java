@@ -4,9 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * Properties for UAA-based OAuth2 security.
- * <p>
- * 读取 uaa 配置
+ * uaa 属性配置类
  *
  * @author peppy
  */
@@ -26,7 +24,7 @@ public class UaaProperties {
     }
 
     /**
-     * Keystore configuration for signing and verifying JWT tokens.
+     * 用于签名和校验 jwt token 的秘钥
      */
     public static class KeyStore {
         //name of the keystore in the classpath
@@ -61,6 +59,9 @@ public class UaaProperties {
         }
     }
 
+    /**
+     * 用户名密码模式配置类
+     */
     public static class WebClientConfiguration {
         //validity of the short-lived access token in secs (min: 60), don't make it too long
         private int accessTokenValidityInSeconds = 5 * 60;

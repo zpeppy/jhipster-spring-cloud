@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * A DTO representing a password change required data - current and new password.
+ * 修改密码时使用的 DTO
  *
  * @author peppy
  */

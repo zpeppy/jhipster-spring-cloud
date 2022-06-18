@@ -10,8 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Adds the standard "iat" claim to tokens so we know when they have been created.
- * This is needed for a session timeout due to inactivity (ignored in case of "remember-me").
+ * 将 "iat" 放入 token 中, 表示 token 的创建时间, 用于 session 过期判断
+ * 如果 "remember-me" 则可以忽略
  *
  * @author peppy
  */

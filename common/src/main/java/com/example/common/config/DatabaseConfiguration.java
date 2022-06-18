@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * {@link EntityScan} 配置实体类包扫描路径
  * <p>
  * {@link EnableJpaRepositories} 配置 jpa 仓库类包扫描路径
- * <p>
- * {@link EnableElasticsearchRepositories} 配置 es 仓库类包扫描路径
  *
  * @author peppy
  */
@@ -22,7 +20,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories("com.example.*.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
-// @EnableElasticsearchRepositories("com.example.*.repository.search")
 public class DatabaseConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);

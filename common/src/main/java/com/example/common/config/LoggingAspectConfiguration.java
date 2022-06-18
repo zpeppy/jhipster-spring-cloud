@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 /**
+ * 注入 {@link LoggingAspect} 日志拦截
+ *
  * @author peppy
  */
 @Configuration

@@ -13,9 +13,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * An authority (a security role) used by Spring Security.
- * <p>
- * 角色实体类
+ * Spring Security 角色实体类
  *
  * @author peppy
  */

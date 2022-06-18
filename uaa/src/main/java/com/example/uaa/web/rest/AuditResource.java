@@ -22,8 +22,6 @@ import java.time.ZoneId;
 import java.util.List;
 
 /**
- * REST controller for getting the {@link AuditEvent}s.
- *
  * @author peppy
  */
 @Api(value = "审计", tags = "审计")
@@ -37,12 +35,6 @@ public class AuditResource {
         this.auditEventService = auditEventService;
     }
 
-    /**
-     * {@code GET /audits} : get a page of {@link AuditEvent}s.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of {@link AuditEvent}s in body.
-     */
     @ApiOperation(value = "查询审计事件列表", tags = "审计")
     @GetMapping
     public ResponseEntity<List<AuditEvent>> getAll(Pageable pageable) {
@@ -51,24 +43,16 @@ public class AuditResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * {@code GET  /audits} : get a page of {@link AuditEvent} between the {@code fromDate} and {@code toDate}.
-     *
-     * @param fromDate the start of the time period of {@link AuditEvent} to get.
-     * @param toDate   the end of the time period of {@link AuditEvent} to get.
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of {@link AuditEvent} in body.
-     */
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true),
-        @ApiImplicitParam(name = "toDate", value = "结束日期", required = true)
+            @ApiImplicitParam(name = "fromDate", value = "开始日期", required = true),
+            @ApiImplicitParam(name = "toDate", value = "结束日期", required = true)
     })
     @ApiOperation(value = "根据时间区间查询审计事件列表", tags = "审计")
     @GetMapping(params = {"fromDate", "toDate"})
     public ResponseEntity<List<AuditEvent>> getByDates(
-        @RequestParam(value = "fromDate") LocalDate fromDate,
-        @RequestParam(value = "toDate") LocalDate toDate,
-        Pageable pageable) {
+            @RequestParam(value = "fromDate") LocalDate fromDate,
+            @RequestParam(value = "toDate") LocalDate toDate,
+            Pageable pageable) {
 
         Instant from = fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
         Instant to = toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant();
@@ -78,12 +62,6 @@ public class AuditResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
-     * {@code GET  /audits/:id} : get an {@link AuditEvent} by id.
-     *
-     * @param id the id of the entity to get.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the {@link AuditEvent} in body, or status {@code 404 (Not Found)}.
-     */
     @ApiOperation(value = "根据 ID 查询审计事件数据", tags = "审计")
     @GetMapping("/{id:.+}")
     public ResponseEntity<AuditEvent> get(@PathVariable Long id) {

@@ -10,10 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Persist AuditEvent managed by the Spring Boot actuator.
+ * 保存 Spring Boot actuator 管理的 {@link org.springframework.boot.actuate.audit.AuditEvent}
  *
  * @author peppy
- * @see org.springframework.boot.actuate.audit.AuditEvent
  */
 @Data
 @Entity

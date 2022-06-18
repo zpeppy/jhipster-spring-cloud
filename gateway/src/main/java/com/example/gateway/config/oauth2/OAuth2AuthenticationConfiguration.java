@@ -17,8 +17,6 @@ import org.springframework.security.oauth2.provider.authentication.TokenExtracto
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
- * Configures the RefreshFilter refreshing expired OAuth2 token Cookies.
- * <p>
  * 资源服务器配置
  *
  * @author peppy
@@ -40,16 +38,16 @@ public class OAuth2AuthenticationConfiguration extends ResourceServerConfigurerA
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/auth/login").permitAll()
-            .antMatchers("/auth/logout").authenticated()
-            .and()
-            .apply(refreshTokenSecurityConfigurerAdapter());
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth/logout").authenticated()
+                .and()
+                .apply(refreshTokenSecurityConfigurerAdapter());
     }
 
     /**
-     * A {@code SecurityConfigurerAdapter} to install a servlet filter that refreshes OAuth2 tokens.
+     * 获取 {@link org.springframework.security.config.annotation.SecurityConfigurerAdapter} 刷新 token
      */
     private RefreshTokenFilterConfigurer refreshTokenSecurityConfigurerAdapter() {
         return new RefreshTokenFilterConfigurer(uaaAuthenticationService(), tokenStore);
@@ -66,17 +64,17 @@ public class OAuth2AuthenticationConfiguration extends ResourceServerConfigurerA
     }
 
     /**
-     * Configure the ResourceServer security by installing a new {@link TokenExtractor}.
+     * 资源服务器配置 {@link TokenExtractor}
      */
     @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+    public void configure(ResourceServerSecurityConfigurer resources) {
         resources.tokenExtractor(tokenExtractor());
     }
 
     /**
-     * The new {@link TokenExtractor} can extract tokens from Cookies and Authorization headers.
+     * 注入从 cookie 中提取 token 的工具类
      *
-     * @return the {@link CookieTokenExtractor} bean.
+     * @return {@link CookieTokenExtractor} 组件
      */
     @Bean
     public TokenExtractor tokenExtractor() {

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 请求参数绑定异常
+ *
  * @author peppy
  */
 public class BadRequestAlertException extends AbstractThrowableProblem {

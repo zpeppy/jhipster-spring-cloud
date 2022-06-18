@@ -4,10 +4,7 @@ import javax.servlet.http.Cookie;
 import java.util.*;
 
 /**
- * A {@link Collection} of {@link Cookie}s that allows modification - unlike a mere array.
- * <p>
- * Since {@link Cookie} doesn't implement {@code hashCode} nor {@code equals},
- * we cannot simply put it into a {@code HashSet}.
+ * cookie 本地缓存
  *
  * @author peppy
  */

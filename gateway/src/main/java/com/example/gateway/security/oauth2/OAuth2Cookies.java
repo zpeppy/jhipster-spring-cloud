@@ -4,7 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Holds the access token and refresh token cookies.
+ * 存储 access token 和 refresh token 的 cookies
  *
  * @author peppy
  */
@@ -26,9 +26,9 @@ class OAuth2Cookies {
     }
 
     /**
-     * Add the access token and refresh token as cookies to the response after successful authentication.
+     * 将 token 添加到响应中
      *
-     * @param response the response to add them to.
+     * @param response 响应对象
      */
     void addCookiesTo(HttpServletResponse response) {
         response.addCookie(getAccessTokenCookie());

@@ -17,10 +17,10 @@ import java.util.*;
 public class AuditEventConverter {
 
     /**
-     * Convert a list of {@link PersistentAuditEvent}s to a list of {@link AuditEvent}s.
+     * 转换审计对象
      *
-     * @param persistentAuditEvents the list to convert.
-     * @return the converted list.
+     * @param persistentAuditEvents {@link PersistentAuditEvent} 列表
+     * @return {@link AuditEvent} 列表
      */
     public List<AuditEvent> convertToAuditEvent(Iterable<PersistentAuditEvent> persistentAuditEvents) {
         if (persistentAuditEvents == null) {
@@ -34,10 +34,10 @@ public class AuditEventConverter {
     }
 
     /**
-     * Convert a {@link PersistentAuditEvent} to an {@link AuditEvent}.
+     * 转换审计对象
      *
-     * @param persistentAuditEvent the event to convert.
-     * @return the converted list.
+     * @param persistentAuditEvent {@link PersistentAuditEvent} 对象
+     * @return {@link AuditEvent} 对象
      */
     public AuditEvent convertToAuditEvent(PersistentAuditEvent persistentAuditEvent) {
         if (persistentAuditEvent == null) {
@@ -48,10 +48,10 @@ public class AuditEventConverter {
     }
 
     /**
-     * Internal conversion. This is needed to support the current SpringBoot actuator {@code AuditEventRepository} interface.
+     * 转换对象
      *
-     * @param data the data to convert.
-     * @return a map of {@link String}, {@link Object}.
+     * @param data string 值
+     * @return object 值
      */
     public Map<String, Object> convertDataToObjects(Map<String, String> data) {
         Map<String, Object> results = Maps.newHashMap();
@@ -65,18 +65,16 @@ public class AuditEventConverter {
     }
 
     /**
-     * Internal conversion. This method will allow to save additional data.
-     * By default, it will save the object as string.
+     * 转换对象
      *
-     * @param data the data to convert.
-     * @return a map of {@link String}, {@link String}.
+     * @param data object 值
+     * @return string 值
      */
     public Map<String, String> convertDataToStrings(Map<String, Object> data) {
         Map<String, String> results = Maps.newHashMap();
 
         if (data != null) {
             for (Map.Entry<String, Object> entry : data.entrySet()) {
-                // Extract the data that will be saved.
                 if (entry.getValue() instanceof WebAuthenticationDetails) {
                     WebAuthenticationDetails authenticationDetails = (WebAuthenticationDetails) entry.getValue();
                     results.put("remoteAddress", authenticationDetails.getRemoteAddress());

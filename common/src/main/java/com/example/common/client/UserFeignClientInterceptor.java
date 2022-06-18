@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
 /**
- * 从 web 请求上下文中获取 token 信息, 并设置到 feign 请求中
+ * 从 web 请求上下文中获取 token 信息, 并设置到 feign 请求头中
  *
  * @author peppy
  */

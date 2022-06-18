@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Zuul filter for restricting access to backend micro-services endpoints.
+ * zuul 过滤器
  *
  * @author peppy
  */
@@ -41,7 +41,7 @@ public class AccessControlFilter extends ZuulFilter {
     }
 
     /**
-     * Filter requests on endpoints that are not in the list of authorized microservices endpoints.
+     * 过滤没有授权的请求
      */
     @Override
     public boolean shouldFilter() {
@@ -64,12 +64,12 @@ public class AccessControlFilter extends ZuulFilter {
 
     private boolean isAuthorizedRequest(String serviceUrl, String serviceName, String requestUri) {
         Map<String, List<String>> authorizedMicroservicesEndpoints = jHipsterProperties.getGateway()
-            .getAuthorizedMicroservicesEndpoints();
+                .getAuthorizedMicroservicesEndpoints();
 
         // If the authorized endpoints list was left empty for this route, all access are allowed
         if (authorizedMicroservicesEndpoints.get(serviceName) == null) {
             log.debug("Access Control: allowing access for {}, as no access control policy has been set up for " +
-                "service: {}", requestUri, serviceName);
+                    "service: {}", requestUri, serviceName);
             return true;
         } else {
             List<String> authorizedEndpoints = authorizedMicroservicesEndpoints.get(serviceName);
@@ -80,7 +80,7 @@ public class AccessControlFilter extends ZuulFilter {
                 String gatewayEndpoint = serviceUrl.substring(0, serviceUrl.length() - 3) + endpoint;
                 if (requestUri.startsWith(gatewayEndpoint)) {
                     log.debug("Access Control: allowing access for {}, as it matches the following authorized " +
-                        "microservice endpoint: {}", requestUri, gatewayEndpoint);
+                            "microservice endpoint: {}", requestUri, gatewayEndpoint);
                     return true;
                 }
             }

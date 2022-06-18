@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.Size;
 
 /**
- * View Model extending the UserDTO, which is meant to be used in the user management UI.
- *
  * @author peppy
  */
 @EqualsAndHashCode(callSuper = true)

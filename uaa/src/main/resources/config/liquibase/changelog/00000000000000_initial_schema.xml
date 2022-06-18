@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
     <property name="autoIncrement" value="true"/>
 
@@ -75,24 +75,24 @@
                               columnDataType="varchar(60)"
                               tableName="uaa_user"/>
         <loadData
-            file="config/liquibase/data/user.csv"
-            separator=";"
-            tableName="uaa_user">
+                file="config/liquibase/data/user.csv"
+                separator=";"
+                tableName="uaa_user">
             <column name="activated" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
         <dropDefaultValue tableName="uaa_user" columnName="created_date" columnDataType="datetime"/>
         <loadData
-            file="config/liquibase/data/authority.csv"
-            separator=";"
-            tableName="uaa_authority">
+                file="config/liquibase/data/authority.csv"
+                separator=";"
+                tableName="uaa_authority">
             <column name="name" type="string"/>
         </loadData>
 
         <loadData
-            file="config/liquibase/data/user_authority.csv"
-            separator=";"
-            tableName="uaa_user_authority">
+                file="config/liquibase/data/user_authority.csv"
+                separator=";"
+                tableName="uaa_user_authority">
             <column name="user_id" type="numeric"/>
         </loadData>
         <createTable tableName="common_persistent_audit_event">
@@ -137,7 +137,7 @@
                                  referencedTableName="common_persistent_audit_event"/>
     </changeSet>
 
-    <changeSet author="jhipster" id="00000000000002" context="test">
+    <!--<changeSet author="jhipster" id="00000000000002" context="test">
         <createTable tableName="jhi_date_time_wrapper">
             <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="jhi_date_time_wrapperPK"/>
@@ -150,5 +150,5 @@
             <column name="offset_time" type="time"/>
             <column name="local_date" type="date"/>
         </createTable>
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

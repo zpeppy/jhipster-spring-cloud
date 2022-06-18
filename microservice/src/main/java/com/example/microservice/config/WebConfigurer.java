@@ -14,7 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 import javax.servlet.ServletContext;
 
 /**
- * Configuration of web application with Servlet 3.0 APIs.
+ * servlet 容器启动配置
  *
  * @author peppy
  */

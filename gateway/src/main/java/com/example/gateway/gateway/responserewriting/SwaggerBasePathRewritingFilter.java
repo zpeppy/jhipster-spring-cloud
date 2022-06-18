@@ -16,7 +16,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Zuul filter to rewrite micro-services Swagger URL Base Path.
+ * 重写 swagger 路径过滤器
  *
  * @author peppy
  */
@@ -41,7 +41,7 @@ public class SwaggerBasePathRewritingFilter extends SendResponseFilter {
     }
 
     /**
-     * Filter requests to micro-services Swagger docs.
+     * 过滤微服务 swagger 的请求
      */
     @Override
     public boolean shouldFilter() {

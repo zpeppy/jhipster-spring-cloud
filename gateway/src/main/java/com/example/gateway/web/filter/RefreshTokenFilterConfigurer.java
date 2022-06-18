@@ -8,15 +8,13 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 
 /**
- * Configures a {@link RefreshTokenFilter} to refresh access tokens if they are about to expire.
+ * 配置刷新令牌的过滤器
  *
  * @author peppy
  * @see RefreshTokenFilter
  */
 public class RefreshTokenFilterConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-    /**
-     * {@link RefreshTokenFilter} needs the {@link OAuth2AuthenticationService} to refresh cookies using the refresh token.
-     */
+
     private OAuth2AuthenticationService authenticationService;
     private final TokenStore tokenStore;
 
@@ -26,10 +24,10 @@ public class RefreshTokenFilterConfigurer extends SecurityConfigurerAdapter<Defa
     }
 
     /**
-     * Install {@link RefreshTokenFilter} as a servlet Filter.
+     * 将 {@link RefreshTokenFilter} 过滤器添加到 servlet 过滤器链中
      */
     @Override
-    public void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) {
         RefreshTokenFilter customFilter = new RefreshTokenFilter(authenticationService, tokenStore);
         http.addFilterBefore(customFilter, OAuth2AuthenticationProcessingFilter.class);
     }

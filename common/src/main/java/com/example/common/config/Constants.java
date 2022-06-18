@@ -1,8 +1,6 @@
 package com.example.common.config;
 
 /**
- * Application constants.
- * <p>
  * 常量配置
  *
  * @author peppy
@@ -10,7 +8,7 @@ package com.example.common.config;
 public final class Constants {
 
     /**
-     * Regex for acceptable logins
+     * 账号匹配正则
      */
     public static final String LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$";
 

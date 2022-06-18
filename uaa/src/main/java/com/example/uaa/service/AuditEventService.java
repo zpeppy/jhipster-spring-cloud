@@ -17,9 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 /**
- * Service for managing audit events.
- * <p>
- * This is the default implementation to support SpringBoot Actuator {@code AuditEventRepository}.
+ * 审计处理
  *
  * @author peppy
  */
@@ -44,35 +42,33 @@ public class AuditEventService {
     }
 
     /**
-     * Old audit events should be automatically deleted after 30 days.
-     * <p>
-     * This is scheduled to get fired at 12:00 (am).
+     * 每天 12 点定时删除 30 天前的审计信息
      */
     @Scheduled(cron = "0 0 12 * * ?")
     public void removeOldAuditEvents() {
         persistenceAuditEventRepository
-            .findByAuditEventDateBefore(Instant.now().minus(jHipsterProperties.getAuditEvents().getRetentionPeriod(), ChronoUnit.DAYS))
-            .forEach(auditEvent -> {
-                log.debug("Deleting audit data {}", auditEvent);
-                persistenceAuditEventRepository.delete(auditEvent);
-            });
+                .findByAuditEventDateBefore(Instant.now().minus(jHipsterProperties.getAuditEvents().getRetentionPeriod(), ChronoUnit.DAYS))
+                .forEach(auditEvent -> {
+                    log.debug("Deleting audit data {}", auditEvent);
+                    persistenceAuditEventRepository.delete(auditEvent);
+                });
     }
 
     @Transactional(readOnly = true)
     public Page<AuditEvent> findAll(Pageable pageable) {
         return persistenceAuditEventRepository.findAll(pageable)
-            .map(auditEventConverter::convertToAuditEvent);
+                .map(auditEventConverter::convertToAuditEvent);
     }
 
     @Transactional(readOnly = true)
     public Page<AuditEvent> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
         return persistenceAuditEventRepository.findAllByAuditEventDateBetween(fromDate, toDate, pageable)
-            .map(auditEventConverter::convertToAuditEvent);
+                .map(auditEventConverter::convertToAuditEvent);
     }
 
     @Transactional(readOnly = true)
     public Optional<AuditEvent> find(Long id) {
         return persistenceAuditEventRepository.findById(id)
-            .map(auditEventConverter::convertToAuditEvent);
+                .map(auditEventConverter::convertToAuditEvent);
     }
 }

@@ -3,29 +3,27 @@ package com.example.gateway.security.oauth2;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
 /**
- * Client talking to an OAuth2 Authorization server token endpoint.
+ * 调用 uaa 认证或者刷新 token 的接口
  *
  * @author peppy
- * @see UaaTokenEndpointClient
- * @see OAuth2TokenEndpointClientAdapter
  */
 public interface OAuth2TokenEndpointClient {
     /**
-     * Send a password grant to the token endpoint.
+     * 通过用户名密码模式认证
      *
-     * @param username the username to authenticate.
-     * @param password his password.
-     * @return the access token and enclosed refresh token received from the token endpoint.
-     * @throws org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException if we cannot contact the token endpoint.
+     * @param username 用户名
+     * @param password 密码
+     * @return access token 和 refresh token
+     * @throws org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException 调用 uaa 异常
      */
     OAuth2AccessToken sendPasswordGrant(String username, String password);
 
     /**
-     * Send a refresh_token grant to the token endpoint.
+     * 向 uaa 发送 refresh_token 刷新令牌
      *
-     * @param refreshTokenValue the refresh token used to get new tokens.
-     * @return the new access/refresh token pair.
-     * @throws org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException if we cannot contact the token endpoint.
+     * @param refreshTokenValue old refresh token
+     * @return 新的 access token 和 refresh token
+     * @throws org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException 调用 uaa 异常
      */
     OAuth2AccessToken sendRefreshGrant(String refreshTokenValue);
 }

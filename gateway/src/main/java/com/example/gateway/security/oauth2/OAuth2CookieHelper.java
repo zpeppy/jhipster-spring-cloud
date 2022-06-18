@@ -26,37 +26,35 @@ import static org.apache.http.conn.util.InetAddressUtils.isIPv4Address;
 import static org.apache.http.conn.util.InetAddressUtils.isIPv6Address;
 
 /**
- * Helps with OAuth2 cookie handling.
+ * OAuth2 cookie 工具类
  *
  * @author peppy
  */
 public class OAuth2CookieHelper {
     /**
-     * Name of the access token cookie.
+     * access token cookie 名称
      */
     public static final String ACCESS_TOKEN_COOKIE = OAuth2AccessToken.ACCESS_TOKEN;
     /**
-     * Name of the refresh token cookie in case of remember me.
+     * 在 remember=true 情况下的 refresh token cookie 名称
      */
     public static final String REFRESH_TOKEN_COOKIE = OAuth2AccessToken.REFRESH_TOKEN;
     /**
-     * Name of the session-only refresh token in case the user did not check remember me.
+     * 在 remember=false 情况下的 session token cookie 名称
      */
     public static final String SESSION_TOKEN_COOKIE = "session_token";
     /**
-     * The names of the Cookies we set.
+     * cookies 列表
      */
     private static final List<String> COOKIE_NAMES = Arrays.asList(ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE,
-        SESSION_TOKEN_COOKIE);
+            SESSION_TOKEN_COOKIE);
     /**
-     * Number of seconds to expire refresh token cookies before the enclosed token expires.
-     * This makes sure we don't run into race conditions where the cookie is still there but
-     * expires while we process it.
+     * 刷新 token 过期时间(单位: 秒)
      */
     private static final long REFRESH_TOKEN_EXPIRATION_WINDOW_SECS = 3L;
 
     /**
-     * Public suffix matcher (to strip private subdomains off cookie scope).
+     * 公共后缀匹配
      */
     PublicSuffixMatcher suffixMatcher;
 
@@ -65,7 +63,7 @@ public class OAuth2CookieHelper {
     private OAuth2Properties oAuth2Properties;
 
     /**
-     * Used to parse JWT claims.
+     * 解析 jwt 信息
      */
     private JsonParser jsonParser = JsonParserFactory.getJsonParser();
 
@@ -90,11 +88,11 @@ public class OAuth2CookieHelper {
 
 
     /**
-     * Get a cookie by name from the given servlet request.
+     * 按名称获取 cookie
      *
-     * @param request    the request containing the cookie.
-     * @param cookieName the case-sensitive name of the cookie to get.
-     * @return the resulting {@link Cookie}; or {@code null}, if not found.
+     * @param request    请求对象
+     * @param cookieName cookie 名称(区分大小写)
+     * @return cookie 对象可能为 {@code null}
      */
     private static Cookie getCookie(HttpServletRequest request, String cookieName) {
         if (request.getCookies() != null) {
@@ -111,12 +109,12 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Create cookies using the provided values.
+     * 创建 cookie
      *
-     * @param request     the request we are handling.
-     * @param accessToken the access token and enclosed refresh token for our cookies.
-     * @param rememberMe  whether the user had originally checked "remember me".
-     * @param result      will get the resulting cookies set.
+     * @param request     请求对象
+     * @param accessToken access token
+     * @param rememberMe  remember
+     * @param result      缓存的 cookie
      */
     public void createCookies(HttpServletRequest request, OAuth2AccessToken accessToken, boolean rememberMe,
                               OAuth2Cookies result) {
@@ -130,17 +128,16 @@ public class OAuth2CookieHelper {
         Cookie refreshTokenCookie = createRefreshTokenCookie(refreshToken, rememberMe);
         setCookieProperties(refreshTokenCookie, request.isSecure(), domain);
         log.debug("created refresh token cookie '{}', age: {}", refreshTokenCookie.getName(), refreshTokenCookie
-            .getMaxAge());
+                .getMaxAge());
 
         result.setCookies(accessTokenCookie, refreshTokenCookie);
     }
 
     /**
-     * Create a cookie out of the given refresh token.
-     * Refresh token cookies contain the base64 encoded refresh token (a JWT token).
-     * They also contain a hint whether the refresh token was for remember me or not.
-     * If not, then the cookie will be prefixed by the timestamp it was created at followed by a pipe '|'.
-     * This gives us the chance to expire session cookies regardless of the token duration.
+     * 创建 refresh token
+     *
+     * @param refreshToken refresh token
+     * @param refreshToken rememberMe 是否为记住我选项
      */
     private Cookie createRefreshTokenCookie(OAuth2RefreshToken refreshToken, boolean rememberMe) {
         int maxAge = -1;
@@ -164,23 +161,20 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Returns true if the refresh token cookie was set with remember me checked.
-     * We can recognize this by the name of the cookie.
+     * 判断是否记住我选项
      *
-     * @param refreshTokenCookie the cookie holding the refresh token.
-     * @return true, if it was set persistently (i.e. for "remember me").
+     * @param refreshTokenCookie 保存的 refresh token cookie
+     * @return 是否记住我选项
      */
     public static boolean isRememberMe(Cookie refreshTokenCookie) {
         return refreshTokenCookie.getName().equals(REFRESH_TOKEN_COOKIE);
     }
 
     /**
-     * Extracts the refresh token from the refresh token cookie.
-     * Since we encode additional information into the cookie, this needs to be called to get
-     * hold of the enclosed JWT.
+     * 从 cookie 中获取 refresh token
      *
-     * @param refreshCookie the cookie we store the value in.
-     * @return the refresh JWT from the cookie.
+     * @param refreshCookie cookie
+     * @return 从 cookie 获取的 jwt refresh token
      */
     public static String getRefreshTokenValue(Cookie refreshCookie) {
         String value = refreshCookie.getValue();
@@ -192,13 +186,10 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Checks if the refresh token session has expired.
-     * Only makes sense for non-persistent cookies, i.e. when remember me was not checked.
-     * The motivation for this is that we want to throw out a user after a while if he's inactive.
-     * We cannot do this via refresh token validity because that one is also used for remember me.
+     * 检查 cookie 中 refresh token 是否过期
      *
-     * @param refreshCookie the refresh token cookie to check.
-     * @return true, if the session is expired.
+     * @param refreshCookie cookie
+     * @return 是否过期
      */
     public boolean isSessionExpired(Cookie refreshCookie) {
         //no session expiration for "remember me"
@@ -224,13 +215,13 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Retrieve the given claim from the given token.
+     * 从 refresh token 中获取明文信息
      *
-     * @param refreshToken the JWT token to examine.
-     * @param claimName    name of the claim to get.
-     * @param clazz        the {@link Class} we expect to find there.
-     * @return the desired claim.
-     * @throws InvalidTokenException if we cannot find the claim in the token or it is of wrong type.
+     * @param refreshToken refresh token
+     * @param claimName    json key 值
+     * @param clazz        结果类型
+     * @return 明文信息
+     * @throws InvalidTokenException 如果找不到则表示该 token 无效
      */
     @SuppressWarnings("unchecked")
     private <T> T getClaim(String refreshToken, String claimName, Class<T> clazz) {
@@ -248,11 +239,11 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Set cookie properties of access and refresh tokens.
+     * 设置 cookie 属性
      *
-     * @param cookie   the cookie to modify.
-     * @param isSecure whether it is coming from a secure request.
-     * @param domain   the domain for which the cookie is valid. If {@code null}, then will fall back to default.
+     * @param cookie   cookie
+     * @param isSecure 是否为安全请求
+     * @param domain   有效的域名
      */
     private void setCookieProperties(Cookie cookie, boolean isSecure, String domain) {
         cookie.setHttpOnly(true);
@@ -265,10 +256,10 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Logs the user out by clearing all cookies.
+     * 清除所有 cookies
      *
-     * @param httpServletRequest  the request containing the Cookies.
-     * @param httpServletResponse the response used to clear them.
+     * @param httpServletRequest  请求对象
+     * @param httpServletResponse 响应对象
      */
     public void clearCookies(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         String domain = getCookieDomain(httpServletRequest);
@@ -287,18 +278,10 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Returns the top level domain of the server from the request. This is used to limit the Cookie
-     * to the top domain instead of the full domain name.
-     * <p>
-     * A lot of times, individual gateways of the same domain get their own subdomain but authentication
-     * shall work across all subdomains of the top level domain.
-     * <p>
-     * For example, when sending a request to {@code app1.domain.com},
-     * this returns {@code .domain.com}.
+     * 从请求中获取顶级域名
      *
-     * @param request the HTTP request we received from the client.
-     * @return the top level domain to set the cookies for.
-     * Returns {@code null} if the domain is not under a public suffix (.com, .co.uk), e.g. for localhost.
+     * @param request 请求对象
+     * @return 顶级域名
      */
     private String getCookieDomain(HttpServletRequest request) {
         String domain = oAuth2Properties.getWebClientConfiguration().getCookieDomain();
@@ -325,10 +308,10 @@ public class OAuth2CookieHelper {
     }
 
     /**
-     * Strip our token cookies from the array.
+     * 清除包含所有 token 的 cookies
      *
-     * @param cookies the cookies we receive as input.
-     * @return the new cookie array without our tokens.
+     * @param cookies cookies
+     * @return 清除后的 cookies
      */
     Cookie[] stripCookies(Cookie[] cookies) {
         CookieCollection cc = new CookieCollection(cookies);

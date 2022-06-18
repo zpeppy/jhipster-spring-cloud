@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
- * OAuth2 properties define properties for OAuth2-based microservices.
- * <p>
- * oauth2 配置属性
+ * OAuth2 属性配置
  *
  * @author peppy
  */
@@ -31,18 +29,11 @@ public class OAuth2Properties {
         private String clientId = "web_app";
         private String secret = "changeit";
         /**
-         * Holds the session timeout in seconds for non-remember-me sessions.
-         * After so many seconds of inactivity, the session will be terminated.
-         * Only checked during token refresh, so long access token validity may
-         * delay the session timeout accordingly.
+         * session 超时时间(单位: 秒)
          */
         private int sessionTimeoutInSeconds = 1800;
         /**
-         * Defines the cookie domain. If specified, cookies will be set on this domain.
-         * If not configured, then cookies will be set on the top-level domain of the
-         * request you sent, i.e. if you send a request to {@code app1.your-domain.com},
-         * then cookies will be set on {@code .your-domain.com}, such that they
-         * are also valid for {@code app2.your-domain.com}.
+         * cookie 应用的域名
          */
         private String cookieDomain;
 
@@ -81,19 +72,15 @@ public class OAuth2Properties {
 
     public static class SignatureVerification {
         /**
-         * Maximum refresh rate for public keys in ms.
-         * We won't fetch new public keys any faster than that to avoid spamming UAA in case
-         * we receive a lot of "illegal" tokens.
+         * 公钥更新频率(单位: 毫秒)
          */
         private long publicKeyRefreshRateLimit = 10 * 1000L;
         /**
-         * Maximum TTL for the public key in ms.
-         * The public key will be fetched again from UAA if it gets older than that.
-         * That way, we make sure that we get the newest keys always in case they are updated there.
+         * 公钥有效时长(单位: 毫秒)
          */
         private long ttl = 24 * 60 * 60 * 1000L;
         /**
-         * Endpoint where to retrieve the public key used to verify token signatures.
+         * 获取 uaa 公钥地址
          */
         private String publicKeyEndpointUri = "http://uaa/oauth/token_key";
 

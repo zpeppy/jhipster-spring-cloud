@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Retrieves all registered microservices Swagger resources.
+ * swagger 资源配置
  *
  * @author peppy
  */

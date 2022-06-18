@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * 授权服务器配置
+ * uaa 授权服务器配置
  *
  * @author peppy
  */
@@ -45,7 +45,7 @@ import java.util.Collection;
 @EnableAuthorizationServer
 public class UaaConfiguration extends AuthorizationServerConfigurerAdapter implements ApplicationContextAware {
     /**
-     * Access tokens will not expire any earlier than this.
+     * access token 最小有效时长(单位: 秒)
      */
     private static final int MIN_ACCESS_TOKEN_VALIDITY_SECS = 60;
 
@@ -77,36 +77,36 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
         @Override
         public void configure(HttpSecurity http) throws Exception {
             http
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and()
-                .csrf()
-                .disable()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .headers()
-                .frameOptions()
-                .disable()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/register").permitAll()
-                .antMatchers("/api/activate").permitAll()
-                .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/account/reset-password/init").permitAll()
-                .antMatchers("/api/account/reset-password/finish").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .antMatchers("/management/health").permitAll()
-                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/v2/api-docs/**").permitAll()
-                .antMatchers("/swagger-resources/configuration/ui").permitAll()
-                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
+                    .exceptionHandling()
+                    .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+                    .and()
+                    .csrf()
+                    .disable()
+                    .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                    .headers()
+                    .frameOptions()
+                    .disable()
+                    .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                    .authorizeRequests()
+                    .antMatchers("/api/register").permitAll()
+                    .antMatchers("/api/activate").permitAll()
+                    .antMatchers("/api/authenticate").permitAll()
+                    .antMatchers("/api/account/reset-password/init").permitAll()
+                    .antMatchers("/api/account/reset-password/finish").permitAll()
+                    .antMatchers("/api/**").authenticated()
+                    .antMatchers("/management/health").permitAll()
+                    .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                    .antMatchers("/v2/api-docs/**").permitAll()
+                    .antMatchers("/swagger-resources/configuration/ui").permitAll()
+                    .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
         }
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
-            resources.resourceId("jhipster-uaa").tokenStore(tokenStore);
+            resources.resourceId("uaa").tokenStore(tokenStore);
         }
     }
 
@@ -132,22 +132,22 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
         For a better client design, this should be done by a ClientDetailsService (similar to UserDetailsService).
          */
         clients.inMemory()
-            .withClient(uaaProperties.getWebClientConfiguration().getClientId())
-            .secret(passwordEncoder.encode(uaaProperties.getWebClientConfiguration().getSecret()))
-            .scopes("openid")
-            .autoApprove(true)
-            .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
-            .accessTokenValiditySeconds(accessTokenValidity)
-            .refreshTokenValiditySeconds(refreshTokenValidity)
-            .and()
-            .withClient(jHipsterProperties.getSecurity().getClientAuthorization().getClientId())
-            .secret(passwordEncoder.encode(jHipsterProperties.getSecurity().getClientAuthorization().getClientSecret()))
-            .scopes("web-app")
-            .authorities("ROLE_ADMIN")
-            .autoApprove(true)
-            .authorizedGrantTypes("client_credentials")
-            .accessTokenValiditySeconds((int) jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds())
-            .refreshTokenValiditySeconds((int) jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe());
+                .withClient(uaaProperties.getWebClientConfiguration().getClientId())
+                .secret(passwordEncoder.encode(uaaProperties.getWebClientConfiguration().getSecret()))
+                .scopes("openid")
+                .autoApprove(true)
+                .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
+                .accessTokenValiditySeconds(accessTokenValidity)
+                .refreshTokenValiditySeconds(refreshTokenValidity)
+                .and()
+                .withClient(jHipsterProperties.getSecurity().getClientAuthorization().getClientId())
+                .secret(passwordEncoder.encode(jHipsterProperties.getSecurity().getClientAuthorization().getClientSecret()))
+                .scopes("web-app")
+                .authorities("ROLE_ADMIN")
+                .autoApprove(true)
+                .authorizedGrantTypes("client_credentials")
+                .accessTokenValiditySeconds((int) jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds())
+                .refreshTokenValiditySeconds((int) jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe());
     }
 
     @Override
@@ -158,39 +158,33 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(new ArrayList<>(tokenEnhancers));
         endpoints
-            .authenticationManager(authenticationManager)
-            .tokenStore(tokenStore())
-            .tokenEnhancer(tokenEnhancerChain)
-            //don't reuse or we will run into session inactivity timeouts
-            .reuseRefreshTokens(false);
+                .authenticationManager(authenticationManager)
+                .tokenStore(tokenStore())
+                .tokenEnhancer(tokenEnhancerChain)
+                //don't reuse or we will run into session inactivity timeouts
+                .reuseRefreshTokens(false);
     }
 
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    /**
-     * Apply the token converter (and enhancer) for token store.
-     *
-     * @return the {@link JwtTokenStore} managing the tokens.
-     */
     @Bean
     public JwtTokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
     /**
-     * This bean generates an token enhancer, which manages the exchange between JWT access tokens and Authentication
-     * in both directions.
+     * 将秘钥设置到令牌转换器
      *
-     * @return an access token converter configured with the authorization server's public/private keys.
+     * @return 令牌转换器
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = new KeyStoreKeyFactory(
-            new ClassPathResource(uaaProperties.getKeyStore().getName()), uaaProperties.getKeyStore().getPassword().toCharArray())
-            .getKeyPair(uaaProperties.getKeyStore().getAlias());
+                new ClassPathResource(uaaProperties.getKeyStore().getName()), uaaProperties.getKeyStore().getPassword().toCharArray()
+        ).getKeyPair(uaaProperties.getKeyStore().getAlias());
         converter.setKeyPair(keyPair);
         return converter;
     }

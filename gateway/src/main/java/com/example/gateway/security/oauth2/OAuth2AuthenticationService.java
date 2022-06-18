@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * Manages authentication cases for OAuth2 updating the cookies holding access and refresh tokens accordingly.
- * <p>
- * It can authenticate users, refresh the token cookies should they expire and log users out.
+ * 更新 cookies
  *
  * @author peppy
  */
@@ -25,23 +23,22 @@ public class OAuth2AuthenticationService {
     private final Logger log = LoggerFactory.getLogger(OAuth2AuthenticationService.class);
 
     /**
-     * Number of milliseconds to cache refresh token grants so we don't have to repeat them in case of parallel requests.
+     * 刷新 token 毫秒值
      */
     private static final long REFRESH_TOKEN_VALIDITY_MILLIS = 10000L;
 
     /**
-     * Used to contact the OAuth2 token endpoint.
+     * 访问 OAuth2 token 接口
      */
     private final OAuth2TokenEndpointClient authorizationClient;
 
     /**
-     * Helps us with cookie handling.
+     * 处理 cookie
      */
     private final OAuth2CookieHelper cookieHelper;
 
     /**
-     * Caches Refresh grant results for a refresh token value so we can reuse them.
-     * This avoids hammering UAA in case of several multi-threaded requests arriving in parallel.
+     * 缓存刷新的 token
      */
     private final PersistentTokenCache<OAuth2Cookies> recentlyRefreshed;
 
@@ -52,13 +49,12 @@ public class OAuth2AuthenticationService {
     }
 
     /**
-     * Authenticate the user by username and password.
+     * 用户名密码认证
      *
-     * @param request  the request coming from the client.
-     * @param response the response going back to the server.
-     * @param params   the params holding the username, password and rememberMe.
-     * @return the {@link OAuth2AccessToken} as a {@link ResponseEntity}. Will return {@code OK (200)}, if successful.
-     * If the UAA cannot authenticate the user, the status code returned by UAA will be returned.
+     * @param request  请求对象
+     * @param response 响应对象
+     * @param params   请求参数: username, password, rememberMe
+     * @return 返回 {@link OAuth2AccessToken} 实现类 {@link org.springframework.security.oauth2.common.DefaultOAuth2AccessToken} token 信息
      */
     public ResponseEntity<OAuth2AccessToken> authenticate(HttpServletRequest request, HttpServletResponse response,
                                                           Map<String, String> params) {
@@ -81,19 +77,14 @@ public class OAuth2AuthenticationService {
     }
 
     /**
-     * Try to refresh the access token using the refresh token provided as cookie.
-     * Note that browsers typically send multiple requests in parallel which means the access token
-     * will be expired on multiple threads. We don't want to send multiple requests to UAA though,
-     * so we need to cache results for a certain duration and synchronize threads to avoid sending
-     * multiple requests in parallel.
+     * 刷新 token
      *
-     * @param request       the request potentially holding the refresh token.
-     * @param response      the response setting the new cookies (if refresh was successful).
-     * @param refreshCookie the refresh token cookie. Must not be null.
-     * @return the new servlet request containing the updated cookies for relaying downstream.
+     * @param request       请求对象
+     * @param response      响应对象
+     * @param refreshCookie 刷新 token 的 cookie
+     * @return 处理后的请求对象
      */
-    public HttpServletRequest refreshToken(HttpServletRequest request, HttpServletResponse response, Cookie
-        refreshCookie) {
+    public HttpServletRequest refreshToken(HttpServletRequest request, HttpServletResponse response, Cookie refreshCookie) {
         //check if non-remember-me session has expired
         if (cookieHelper.isSessionExpired(refreshCookie)) {
             log.info("session has expired due to inactivity");
@@ -126,11 +117,10 @@ public class OAuth2AuthenticationService {
     }
 
     /**
-     * Get the result from the cache in a thread-safe manner.
+     * 从缓存中获取 token
      *
-     * @param refreshTokenValue the refresh token for which we want the results.
-     * @return a RefreshGrantResult for that token. This will either be empty, if we are the first one to do the
-     * request, or contain some results already, if another thread already handled the grant for us.
+     * @param refreshTokenValue 需要刷新的 token
+     * @return token cookies
      */
     private OAuth2Cookies getCachedCookies(String refreshTokenValue) {
         synchronized (recentlyRefreshed) {
@@ -144,21 +134,20 @@ public class OAuth2AuthenticationService {
     }
 
     /**
-     * Logs the user out by clearing all cookies.
+     * 退出清除缓存中的 token cookie
      *
-     * @param httpServletRequest  the request containing the Cookies.
-     * @param httpServletResponse the response used to clear them.
+     * @param httpServletRequest  请求对象
+     * @param httpServletResponse 响应对象
      */
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         cookieHelper.clearCookies(httpServletRequest, httpServletResponse);
     }
 
     /**
-     * Strips token cookies preventing them from being used further down the chain.
-     * For example, the OAuth2 client won't checked them and they won't be relayed to other services.
+     * 清除含 token 的 cookies
      *
-     * @param httpServletRequest the incoming request.
-     * @return the request to replace it with which has the tokens stripped.
+     * @param httpServletRequest 请求对象
+     * @return 清除 cookies 后的请求对象
      */
     public HttpServletRequest stripTokens(HttpServletRequest httpServletRequest) {
         Cookie[] cookies = cookieHelper.stripCookies(httpServletRequest.getCookies());
