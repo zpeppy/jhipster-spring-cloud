@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * 审计事件处理
+ * 审计事件转换器
  *
  * @author peppy
  */

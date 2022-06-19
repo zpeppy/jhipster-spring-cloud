@@ -12,8 +12,6 @@ import java.util.Map;
 
 /**
  * Improved {@link JwtAccessTokenConverter} that can handle lazy fetching of public verifier keys.
- * <p>
- * jwt access token 处理
  *
  * @author peppy
  */

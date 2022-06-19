@@ -35,12 +35,12 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>-->
+        </dependency>
         <!-- Spring Data Jest dependencies for Elasticsearch -->
-        <!--<dependency>
+        <dependency>
             <groupId>com.github.vanroy</groupId>
             <artifactId>spring-boot-starter-data-jest</artifactId>
             <exclusions>
@@ -53,9 +53,9 @@
                     <groupId>org.apache.logging.log4j</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>-->
+        </dependency>
         <!-- log4j2-mock needed to create embedded elasticsearch instance with SLF4J -->
-        <!--<dependency>
+        <dependency>
             <groupId>de.dentrassi.elasticsearch</groupId>
             <artifactId>log4j2-mock</artifactId>
             <version>${log4j2-mock.version}</version>
@@ -66,9 +66,9 @@
                     <groupId>org.apache.logging.log4j</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>-->
+        </dependency>
         <!-- end of Spring Data Jest dependencies -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
         </dependency>
@@ -76,7 +76,7 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>kafka</artifactId>
             <scope>test</scope>
-        </dependency>-->
+        </dependency>
 
         <!-- common -->
         <dependency>

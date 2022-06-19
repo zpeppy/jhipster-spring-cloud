@@ -18,8 +18,6 @@ import java.time.Instant;
 /**
  * Base abstract class for entities which will hold definitions for created, last modified, created by,
  * last modified by attributes.
- * <p>
- * 审计实体类
  *
  * @author peppy
  */

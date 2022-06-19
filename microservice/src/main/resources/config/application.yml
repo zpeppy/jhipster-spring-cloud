@@ -37,9 +37,11 @@ eureka:
       git-version: ${git.commit.id.describe:}
       git-commit: ${git.commit.id.abbrev:}
       git-branch: ${git.branch:}
+
 ribbon:
   eureka:
     enabled: true
+
 feign:
   hystrix:
     enabled: true
@@ -155,6 +157,7 @@ spring:
   output:
     ansi:
       console-available: true
+
 security:
   oauth2:
     client:
@@ -208,6 +211,7 @@ jhipster:
     contact-email:
     license: unlicensed
     license-url:
+
 kafka:
   bootstrap-servers: kafka:9092
   consumer:
@@ -218,6 +222,7 @@ kafka:
   producer:
     key.serializer: org.apache.kafka.common.serialization.StringSerializer
     value.serializer: org.apache.kafka.common.serialization.StringSerializer
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

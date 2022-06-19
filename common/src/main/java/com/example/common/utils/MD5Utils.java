@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 /**
- * MD5 处理
+ * MD5 工具类
  *
  * @author peppy
  */

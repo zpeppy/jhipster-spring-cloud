@@ -11,8 +11,6 @@ import java.util.stream.Stream;
 
 /**
  * Utility class for Spring Security.
- * <p>
- * 获取登陆账号信息
  *
  * @author peppy
  */

@@ -18,8 +18,6 @@ import java.util.Arrays;
  * Aspect for logging execution of service and repository Spring components.
  * <p>
  * By default, it only runs with the "dev" profile.
- * <p>
- * 日志拦截统一处理
  *
  * @author peppy
  */

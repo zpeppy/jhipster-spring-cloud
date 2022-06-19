@@ -176,6 +176,8 @@ docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.2
 127.0.0.1 redis
 127.0.0.1 nacos
 127.0.0.1 zipkin
+127.0.0.1 elasticsearch
+127.0.0.1 kafka
 ```
 
 ### 通过二进制包方式安装, 启动服务

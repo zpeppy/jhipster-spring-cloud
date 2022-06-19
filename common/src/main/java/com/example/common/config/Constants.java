@@ -2,8 +2,6 @@ package com.example.common.config;
 
 /**
  * Application constants.
- * <p>
- * 常量配置
  *
  * @author peppy
  */

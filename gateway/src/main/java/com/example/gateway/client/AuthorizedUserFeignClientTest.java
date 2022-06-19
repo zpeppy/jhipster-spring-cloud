@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
+ * 测试 UserFeignClient 调用
+ *
  * @author peppy
  */
 @AuthorizedUserFeignClient(name = "microservice")

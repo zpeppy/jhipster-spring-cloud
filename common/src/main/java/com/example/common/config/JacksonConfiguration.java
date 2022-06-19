@@ -9,6 +9,8 @@ import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
 /**
+ * Jackson 序列化器配置
+ *
  * @author peppy
  */
 @Configuration

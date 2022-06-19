@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 请求参数绑定警告异常
+ *
  * @author peppy
  */
 public class BadRequestAlertException extends AbstractThrowableProblem {
@@ -37,7 +39,7 @@ public class BadRequestAlertException extends AbstractThrowableProblem {
     }
 
     private static Map<String, Object> getAlertParameters(String entityName, String errorKey) {
-        Map<String, Object> parameters = new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>(2);
         parameters.put("message", "error." + errorKey);
         parameters.put("params", entityName);
         return parameters;

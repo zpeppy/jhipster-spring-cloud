@@ -37,9 +37,11 @@ eureka:
       git-version: ${git.commit.id.describe:}
       git-commit: ${git.commit.id.abbrev:}
       git-branch: ${git.branch:}
+
 ribbon:
   eureka:
     enabled: true
+
 management:
   endpoints:
     web:
@@ -132,6 +134,7 @@ spring:
   output:
     ansi:
       console-available: true
+
 security:
   oauth2:
     client:
@@ -185,6 +188,7 @@ jhipster:
     contact-email:
     license: unlicensed
     license-url:
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

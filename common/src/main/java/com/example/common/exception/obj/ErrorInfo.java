@@ -7,6 +7,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * 错误信息
+ *
  * @author peppy
  */
 @ApiModel(value = "ErrorInfo 错误信息", description = "ErrorInfo 错误信息")
@@ -39,7 +41,7 @@ public class ErrorInfo implements Serializable {
     @ApiModelProperty(value = "错误信息")
     private String reason;
 
-    //
+    // 额外属性
 
     @ApiModelProperty(value = "报错时间")
     private String time;

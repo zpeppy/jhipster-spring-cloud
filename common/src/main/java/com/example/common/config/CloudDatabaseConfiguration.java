@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 import javax.sql.DataSource;
 
 /**
- * spring.profiles.active=cloud 时 hikari 数据库连接池配置
+ * 配置 spring.profiles.active=cloud 时注入 hikari 数据库连接池
  *
  * @author peppy
  */

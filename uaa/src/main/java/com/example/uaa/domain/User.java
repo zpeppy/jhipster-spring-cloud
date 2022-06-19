@@ -20,8 +20,6 @@ import java.util.*;
 
 /**
  * A user.
- * <p>
- * 用户实体类
  *
  * @author peppy
  */

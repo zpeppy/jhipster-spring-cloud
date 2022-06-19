@@ -1,6 +1,7 @@
 package com.example.common.security.oauth2;
 
 import com.example.common.config.oauth2.OAuth2Properties;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Client fetching the public key from UAA to create a {@link SignatureVerifier}.
@@ -24,6 +26,7 @@ import java.util.Map;
 @Component
 public class UaaSignatureVerifierClient implements OAuth2SignatureVerifierClient {
     private final Logger log = LoggerFactory.getLogger(UaaSignatureVerifierClient.class);
+    
     private final RestTemplate restTemplate;
     protected final OAuth2Properties oAuth2Properties;
 
@@ -44,9 +47,9 @@ public class UaaSignatureVerifierClient implements OAuth2SignatureVerifierClient
     public SignatureVerifier getSignatureVerifier() {
         try {
             HttpEntity<Void> request = new HttpEntity<>(new HttpHeaders());
-            String key = (String) restTemplate
-                    .exchange(getPublicKeyEndpoint(), HttpMethod.GET, request, Map.class).getBody()
-                    .get("value");
+            String key = (String) Optional.ofNullable(
+                    restTemplate.exchange(getPublicKeyEndpoint(), HttpMethod.GET, request, Map.class).getBody()
+            ).orElseGet(Maps::newHashMap).get("value");
             return new RsaVerifier(key);
         } catch (IllegalStateException ex) {
             log.warn("could not contact UAA to get public key");

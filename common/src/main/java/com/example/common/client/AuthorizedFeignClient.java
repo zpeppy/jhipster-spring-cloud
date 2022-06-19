@@ -7,7 +7,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * FeignClient 自定义注解, 调用服务提供默认 token 信息
+ * FeignClient 自定义注解, 客户端模式服务调用提供默认 token 信息
  *
  * @author peppy
  */

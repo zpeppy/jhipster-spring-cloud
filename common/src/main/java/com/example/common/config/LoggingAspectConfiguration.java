@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 /**
+ * 注入日志处理 AOP
+ *
  * @author peppy
  */
 @Configuration

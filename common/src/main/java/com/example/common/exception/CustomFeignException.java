@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.lang.NonNull;
 
 /**
+ * 自定义 feign 异常
+ *
  * @author peppy
  */
 @Getter

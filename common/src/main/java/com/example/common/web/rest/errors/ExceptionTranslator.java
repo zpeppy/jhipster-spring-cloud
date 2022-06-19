@@ -33,8 +33,6 @@ import java.util.stream.Collectors;
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
  * The error response follows RFC7807 - Problem Details for HTTP APIs (https://tools.ietf.org/html/rfc7807).
- * <p>
- * 默认的全局异常处理
  *
  * @author peppy
  */

@@ -4,7 +4,7 @@ import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 
 /**
- * feign 请求拦截器配置, 携带用户登录 token 信息
+ * feign 请求拦截器配置, 用户名密码模式调用, 携带用户登录 token 信息
  *
  * @author peppy
  */

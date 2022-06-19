@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.lang.NonNull;
 
 /**
+ * Hystrix 熔断异常
+ *
  * @author peppy
  */
 @Getter

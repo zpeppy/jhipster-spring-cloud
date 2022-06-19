@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 /**
  * 拦截异常统一处理
  * <p>
- * {@link ExceptionHandlerService} 实现类必须使用 {@link Component} 注解注入, 不能使用 {@link Bean} 注入.
+ * {@link ExceptionHandlerService} 实现类必须使用 {@link Component} 注解注入, 不能使用 {@link Bean} 注入
  *
  * @author peppy
  */

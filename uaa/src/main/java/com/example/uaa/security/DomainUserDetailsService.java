@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 
 /**
  * Authenticate a user from the database.
- * <p>
- * 查询用户账号及角色信息
  *
  * @author peppy
  */

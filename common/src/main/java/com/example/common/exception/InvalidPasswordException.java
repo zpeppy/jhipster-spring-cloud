@@ -1,6 +1,8 @@
 package com.example.common.exception;
 
 /**
+ * 无效密码异常
+ *
  * @author peppy
  */
 public class InvalidPasswordException extends RuntimeException {

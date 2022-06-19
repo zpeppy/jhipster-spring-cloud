@@ -18,7 +18,7 @@ logging:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
     com.example.microservice: DEBUG
-    com.alibaba.nacos: INFO
+    com.alibaba.nacos.client: ERROR
 
 eureka:
   instance:
@@ -137,6 +137,7 @@ jhipster:
       queue-size: 512
   audit-events:
     retention-period: 30 # Number of days before audit events are deleted.
+
 oauth2:
   signature-verification:
     public-key-endpoint-uri: http://uaa/oauth/token_key
@@ -148,6 +149,7 @@ oauth2:
     #keep in sync with UAA configuration
     client-id: web_app
     secret: changeit
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

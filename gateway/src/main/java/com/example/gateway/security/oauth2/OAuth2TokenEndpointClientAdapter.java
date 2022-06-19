@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEndpointClient {
     private final Logger log = LoggerFactory.getLogger(OAuth2TokenEndpointClientAdapter.class);
+
     protected final RestTemplate restTemplate;
     protected final JHipsterProperties jHipsterProperties;
     protected final OAuth2Properties oAuth2Properties;

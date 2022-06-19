@@ -19,6 +19,7 @@ logging:
     io.github.jhipster: DEBUG
     com.example.uaa: DEBUG
     com.alibaba.nacos: INFO
+    sun.net.www: INFO
 
 eureka:
   instance:
@@ -124,18 +125,20 @@ jhipster:
       queue-size: 512
   audit-events:
     retention-period: 30 # Number of days before audit events are deleted.
+
 uaa:
   key-store:
     name: config/tls/keystore.p12
     password: password
     alias: selfsigned
   web-client-configuration:
-    # Access Token is valid for 5 mins
-    access-token-validity-in-seconds: 300
+    # Access Token is valid for 1 days
+    access-token-validity-in-seconds: 86400
     # Refresh Token is valid for 7 days
     refresh-token-validity-in-seconds-for-remember-me: 604800
     client-id: web_app
     secret: changeit
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

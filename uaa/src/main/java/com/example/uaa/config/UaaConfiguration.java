@@ -189,8 +189,9 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = new KeyStoreKeyFactory(
-            new ClassPathResource(uaaProperties.getKeyStore().getName()), uaaProperties.getKeyStore().getPassword().toCharArray())
-            .getKeyPair(uaaProperties.getKeyStore().getAlias());
+            new ClassPathResource(uaaProperties.getKeyStore().getName()),
+            uaaProperties.getKeyStore().getPassword().toCharArray()
+        ).getKeyPair(uaaProperties.getKeyStore().getAlias());
         converter.setKeyPair(keyPair);
         return converter;
     }

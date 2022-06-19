@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.io.Serializable;
 
 /**
+ * 字段错误视图对象
+ *
  * @author peppy
  */
 @Getter
