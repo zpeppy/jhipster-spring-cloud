@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 缓存信息配置
  *
- * @author think
+ * @author peppy
  */
 @Configuration
 public class CacheInfoConfiguration {
