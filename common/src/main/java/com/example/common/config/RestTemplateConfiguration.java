@@ -1,6 +1,7 @@
 package com.example.common.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class RestTemplateConfiguration {
         return new RestTemplate();
     }
 
+    @LoadBalanced
     @Bean
     @Qualifier("loadBalancedRestTemplate")
     public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {

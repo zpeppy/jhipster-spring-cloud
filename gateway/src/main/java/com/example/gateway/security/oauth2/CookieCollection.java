@@ -4,7 +4,7 @@ import javax.servlet.http.Cookie;
 import java.util.*;
 
 /**
- * cookie 本地缓存
+ * cookie 数组处理类
  *
  * @author peppy
  */
