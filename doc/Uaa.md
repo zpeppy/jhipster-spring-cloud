@@ -300,6 +300,7 @@ Liquibase 是一个数据库变更的版本控制工具。项目中通过 Liquib
 - 程序会读取 `classpath:config/liquibase/master.xml` 文件,
 - 然后按照 `classpath:config/liquibase/changelog/00000000000000_initial_schema.xml` 数据库约束文件创建表
 - 最后按照 `classpath:config/liquibase/data/*.csv` 数据文件导入数据
+- 在 `classpath:config/liquibase/data/user.csv` 中包含(账号密码: admin/admin) 用户
 
 注: 使用该功能需修改 `spring.jpa.hibernate.ddl-auto=none`, 禁止 hibernate 自动建表, 否则会有冲突
 

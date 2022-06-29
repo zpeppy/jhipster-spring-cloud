@@ -40,7 +40,7 @@ public class GatewayConfiguration {
      * <p>
      * 这使用 Bucket4J 来限制 API 调用，请参阅 {@link RateLimitingFilter}
      */
-    @ConditionalOnProperty(prefix = "jhipster.gateway.rate-limiting.enabled", havingValue = "true")
+    @ConditionalOnProperty(prefix = "jhipster.gateway.rate-limiting", name = "enabled", havingValue = "true")
     @Configuration
     public static class RateLimitingConfiguration {
 
