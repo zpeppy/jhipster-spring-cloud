@@ -5,9 +5,9 @@
 
     <parent>
         <groupId>com.yqlsc</groupId>
-        <artifactId>smart-cloud-dependencies</artifactId>
+        <artifactId>smart-cloud-service-modules</artifactId>
         <version>${revision}</version>
-        <relativePath>../smart-cloud-dependencies/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.yqlsc</groupId>
@@ -35,10 +35,10 @@
     </properties>
 
     <dependencies>
-        <!-- common -->
+        <!-- api -->
         <dependency>
             <groupId>com.yqlsc</groupId>
-            <artifactId>smart-cloud-common</artifactId>
+            <artifactId>smart-cloud-api</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
@@ -492,7 +492,7 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                <outputDirectory>target/classes</outputDirectory>
                                 <useDefaultDelimiters>false</useDefaultDelimiters>
                                 <delimiters>
                                     <delimiter>#</delimiter>
@@ -538,7 +538,7 @@
                     <configuration>
                         <!-- Due to spring-boot repackage, without adding this property test classes are not found
                              See https://github.com/spring-projects/spring-boot/issues/6254 -->
-                        <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                        <classesDirectory>target/classes</classesDirectory>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
                         <reportsDirectory>${junit.itReportFolder}</reportsDirectory>

@@ -22,7 +22,7 @@
         <module>smart-cloud-common</module>
         <module>smart-cloud-uaa</module>
         <module>smart-cloud-gateway</module>
-        <module>smart-cloud-microservice</module>
+        <module>smart-cloud-service-modules</module>
     </modules>
 
 </project>
