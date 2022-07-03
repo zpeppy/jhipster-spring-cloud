@@ -11,3 +11,7 @@
 ### Microservice 使用说明
 
 [Microservice 使用说明](Microservice.md)
+
+### Common 使用说明
+
+[Common 使用说明](Common.md)
