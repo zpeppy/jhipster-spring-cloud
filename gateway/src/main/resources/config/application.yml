@@ -153,6 +153,15 @@ spring:
   output:
     ansi:
       console-available: true
+  cloud:
+    # nacos 注册中心
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+        username: nacos
+        password: nacos
+        namespace: public
+        group: DEFAULT_GROUP
 
 security:
   oauth2:
