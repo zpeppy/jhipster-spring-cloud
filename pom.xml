@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>jhipster-spring-cloud</artifactId>
+    <groupId>com.yqlsc</groupId>
+    <artifactId>smart-cloud</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>jhipster-spring-cloud</name>
+    <name>smart-cloud</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -18,11 +18,11 @@
     </properties>
 
     <modules>
-        <module>dependencies</module>
-        <module>common</module>
-        <module>uaa</module>
-        <module>gateway</module>
-        <module>microservice</module>
+        <module>smart-cloud-dependencies</module>
+        <module>smart-cloud-common</module>
+        <module>smart-cloud-uaa</module>
+        <module>smart-cloud-gateway</module>
+        <module>smart-cloud-microservice</module>
     </modules>
 
 </project>

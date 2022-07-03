@@ -149,12 +149,12 @@ Desktop.ini
 ########################################################################################################################
 # JetBrains
 .idea
-common/common.iml
-dependencies/dependencies.iml
-gateway/gateway.iml
-microservice/microservice.iml
-uaa/uaa.iml
-jhipster-spring-cloud.iml
+common/*.iml
+dependencies/*.iml
+gateway/*.iml
+microservice/*.iml
+uaa/*.iml
+*.iml
 
 # Maven
 target

@@ -7,7 +7,7 @@
 统一日志拦截配置
 
 - 拦截 `@Repository`, `@Service`, `@RestController` 标注的类下所有方法
-- 拦截 `com.example.*.repository`, `com.example.*.service`, `com.example.*.web.rest` 包下所有类及方法
+- 拦截 `com.yqlsc.*.repository`, `com.yqlsc.*.service`, `com.yqlsc.*.web.rest` 包下所有类及方法
 
 ##### @AuthorizedFeignClient, OAuth2InterceptedFeignConfiguration
 
@@ -40,8 +40,8 @@ oauth2 配置属性类, 自动设置 `application-*.yml` 中 `oauth2` 下的配�
 
 数据库配置类
 
-- `@EntityScan("com.example.*.domain")` 自动扫描指定包下标注 `@Entity` 的实体类
-- `@EnableJpaRepositories("com.example.*.repository")` 自动扫描指定包下标注 `@Repository` 的仓库类
+- `@EntityScan("com.yqlsc.*.domain")` 自动扫描指定包下标注 `@Entity` 的实体类
+- `@EnableJpaRepositories("com.yqlsc.*.repository")` 自动扫描指定包下标注 `@Repository` 的仓库类
 
 ##### DateTimeFormatConfiguration
 
@@ -51,7 +51,7 @@ WebMvc 时间格式化配置类
 
 feign 相关配置类
 
-- `@EnableFeignClients(basePackages = "com.example")` 开启自动扫描自定包下标注 `@FeignClient` 的接口
+- `@EnableFeignClients(basePackages = "com.yqlsc")` 开启自动扫描自定包下标注 `@FeignClient` 的接口
 - 注入 **feign** 调用的日志级别配置
 
 ##### JacksonConfiguration

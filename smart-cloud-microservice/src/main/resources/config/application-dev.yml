@@ -1,0 +1,141 @@
+# 日志配置
+logging:
+  level:
+    ROOT: DEBUG
+    io.github.jhipster: DEBUG
+    com.yqlsc.microservice: DEBUG
+    com.alibaba.nacos: INFO
+
+# eureka 配置
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    service-url:
+#      defaultZone: http://admin:${jhipster.registry.password}@registry:8761/eureka/
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
+
+spring:
+  profiles:
+    active: dev
+    include:
+      - swagger
+      # Uncomment to activate TLS for the dev profile
+      #- tls
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**
+    livereload:
+      enabled: false # we use Webpack dev server + BrowserSync for livereload
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://mysql:3306/microservice?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    show-sql: true
+  data:
+    elasticsearch:
+      properties:
+        path:
+          home: target/elasticsearch
+  liquibase:
+    # Remove 'faker' if you do not want the sample data to be loaded automatically
+    contexts: dev, faker
+  #  mail:
+  #    host: mail
+  #    port: 25
+  #    username:
+  #    password:
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  thymeleaf:
+    cache: false
+  sleuth:
+    sampler:
+      probability: 1 # report 100% of traces
+  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+    base-url: http://zipkin:9411
+    enabled: true
+    locator:
+      discovery:
+        enabled: true
+
+server:
+  port: 8081
+
+# jhipster 配置, JHipsterProperties 配置属性类会读取下面配置值
+jhipster:
+  cache: # Cache configuration
+    redis: # Redis configuration
+      expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
+      server: redis://redis:6379
+      cluster: false
+      # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
+      # cluster: true
+  # CORS is disabled by default on microservices, as you should access them through a gateway.
+  # If you want to enable it, please uncomment the configuration below.
+  # cors:
+  #     allowed-origins: "*"
+  #     allowed-methods: "*"
+  #     allowed-headers: "*"
+  #     exposed-headers: "Authorization,Link,X-Total-Count"
+  #     allow-credentials: true
+  #     max-age: 1800
+  security:
+    # 客户端模式
+    client-authorization:
+      access-token-uri: http://uaa/oauth/token
+      token-service-id: uaa
+      client-id: internal
+      client-secret: internal
+  mail: # specific JHipster mail property, for standard properties see MailProperties
+    base-url: http://mail:8081
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: false
+      report-frequency: 60 # in seconds
+  # logstash 配置
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: logstash
+      port: 5000
+      queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
+# uaa oauth2 配置
+oauth2:
+  signature-verification:
+    public-key-endpoint-uri: http://uaa/oauth/token_key
+    #ttl for public keys to verify JWT tokens (in ms)
+    ttl: 3600000
+    #max. rate at which public keys will be fetched (in ms)
+    public-key-refresh-rate-limit: 10000
+  # 用户名密码模式
+  web-client-configuration:
+    #keep in sync with UAA configuration
+    client-id: web_app
+    secret: changeit
+
+# ApplicationProperties 配置类会获取 application 下配置值
+application:
+  name: microservice

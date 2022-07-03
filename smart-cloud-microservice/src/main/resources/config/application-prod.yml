@@ -1,0 +1,143 @@
+# 日志配置
+logging:
+  level:
+    ROOT: INFO
+    io.github.jhipster: INFO
+    com.yqlsc.microservice: INFO
+
+# eureka配置
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    service-url:
+#      defaultZone: http://admin:${jhipster.registry.password}@registry:8761/eureka/
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: false
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://mysql:3306/microservice?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password:
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    show-sql: false
+  data:
+    jest:
+      uri: http://elasticsearch:9200
+  # see https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-nosql.html#boot-features-connecting-to-elasticsearch-jest
+  elasticsearch:
+    rest:
+      uris: http://elasticsearch:9200
+  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
+  liquibase:
+    contexts: prod
+  mail:
+    host: mail
+    port: 25
+    username:
+    password:
+  thymeleaf:
+    cache: true
+  sleuth:
+    sampler:
+      probability: 1 # report 100% of traces
+  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+    base-url: http://zipkin:9411
+    enabled: false
+    locator:
+      discovery:
+        enabled: true
+
+# ===================================================================
+# 生产环境需使用 TLS, 使用以下命令生成 keystore.p12:
+# keytool -genkey -alias microservice -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+#
+# 修改配置如下所示:
+#
+# server:
+#   port: 443
+#   ssl:
+#     key-store: classpath:config/tls/keystore.p12
+#     key-store-password: password
+#     key-store-type: PKCS12
+#     key-alias: selfsigned
+#     ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 ,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA,TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
+# ===================================================================
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024
+
+# jhipster 配置, JHipsterProperties 配置属性类会读取下面配置值
+jhipster:
+  http:
+    cache: # Used by the CachingHttpHeadersFilter
+      timeToLiveInDays: 1461
+  cache: # Cache configuration
+    redis: # Redis configuration
+      expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
+      server: redis://redis:6379
+      cluster: false
+      # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
+      # cluster: true
+  security:
+    # 客户端模式
+    client-authorization:
+      access-token-uri: http://uaa/oauth/token
+      token-service-id: uaa
+      client-id: internal
+      client-secret: internal
+  mail: # specific JHipster mail property, for standard properties see MailProperties
+    base-url: http://my-server-url-to-change # Modify according to your server's URL
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: false
+      report-frequency: 60 # in seconds
+  # logstash 配置
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: logstash
+      port: 5000
+      queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
+# uaa oauth2 配置
+oauth2:
+  signature-verification:
+    public-key-endpoint-uri: http://uaa/oauth/token_key
+    #ttl for public keys to verify JWT tokens (in ms)
+    ttl: 3600000
+    #max. rate at which public keys will be fetched (in ms)
+    public-key-refresh-rate-limit: 10000
+  # 用户名密码模式
+  web-client-configuration:
+    #change client secret in production, keep in sync with UAA configuration
+    client-id: web_app
+    secret: changeit
+
+# ApplicationProperties 配置类会获取 application 下配置值
+# application:
