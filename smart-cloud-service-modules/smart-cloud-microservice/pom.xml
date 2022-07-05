@@ -38,7 +38,7 @@
         <!-- api -->
         <dependency>
             <groupId>com.yqlsc</groupId>
-            <artifactId>smart-cloud-api</artifactId>
+            <artifactId>smart-cloud-microservice-api</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

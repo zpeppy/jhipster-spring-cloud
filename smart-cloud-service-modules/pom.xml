@@ -32,7 +32,7 @@
     </dependencies>
 
     <modules>
-        <module>smart-cloud-api</module>
+        <module>smart-cloud-microservice-api</module>
         <module>smart-cloud-microservice</module>
     </modules>
 

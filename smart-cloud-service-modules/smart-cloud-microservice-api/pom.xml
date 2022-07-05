@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.yqlsc</groupId>
-    <artifactId>smart-cloud-api</artifactId>
+    <artifactId>smart-cloud-microservice-api</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
-    <name>smart-cloud-api</name>
+    <name>smart-cloud-microservice-api</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
