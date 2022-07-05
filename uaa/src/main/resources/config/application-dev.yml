@@ -80,6 +80,9 @@ spring:
     locator:
       discovery:
         enabled: true
+  redis:
+    host: redis
+    port: 6379
 
 server:
   port: 9999
