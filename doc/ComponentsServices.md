@@ -99,10 +99,12 @@ docker run -d --name clickhouse-server -p 8123:8123 -p 9009:9009 -p 9000:9000 --
 ##### seata
 
 ```docker
-docker run --name seata-server -p 8091:8091 -v /docker/seata-server/config:/seata-server/resources seataio/seata-server:1.4.2
-```
+# 官方建议将自定义配置文件放到其他目录下, 需先手动拷贝配置文件到本地: docker cp seata-server:/seata-server/resources /root/docker/seata-server/config
+docker run -d --name seata-server -p 8091:8091 -p 7091:7091 -e SEATA_CONFIG_NAME=file:/root/seata-config -v /root/docker/seata-server/config:/root/seata-config seataio/seata-server:1.5.1
 
-- 修改环境变量：seata-server -e SEATA_CONFIG_NAME=file:/seata-server/resources
+# 按默认的配置文件路径为: /seata-server/resources, 需先手动拷贝配置文件到本地, 否则启动报错: A component required a bean of type 'io.seata.server.console.service.BranchSessionService' in your configuration.
+docker run -d --name seata-server -p 8091:8091 -p 7091:7091 -v /root/docker/seata-server/config:/seata-server/resources seataio/seata-server:1.5.1
+```
 
 ##### nacos
 
