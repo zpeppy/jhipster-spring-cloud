@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.example.gateway",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "6.10.5",
+    "applicationType": "gateway",
+    "baseName": "r2gateway",
+    "packageName": "com.example.gateway",
+    "packageFolder": "com/example/gateway",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "YjlkODdjNzk3ZDY2MDMxNWZkZDg0MTc2ZmFlYjk5OGY5NWMzNGE2OGJjYWExNjVkNzQxMTAxMmQxYTAzZjg2ZTY4NTFhYmVlNDc0OGY0NzIxZTQ0MzdjYWFmZTUyMjEzNjRhYThmNTFmODZiYjMzZWJlOGExMTk0MTE3ZmI4N2E=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "skipClient": true,
+    "creationTimestamp": 1659517868208,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "zh-cn",
+    "languages": ["zh-cn", "en"],
+    "blueprints": [],
+    "reactive": true
+  }
+}
