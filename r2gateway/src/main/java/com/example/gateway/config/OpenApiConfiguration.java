@@ -21,6 +21,9 @@ import java.util.HashSet;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+/**
+ * @author peppy
+ */
 @Configuration
 @Profile(JHipsterConstants.SPRING_PROFILE_SWAGGER)
 public class OpenApiConfiguration {

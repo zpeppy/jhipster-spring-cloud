@@ -6,10 +6,11 @@ import com.example.gateway.service.MailService;
 import com.example.gateway.service.UserService;
 import com.example.gateway.service.dto.PasswordChangeDTO;
 import com.example.gateway.service.dto.UserDTO;
-import com.example.gateway.web.rest.errors.*;
+import com.example.gateway.web.rest.errors.EmailAlreadyUsedException;
+import com.example.gateway.web.rest.errors.InvalidPasswordException;
+import com.example.gateway.web.rest.errors.LoginAlreadyUsedException;
 import com.example.gateway.web.rest.vm.KeyAndPasswordVM;
 import com.example.gateway.web.rest.vm.ManagedUserVM;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,8 @@ import java.util.Objects;
 
 /**
  * REST controller for managing the current user's account.
+ *
+ * @author peppy
  */
 @RestController
 @RequestMapping("/api")
@@ -53,18 +56,18 @@ public class AccountResource {
     /**
      * {@code POST  /register} : register the user.
      *
-     * @param managedUserVM the managed user View Model.
-     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
+     * @param managedUserVm the managed user View Model.
+     * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password is incorrect.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Void> registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
-        if (!checkPasswordLength(managedUserVM.getPassword())) {
+    public Mono<Void> registerAccount(@Valid @RequestBody ManagedUserVM managedUserVm) {
+        if (!checkPasswordLength(managedUserVm.getPassword())) {
             throw new InvalidPasswordException();
         }
-        return userService.registerUser(managedUserVM, managedUserVM.getPassword())
+        return userService.registerUser(managedUserVm, managedUserVm.getPassword())
             .doOnSuccess(mailService::sendActivationEmail)
             .then();
     }
@@ -112,7 +115,7 @@ public class AccountResource {
      *
      * @param userDTO the current user information.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user login wasn't found.
+     * @throws RuntimeException          {@code 500 (Internal Server Error)} if the user login wasn't found.
      */
     @PostMapping("/account")
     public Mono<Void> saveAccount(@Valid @RequestBody UserDTO userDTO) {
@@ -127,9 +130,9 @@ public class AccountResource {
                     }
                     return userRepository.findOneByLogin(userLogin);
                 }))
-                .switchIfEmpty(Mono.error(new AccountResourceException("User could not be found")))
-                .flatMap(user -> userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
-                    userDTO.getLangKey(), userDTO.getImageUrl()));
+            .switchIfEmpty(Mono.error(new AccountResourceException("User could not be found")))
+            .flatMap(user -> userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+                userDTO.getLangKey(), userDTO.getImageUrl()));
     }
 
     /**
@@ -171,7 +174,7 @@ public class AccountResource {
      *
      * @param keyAndPassword the generated key and the new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the password could not be reset.
+     * @throws RuntimeException         {@code 500 (Internal Server Error)} if the password could not be reset.
      */
     @PostMapping(path = "/account/reset-password/finish")
     public Mono<Void> finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {

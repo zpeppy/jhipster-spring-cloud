@@ -2,6 +2,8 @@ package com.example.gateway.security;
 
 /**
  * Constants for Spring Security authorities.
+ *
+ * @author peppy
  */
 public final class AuthoritiesConstants {
 

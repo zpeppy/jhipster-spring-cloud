@@ -20,6 +20,8 @@ import org.zalando.problem.spring.webflux.advice.ProblemHandling;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.
+ *
+ * @author peppy
  */
 @Configuration
 public class WebConfigurer implements WebFluxConfigurer {
@@ -42,7 +44,7 @@ public class WebConfigurer implements WebFluxConfigurer {
             source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v2/api-docs", config);
             source.registerCorsConfiguration("/*/api/**", config);
-            source.registerCorsConfiguration("/services/*/api/**", config);
+            source.registerCorsConfiguration("/gateway/*/api/**", config);
             source.registerCorsConfiguration("/*/management/**", config);
         }
         return new CorsWebFilter(source);
@@ -61,7 +63,8 @@ public class WebConfigurer implements WebFluxConfigurer {
     }
 
     @Bean
-    @Order(-2) // The handler must have precedence over WebFluxResponseStatusExceptionHandler and Spring Boot's ErrorWebExceptionHandler
+    @Order(-2)
+    // The handler must have precedence over WebFluxResponseStatusExceptionHandler and Spring Boot's ErrorWebExceptionHandler
     public WebExceptionHandler problemExceptionHandler(ObjectMapper mapper, ProblemHandling problemHandling) {
         return new ProblemExceptionHandler(mapper, problemHandling);
     }

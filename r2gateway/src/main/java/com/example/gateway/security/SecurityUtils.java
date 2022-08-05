@@ -10,6 +10,8 @@ import reactor.core.publisher.Mono;
 
 /**
  * Utility class for Spring Security.
+ *
+ * @author peppy
  */
 public final class SecurityUtils {
 

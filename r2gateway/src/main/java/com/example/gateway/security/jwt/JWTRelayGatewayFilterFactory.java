@@ -8,6 +8,9 @@ import org.springframework.util.StringUtils;
 
 import static com.example.gateway.security.jwt.JWTFilter.AUTHORIZATION_HEADER;
 
+/**
+ * @author peppy
+ */
 @Component
 public class JWTRelayGatewayFilterFactory extends AbstractGatewayFilterFactory<Object> {
 

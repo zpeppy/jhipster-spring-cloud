@@ -5,22 +5,19 @@ import com.example.gateway.domain.User;
 import com.example.gateway.repository.UserRepository;
 import com.example.gateway.security.AuthoritiesConstants;
 import com.example.gateway.service.MailService;
-import org.springframework.data.domain.Sort;
-import java.util.Collections;
 import com.example.gateway.service.UserService;
 import com.example.gateway.service.dto.UserDTO;
 import com.example.gateway.web.rest.errors.BadRequestAlertException;
 import com.example.gateway.web.rest.errors.EmailAlreadyUsedException;
 import com.example.gateway.web.rest.errors.LoginAlreadyUsedException;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -35,8 +32,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * REST controller for managing users.
@@ -61,6 +59,8 @@ import java.util.Arrays;
  * </ul>
  * <p>
  * Another option would be to have a specific JPA entity graph to handle this case.
+ *
+ * @author peppy
  */
 @RestController
 @RequestMapping("/api")
@@ -170,7 +170,7 @@ public class UserResource {
     /**
      * {@code GET /users} : get all users.
      *
-     * @param request a {@link ServerHttpRequest} request.
+     * @param request  a {@link ServerHttpRequest} request.
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
@@ -192,6 +192,7 @@ public class UserResource {
 
     /**
      * Gets a list of all roles.
+     *
      * @return a string list of all roles.
      */
     @GetMapping("/users/authorities")
@@ -226,6 +227,6 @@ public class UserResource {
     public Mono<ResponseEntity<Void>> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         return userService.deleteUser(login)
-            .map(it -> ResponseEntity.noContent().headers(HeaderUtil.createAlert( applicationName, "userManagement.deleted", login)).build());
+            .map(it -> ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build());
     }
 }

@@ -1,9 +1,9 @@
 package com.example.gateway.service;
 
-import io.github.jhipster.config.JHipsterProperties;
 import com.example.gateway.config.audit.AuditEventConverter;
 import com.example.gateway.domain.PersistentAuditEvent;
 import com.example.gateway.repository.PersistenceAuditEventRepository;
+import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -27,6 +27,8 @@ import static org.springframework.boot.actuate.security.AuthenticationAuditListe
  * Service for managing audit events.
  * <p>
  * This is the default implementation to support SpringBoot Actuator {@code AuditEventRepository}.
+ *
+ * @author peppy
  */
 @Service
 public class AuditEventService {
@@ -55,7 +57,7 @@ public class AuditEventService {
 
     /**
      * Old audit events should be automatically deleted after 30 days.
-     *
+     * <p>
      * This is scheduled to get fired at 12:00 (am).
      */
     @Scheduled(cron = "0 0 12 * * ?")
@@ -147,7 +149,7 @@ public class AuditEventService {
                     if (length > EVENT_DATA_COLUMN_MAX_LENGTH) {
                         value = value.substring(0, EVENT_DATA_COLUMN_MAX_LENGTH);
                         log.warn("Event data for {} too long ({}) has been truncated to {}. Consider increasing column width.",
-                                entry.getKey(), length, EVENT_DATA_COLUMN_MAX_LENGTH);
+                            entry.getKey(), length, EVENT_DATA_COLUMN_MAX_LENGTH);
                     }
                 }
                 results.put(entry.getKey(), value);

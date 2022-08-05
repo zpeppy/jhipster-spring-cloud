@@ -12,6 +12,8 @@ import reactor.core.publisher.Mono;
 /**
  * Filters incoming requests and installs a Spring Security principal if a header corresponding to a valid user is
  * found.
+ *
+ * @author peppy
  */
 public class JWTFilter implements WebFilter {
 

@@ -44,13 +44,13 @@ spring:
     password:
   task:
     execution:
-      thread-name-prefix: r-2-gateway-task-
+      thread-name-prefix: r2gateway-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: r-2-gateway-scheduling-
+      thread-name-prefix: r2gateway-scheduling-
       pool:
         size: 1
   thymeleaf:

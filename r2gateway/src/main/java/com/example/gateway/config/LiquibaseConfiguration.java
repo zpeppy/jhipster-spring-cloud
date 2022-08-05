@@ -5,9 +5,7 @@ import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
 import liquibase.integration.spring.SpringLiquibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseDataSource;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.autoconfigure.r2dbc.R2dbcProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -20,6 +18,9 @@ import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
+/**
+ * @author peppy
+ */
 @Configuration
 public class LiquibaseConfiguration {
 
@@ -33,7 +34,7 @@ public class LiquibaseConfiguration {
 
     @Bean
     public SpringLiquibase liquibase(@Qualifier("taskExecutor") Executor executor, LiquibaseProperties liquibaseProperties,
-            R2dbcProperties dataSourceProperties) {
+                                     R2dbcProperties dataSourceProperties) {
 
         SpringLiquibase liquibase = createAsyncSpringLiquibase(this.env, executor, liquibaseProperties, dataSourceProperties);
         liquibase.setChangeLog("classpath:config/liquibase/master.xml");
@@ -58,7 +59,7 @@ public class LiquibaseConfiguration {
     }
 
     public static SpringLiquibase createAsyncSpringLiquibase(Environment env, Executor executor,
-            LiquibaseProperties liquibaseProperties, R2dbcProperties dataSourceProperties) {
+                                                             LiquibaseProperties liquibaseProperties, R2dbcProperties dataSourceProperties) {
         SpringLiquibase liquibase = new AsyncSpringLiquibase(executor, env);
         liquibase.setDataSource(createNewDataSource(liquibaseProperties, dataSourceProperties));
         return liquibase;

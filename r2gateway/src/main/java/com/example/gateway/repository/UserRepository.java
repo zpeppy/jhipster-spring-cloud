@@ -2,7 +2,6 @@ package com.example.gateway.repository;
 
 import com.example.gateway.domain.Authority;
 import com.example.gateway.domain.User;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.data.r2dbc.core.ReactiveDataAccessStrategy;
@@ -20,32 +19,34 @@ import java.util.stream.Collectors;
 
 /**
  * Spring Data R2DBC repository for the {@link User} entity.
+ *
+ * @author peppy
  */
 @Repository
 public interface UserRepository extends R2dbcRepository<User, Long>, UserRepositoryInternal {
 
-    @Query("SELECT * FROM jhi_user WHERE activation_key = :activationKey")
+    @Query("SELECT * FROM gateway_user WHERE activation_key = :activationKey")
     Mono<User> findOneByActivationKey(String activationKey);
 
-    @Query("SELECT * FROM jhi_user WHERE activated = false AND activation_key IS NOT NULL AND created_date < :dateTime")
+    @Query("SELECT * FROM gateway_user WHERE activated = false AND activation_key IS NOT NULL AND created_date < :dateTime")
     Flux<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(LocalDateTime dateTime);
 
-    @Query("SELECT * FROM jhi_user WHERE reset_key = :resetKey")
+    @Query("SELECT * FROM gateway_user WHERE reset_key = :resetKey")
     Mono<User> findOneByResetKey(String resetKey);
 
-    @Query("SELECT * FROM jhi_user WHERE LOWER(email) = LOWER(:email)")
+    @Query("SELECT * FROM gateway_user WHERE LOWER(email) = LOWER(:email)")
     Mono<User> findOneByEmailIgnoreCase(String email);
 
-    @Query("SELECT * FROM jhi_user WHERE login = :login")
+    @Query("SELECT * FROM gateway_user WHERE login = :login")
     Mono<User> findOneByLogin(String login);
 
-    @Query("SELECT COUNT(DISTINCT id) FROM jhi_user WHERE login != :anonymousUser")
+    @Query("SELECT COUNT(DISTINCT id) FROM gateway_user WHERE login != :anonymousUser")
     Mono<Long> countAllByLoginNot(String anonymousUser);
 
-    @Query("INSERT INTO jhi_user_authority VALUES(:userId, :authority)")
+    @Query("INSERT INTO gateway_user_authority VALUES(:userId, :authority)")
     Mono<Void> saveUserAuthority(Long userId, String authority);
 
-    @Query("DELETE FROM jhi_user_authority")
+    @Query("DELETE FROM gateway_user_authority")
     Mono<Void> deleteAllUserAuthorities();
 }
 
@@ -82,7 +83,7 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
     }
 
     private Mono<User> findOneWithAuthoritiesBy(String fieldName, Object fieldValue) {
-        return db.execute("SELECT * FROM jhi_user u LEFT JOIN jhi_user_authority ua ON u.id=ua.user_id WHERE u." + fieldName + " = :" + fieldName)
+        return db.execute("SELECT * FROM gateway_user u LEFT JOIN gateway_user_authority ua ON u.id=ua.user_id WHERE u." + fieldName + " = :" + fieldName)
             .bind(fieldName, fieldValue)
             .map((row, metadata) ->
                 Tuples.of(
@@ -120,7 +121,7 @@ class UserRepositoryInternalImpl implements UserRepositoryInternal {
 
     @Override
     public Mono<Void> delete(User user) {
-        return db.execute("DELETE FROM jhi_user_authority WHERE user_id = :userId")
+        return db.execute("DELETE FROM gateway_user_authority WHERE user_id = :userId")
             .bind("userId", user.getId())
             .then()
             .then(db.delete()
