@@ -8,9 +8,7 @@ import com.example.gateway.repository.UserRepository;
 import com.example.gateway.security.AuthoritiesConstants;
 import com.example.gateway.security.SecurityUtils;
 import com.example.gateway.service.dto.UserDTO;
-
 import io.github.jhipster.security.RandomUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +24,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Service class for managing users.
@@ -79,7 +78,7 @@ public class UserService {
     @Transactional
     public Mono<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmailIgnoreCase(mail)
-            .filter(User::getActivated)
+            .filter(User::isActivated)
             .publishOn(Schedulers.boundedElastic())
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
@@ -93,7 +92,7 @@ public class UserService {
     public Mono<User> registerUser(UserDTO userDTO, String password) {
         return userRepository.findOneByLogin(userDTO.getLogin().toLowerCase())
             .flatMap(existingUser -> {
-                if (!existingUser.getActivated()) {
+                if (!existingUser.isActivated()) {
                     return userRepository.delete(existingUser);
                 } else {
                     return Mono.error(new UsernameAlreadyUsedException());
@@ -101,7 +100,7 @@ public class UserService {
             })
             .then(userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()))
             .flatMap(existingUser -> {
-                if (!existingUser.getActivated()) {
+                if (!existingUser.isActivated()) {
                     return userRepository.delete(existingUser);
                 } else {
                     return Mono.error(new EmailAlreadyUsedException());
@@ -315,6 +314,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     @Transactional(readOnly = true)

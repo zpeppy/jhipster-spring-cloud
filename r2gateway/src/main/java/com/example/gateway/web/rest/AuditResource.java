@@ -1,7 +1,6 @@
 package com.example.gateway.web.rest;
 
 import com.example.gateway.service.AuditEventService;
-
 import io.github.jhipster.web.util.PaginationUtil;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.PageImpl;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 
 /**
  * REST controller for getting the {@link AuditEvent}s.
+ *
+ * @author peppy
  */
 @RestController
 @RequestMapping("/management/audits")
@@ -36,11 +37,11 @@ public class AuditResource {
     /**
      * {@code GET /audits} : get a page of {@link AuditEvent}s.
      *
-     * @param request a {@link ServerHttpRequest} request.
+     * @param request  a {@link ServerHttpRequest} request.
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of {@link AuditEvent}s in body.
      */
-    @GetMapping
+    @GetMapping("/events")
     public Mono<ResponseEntity<Flux<AuditEvent>>> getAll(ServerHttpRequest request, Pageable pageable) {
         return auditEventService.count()
             .map(total -> new PageImpl<>(new ArrayList<>(), pageable, total))
@@ -52,17 +53,15 @@ public class AuditResource {
      * {@code GET  /audits} : get a page of {@link AuditEvent} between the {@code fromDate} and {@code toDate}.
      *
      * @param fromDate the start of the time period of {@link AuditEvent} to get.
-     * @param toDate the end of the time period of {@link AuditEvent} to get.
-     * @param request a {@link ServerHttpRequest} request.
+     * @param toDate   the end of the time period of {@link AuditEvent} to get.
+     * @param request  a {@link ServerHttpRequest} request.
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of {@link AuditEvent} in body.
      */
-    @GetMapping(params = {"fromDate", "toDate"})
-    public Mono<ResponseEntity<Flux<AuditEvent>>> getByDates(
-        @RequestParam(value = "fromDate") LocalDate fromDate,
-        @RequestParam(value = "toDate") LocalDate toDate,
-        ServerHttpRequest request,
-        Pageable pageable) {
+    @GetMapping(value = "/events", params = {"fromDate", "toDate"})
+    public Mono<ResponseEntity<Flux<AuditEvent>>> getByDates(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                                             @RequestParam(value = "toDate") LocalDate toDate,
+                                                             ServerHttpRequest request, Pageable pageable) {
 
         Instant from = fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
         Instant to = toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant();

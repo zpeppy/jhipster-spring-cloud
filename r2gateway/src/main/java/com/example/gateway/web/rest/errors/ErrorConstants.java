@@ -2,6 +2,9 @@ package com.example.gateway.web.rest.errors;
 
 import java.net.URI;
 
+/**
+ * @author peppy
+ */
 public final class ErrorConstants {
 
     public static final String ERR_CONCURRENCY_FAILURE = "error.concurrencyFailure";

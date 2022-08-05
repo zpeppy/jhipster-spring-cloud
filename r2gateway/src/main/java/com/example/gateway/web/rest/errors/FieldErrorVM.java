@@ -1,7 +1,15 @@
 package com.example.gateway.web.rest.errors;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.io.Serializable;
 
+/**
+ * @author peppy
+ */
+@Getter
+@AllArgsConstructor
 public class FieldErrorVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -11,23 +19,5 @@ public class FieldErrorVM implements Serializable {
     private final String field;
 
     private final String message;
-
-    public FieldErrorVM(String dto, String field, String message) {
-        this.objectName = dto;
-        this.field = field;
-        this.message = message;
-    }
-
-    public String getObjectName() {
-        return objectName;
-    }
-
-    public String getField() {
-        return field;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 
 }

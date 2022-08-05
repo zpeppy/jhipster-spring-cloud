@@ -1,13 +1,15 @@
 package com.example.gateway.config.audit;
 
 import com.example.gateway.domain.PersistentAuditEvent;
-
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * @author peppy
+ */
 @Component
 public class AuditEventConverter {
 

@@ -5,18 +5,18 @@ import com.example.gateway.security.jwt.JWTFilter;
 import com.example.gateway.security.jwt.TokenProvider;
 import com.example.gateway.service.AuditEventService;
 import com.example.gateway.web.rest.vm.LoginVM;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 import javax.validation.Valid;
 
@@ -40,13 +40,13 @@ public class UserJWTController {
     }
 
     @PostMapping("/authenticate")
-    public Mono<ResponseEntity<JWTToken>> authorize(@Valid @RequestBody Mono<LoginVM> loginVM) {
-        return loginVM
+    public Mono<ResponseEntity<JWTToken>> authorize(@Valid @RequestBody Mono<LoginVM> loginVm) {
+        return loginVm
             .flatMap(login -> authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
                 .onErrorResume(throwable -> onAuthenticationError(login, throwable))
                 .flatMap(auth -> onAuthenticationSuccess(login, auth))
-                .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, Boolean.TRUE.equals(login.isRememberMe()))))
+                .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, Boolean.TRUE.equals(login.getRememberMe()))))
             )
             .map(jwt -> {
                 HttpHeaders httpHeaders = new HttpHeaders();

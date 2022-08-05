@@ -3,17 +3,21 @@ package com.example.gateway.service.mapper;
 import com.example.gateway.domain.Authority;
 import com.example.gateway.domain.User;
 import com.example.gateway.service.dto.UserDTO;
-
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
- *
+ * <p>
  * Normal mappers are generated using MapStruct, this one is hand-coded as MapStruct
  * support is still in beta, and requires a manual step with an IDE.
+ *
+ * @author peppy
  */
 @Service
 public class UserMapper {
@@ -29,8 +33,8 @@ public class UserMapper {
         return new UserDTO(user);
     }
 
-    public List<User> userDTOsToUsers(List<UserDTO> userDTOs) {
-        return userDTOs.stream()
+    public List<User> userDTOsToUsers(List<UserDTO> userDtos) {
+        return userDtos.stream()
             .filter(Objects::nonNull)
             .map(this::userDTOToUser)
             .collect(Collectors.toList());

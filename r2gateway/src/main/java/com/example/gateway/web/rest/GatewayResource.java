@@ -1,22 +1,25 @@
 package com.example.gateway.web.rest;
 
+import com.example.gateway.security.AuthoritiesConstants;
 import com.example.gateway.web.rest.vm.RouteVM;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.gateway.route.Route;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.gateway.route.Route;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import reactor.core.publisher.Flux;
-import org.springframework.http.*;
-import org.springframework.security.access.annotation.Secured;
-import com.example.gateway.security.AuthoritiesConstants;
-import org.springframework.web.bind.annotation.*;
-
 /**
  * REST controller for managing Gateway configuration.
+ *
+ * @author peppy
  */
 @RestController
 @RequestMapping("/api/gateway")
@@ -43,21 +46,21 @@ public class GatewayResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<List<RouteVM>> activeRoutes() {
         Flux<Route> routes = routeLocator.getRoutes();
-        List<RouteVM> routeVMs = new ArrayList<>();
+        List<RouteVM> routeVms = new ArrayList<>();
         routes.subscribe(route -> {
-            RouteVM routeVM = new RouteVM();
+            RouteVM routeVm = new RouteVM();
             // Manipulate strings to make Gateway routes look like Zuul's
             String predicate = route.getPredicate().toString();
             String path = predicate.substring(predicate.indexOf("[") + 1, predicate.indexOf("]"));
-            routeVM.setPath(path);
+            routeVm.setPath(path);
             String serviceId = route.getId().substring(route.getId().indexOf("_") + 1).toLowerCase();
-            routeVM.setServiceId(serviceId);
+            routeVm.setServiceId(serviceId);
             // Exclude gateway app from routes
             if (!serviceId.equalsIgnoreCase(appName)) {
-                routeVM.setServiceInstances(discoveryClient.getInstances(serviceId));
-                routeVMs.add(routeVM);
+                routeVm.setServiceInstances(discoveryClient.getInstances(serviceId));
+                routeVms.add(routeVm);
             }
         });
-        return ResponseEntity.ok(routeVMs);
+        return ResponseEntity.ok(routeVms);
     }
 }

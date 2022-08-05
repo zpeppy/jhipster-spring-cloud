@@ -7,6 +7,8 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 /**
  * Configure the converters to use the ISO format for dates by default.
+ *
+ * @author peppy
  */
 @Configuration
 public class DateTimeFormatConfiguration implements WebFluxConfigurer {

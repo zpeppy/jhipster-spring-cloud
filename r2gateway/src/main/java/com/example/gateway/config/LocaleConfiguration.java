@@ -24,6 +24,9 @@ import java.time.Duration;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/**
+ * @author peppy
+ */
 @Configuration
 @Import(WebFluxAutoConfiguration.class)
 public class LocaleConfiguration {
@@ -91,8 +94,7 @@ public class LocaleConfiguration {
                 }
                 addCookie(exchange.getResponse(),
                     QUOTE + (locale != null ? locale.toString() : "-") + (timeZone != null ? ' ' + timeZone.getID() : "") + QUOTE);
-            }
-            else {
+            } else {
                 removeCookie(exchange.getResponse());
             }
             exchange.getAttributes().put(LOCALE_REQUEST_ATTRIBUTE_NAME,
