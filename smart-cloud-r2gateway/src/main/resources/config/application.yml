@@ -1,0 +1,176 @@
+# eureka 配置
+#eureka:
+#  client:
+#    enabled: true
+#    healthcheck:
+#      enabled: true
+#    fetch-registry: true
+#    register-with-eureka: true
+#    instance-info-replication-interval-seconds: 10
+#    registry-fetch-interval-seconds: 10
+#  instance:
+#    appname: r2gateway
+#    instanceId: r2gateway:${spring.application.instance-id:${random.value}}
+#    lease-renewal-interval-in-seconds: 5
+#    lease-expiration-duration-in-seconds: 10
+#    status-page-url-path: ${management.endpoints.web.base-path}/info
+#    health-check-url-path: ${management.endpoints.web.base-path}/health
+#    metadata-map:
+#      zone: primary # This is needed for the load balancer
+#      profile: ${spring.profiles.active}
+#      version: #project.version#
+#      git-version: ${git.commit.id.describe:}
+#      git-commit: ${git.commit.id.abbrev:}
+#      git-branch: ${git.branch:}
+
+# ribbon 配置
+#ribbon:
+#  eureka:
+#    enabled: true
+
+# hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+# management 配置
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: [ 'configprops', 'env', 'gateway', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump' ]
+  endpoint:
+    health:
+      show-details: when_authorized
+      roles: 'ROLE_ADMIN'
+    jhimetrics:
+      enabled: true
+  info:
+    git:
+      mode: full
+  health:
+    mail:
+      enabled: false # When using the MailService, configure an SMTP server and set this to true
+  metrics:
+    export:
+      # Prometheus is the default metrics backend
+      prometheus:
+        enabled: true
+        step: 60
+    enable:
+      http: true
+      jvm: true
+      logback: true
+      process: true
+      system: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      percentiles:
+        all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+    tags:
+      application: ${spring.application.name}
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+
+spring:
+  application:
+    name: r2gateway
+  cloud:
+    gateway:
+      default-filters:
+        - JwtRelay # 对应 JwtRelayGatewayFilterFactory 类前缀
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+          predicates:
+            - name: Path
+              args:
+                pattern: "'/gateway/'+serviceId.toLowerCase()+'/**'"
+          filters:
+            - name: RewritePath
+              args:
+                regexp: "'/gateway/' + serviceId.toLowerCase() + '/(?<remaining>.*)'"
+                replacement: "'/${remaining}'"
+      httpclient:
+        pool:
+          max-connections: 1000
+    # nacos 注册中心
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+        username: nacos
+        password: nacos
+        namespace: public
+        group: DEFAULT_GROUP
+  jmx:
+    enabled: false
+  messages:
+    basename: i18n/messages
+  main:
+    allow-bean-definition-overriding: true
+  task:
+    execution:
+      thread-name-prefix: r2gateway-task-
+      pool:
+        core-size: 2
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: r2gateway-scheduling-
+      pool:
+        size: 2
+  thymeleaf:
+    mode: HTML
+  output:
+    ansi:
+      console-available: true
+
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
+
+# Properties to be exposed on the /info management endpoint
+info:
+  # Comma separated list of profiles that will trigger the ribbon to show
+  display-ribbon-on-profiles: 'dev'
+
+# jhipster 配置
+jhipster:
+  clientApp:
+    name: 'r2GatewayApp'
+  # By default CORS is disabled. Uncomment to enable.
+  # cors:
+  #     allowed-origins: "*"
+  #     allowed-methods: "*"
+  #     allowed-headers: "*"
+  #     exposed-headers: "Authorization,Link,X-Total-Count"
+  #     allow-credentials: true
+  #     max-age: 1800
+  mail:
+    from: r2gateway@localhost
+  swagger:
+    default-include-pattern: /api/.*
+    title: r2gateway API
+    description: r2gateway API documentation
+    version: 0.0.1
+    terms-of-service-url:
+    contact-name:
+    contact-url:
+    contact-email:
+    license: unlicensed
+    license-url:
+
+# ApplicationProperties 配置类会获取 application 下配置值
+# application:
