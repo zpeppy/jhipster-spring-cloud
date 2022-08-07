@@ -1,13 +1,14 @@
 package com.yqlsc.gateway.web.rest;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yqlsc.gateway.config.Constants;
 import com.yqlsc.gateway.security.jwt.JwtFilter;
 import com.yqlsc.gateway.security.jwt.TokenProvider;
 import com.yqlsc.gateway.service.AuditEventService;
+import com.yqlsc.gateway.web.rest.vm.JwtTokenVM;
 import com.yqlsc.gateway.web.rest.vm.LoginVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,11 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 
 /**
+ * 使用自带 jwt 鉴权
+ *
  * @author peppy
  */
+@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "false", matchIfMissing = true)
 @Api(value = "用户认证授权管理", tags = "用户认证授权管理")
 @RestController
 @RequestMapping("/api")
@@ -44,18 +48,18 @@ public class UserJwtController {
 
     @ApiOperation(value = "用户登录认证", tags = "用户认证授权管理")
     @PostMapping("/authenticate")
-    public Mono<ResponseEntity<JwtToken>> authorize(@Valid @RequestBody Mono<LoginVM> loginVm) {
+    public Mono<ResponseEntity<JwtTokenVM>> authorize(@Valid @RequestBody Mono<LoginVM> loginVm) {
         return loginVm
                 .flatMap(login -> authenticationManager
                         .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
                         .onErrorResume(throwable -> onAuthenticationError(login, throwable))
                         .flatMap(auth -> onAuthenticationSuccess(login, auth))
-                        .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, Boolean.TRUE.equals(login.getRememberMe()))))
+                        .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, login)))
                 )
                 .map(jwt -> {
                     HttpHeaders httpHeaders = new HttpHeaders();
                     httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, JwtFilter.BEARER + jwt);
-                    return new ResponseEntity<>(new JwtToken(jwt), httpHeaders, HttpStatus.OK);
+                    return new ResponseEntity<>(new JwtTokenVM(jwt), httpHeaders, HttpStatus.OK);
                 });
     }
 
@@ -75,24 +79,4 @@ public class UserJwtController {
                 .then(Mono.error(throwable));
     }
 
-    /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class JwtToken {
-
-        private String idToken;
-
-        JwtToken(String idToken) {
-            this.idToken = idToken;
-        }
-
-        @JsonProperty("id_token")
-        String getIdToken() {
-            return idToken;
-        }
-
-        void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
-    }
 }

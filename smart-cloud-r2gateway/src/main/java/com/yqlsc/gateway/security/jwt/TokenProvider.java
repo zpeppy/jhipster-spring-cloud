@@ -1,5 +1,6 @@
 package com.yqlsc.gateway.security.jwt;
 
+import com.yqlsc.gateway.web.rest.vm.LoginVM;
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -10,6 +11,7 @@ import io.jsonwebtoken.jackson.io.JacksonSerializer;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
  *
  * @author peppy
  */
+@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "false", matchIfMissing = true)
 @Component
 public class TokenProvider {
 
@@ -72,17 +75,17 @@ public class TokenProvider {
      * 创建 jwt
      *
      * @param authentication 认证信息
-     * @param rememberMe     是否记住我
+     * @param loginVm        登录信息
      * @return token
      */
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication, LoginVM loginVm) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
         Date validity;
-        if (rememberMe) {
+        if (Boolean.TRUE.equals(loginVm.getRememberMe())) {
             validity = new Date(now + this.tokenValidityInMillisecondsForRememberMe);
         } else {
             validity = new Date(now + this.tokenValidityInMilliseconds);
@@ -130,7 +133,7 @@ public class TokenProvider {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             log.info("Invalid JWT token.");
-            log.trace("Invalid JWT token trace.", e);
+            log.warn("Invalid JWT token trace.", e);
         }
         return false;
     }

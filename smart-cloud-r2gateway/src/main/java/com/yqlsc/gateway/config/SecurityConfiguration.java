@@ -21,6 +21,8 @@ import org.springframework.security.web.server.util.matcher.NegatedServerWebExch
 import org.springframework.security.web.server.util.matcher.OrServerWebExchangeMatcher;
 import org.zalando.problem.spring.webflux.advice.security.SecurityProblemSupport;
 
+import javax.annotation.Resource;
+
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
 
 /**
@@ -35,13 +37,13 @@ public class SecurityConfiguration {
 
     private final ReactiveUserDetailsService userDetailsService;
 
-    private final TokenProvider tokenProvider;
-
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(ReactiveUserDetailsService userDetailsService, TokenProvider tokenProvider, SecurityProblemSupport problemSupport) {
+    @Resource
+    private TokenProvider tokenProvider;
+
+    public SecurityConfiguration(ReactiveUserDetailsService userDetailsService, SecurityProblemSupport problemSupport) {
         this.userDetailsService = userDetailsService;
-        this.tokenProvider = tokenProvider;
         this.problemSupport = problemSupport;
     }
 
