@@ -29,6 +29,8 @@ import java.util.Set;
 
 /**
  * Service class for managing users.
+ *
+ * @author peppy
  */
 @Service
 public class UserService {
@@ -236,7 +238,7 @@ public class UserService {
     }
 
     @Transactional
-    Mono<User> saveUser(User user) {
+    public Mono<User> saveUser(User user) {
         return SecurityUtils.getCurrentUserLogin()
             .switchIfEmpty(Mono.just(Constants.SYSTEM_ACCOUNT))
             .flatMap(login -> {

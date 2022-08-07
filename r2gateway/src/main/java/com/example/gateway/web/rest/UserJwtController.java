@@ -1,11 +1,13 @@
 package com.example.gateway.web.rest;
 
 import com.example.gateway.config.Constants;
-import com.example.gateway.security.jwt.JWTFilter;
+import com.example.gateway.security.jwt.JwtFilter;
 import com.example.gateway.security.jwt.TokenProvider;
 import com.example.gateway.service.AuditEventService;
+import com.example.gateway.web.rest.vm.JwtTokenVM;
 import com.example.gateway.web.rest.vm.LoginVM;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.Api;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +22,18 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
+import static com.example.gateway.security.jwt.JwtFilter.BEARER;
+
 /**
  * Controller to authenticate users.
+ *
+ * @author peppy
  */
+@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "false", matchIfMissing = true)
+@Api(value = "认证授权管理", tags = "认证授权管理")
 @RestController
 @RequestMapping("/api")
-public class UserJWTController {
+public class UserJwtController {
 
     private final TokenProvider tokenProvider;
 
@@ -33,25 +41,25 @@ public class UserJWTController {
 
     private final AuditEventService auditEventService;
 
-    public UserJWTController(TokenProvider tokenProvider, ReactiveAuthenticationManager authenticationManager, AuditEventService auditEventService) {
+    public UserJwtController(TokenProvider tokenProvider, ReactiveAuthenticationManager authenticationManager, AuditEventService auditEventService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
         this.auditEventService = auditEventService;
     }
 
     @PostMapping("/authenticate")
-    public Mono<ResponseEntity<JWTToken>> authorize(@Valid @RequestBody Mono<LoginVM> loginVm) {
+    public Mono<ResponseEntity<JwtTokenVM>> authorize(@Valid @RequestBody Mono<LoginVM> loginVm) {
         return loginVm
             .flatMap(login -> authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
                 .onErrorResume(throwable -> onAuthenticationError(login, throwable))
                 .flatMap(auth -> onAuthenticationSuccess(login, auth))
-                .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, Boolean.TRUE.equals(login.getRememberMe()))))
+                .flatMap(auth -> Mono.fromCallable(() -> tokenProvider.createToken(auth, login)))
             )
             .map(jwt -> {
                 HttpHeaders httpHeaders = new HttpHeaders();
-                httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-                return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+                httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, BEARER + jwt);
+                return new ResponseEntity<>(new JwtTokenVM(jwt), httpHeaders, HttpStatus.OK);
             });
     }
 
@@ -71,24 +79,4 @@ public class UserJWTController {
             .then(Mono.error(throwable));
     }
 
-    /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class JWTToken {
-
-        private String idToken;
-
-        JWTToken(String idToken) {
-            this.idToken = idToken;
-        }
-
-        @JsonProperty("id_token")
-        String getIdToken() {
-            return idToken;
-        }
-
-        void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
-    }
 }

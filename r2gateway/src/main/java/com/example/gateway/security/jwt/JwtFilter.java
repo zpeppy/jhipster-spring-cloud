@@ -15,13 +15,15 @@ import reactor.core.publisher.Mono;
  *
  * @author peppy
  */
-public class JWTFilter implements WebFilter {
+public class JwtFilter implements WebFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
+    public static final String BEARER = "Bearer ";
+
     private final TokenProvider tokenProvider;
 
-    public JWTFilter(TokenProvider tokenProvider) {
+    public JwtFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 
@@ -37,7 +39,7 @@ public class JWTFilter implements WebFilter {
 
     private String resolveToken(ServerHttpRequest request) {
         String bearerToken = request.getHeaders().getFirst(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER)) {
             return bearerToken.substring(7);
         }
         return null;

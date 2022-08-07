@@ -12,6 +12,7 @@ import com.example.gateway.web.rest.errors.EmailAlreadyUsedException;
 import com.example.gateway.web.rest.errors.LoginAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,6 +63,7 @@ import java.util.List;
  *
  * @author peppy
  */
+@Api(value = "用户信息", tags = "用户信息")
 @RestController
 @RequestMapping("/api")
 public class UserResource {

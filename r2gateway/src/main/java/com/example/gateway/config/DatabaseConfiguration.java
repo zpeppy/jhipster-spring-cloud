@@ -49,6 +49,7 @@ public class DatabaseConfiguration {
     @WritingConverter
     public static class InstantWriteConverter implements Converter<Instant, LocalDateTime> {
 
+        @Override
         public LocalDateTime convert(Instant source) {
             return LocalDateTime.ofInstant(source, ZoneOffset.UTC);
         }

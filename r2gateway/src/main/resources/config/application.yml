@@ -100,7 +100,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - JWTRelay
+        - JwtRelay # 对应 JwtRelayGatewayFilterFactory 类前缀
       discovery:
         locator:
           enabled: true

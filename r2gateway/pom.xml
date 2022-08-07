@@ -417,6 +417,11 @@
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
 
+        <!-- spring-security-jwt -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+        </dependency>
         <!-- sleuth-zipkin -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

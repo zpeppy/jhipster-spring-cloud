@@ -1,5 +1,6 @@
 package com.example.gateway.web.rest.vm;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 import org.springframework.cloud.client.ServiceInstance;
 
@@ -17,6 +18,6 @@ public class RouteVM {
 
     private String serviceId;
 
-    private List<ServiceInstance> serviceInstances;
+    private List<ServiceInstance> serviceInstances = Lists.newArrayList();
 
 }

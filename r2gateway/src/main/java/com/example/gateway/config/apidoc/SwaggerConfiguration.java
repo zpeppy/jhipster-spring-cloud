@@ -12,7 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux;
 
 /**
- * @author ppeppy
+ * @author peppy
  */
 @Primary
 @Profile(JHipsterConstants.SPRING_PROFILE_SWAGGER)

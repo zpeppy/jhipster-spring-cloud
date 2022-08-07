@@ -1,5 +1,6 @@
 package com.example.gateway.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -10,6 +11,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author peppy
  */
-@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@Data
+@ConfigurationProperties(prefix = "application")
 public class ApplicationProperties {
+
+    private boolean useUaa = false;
+
 }

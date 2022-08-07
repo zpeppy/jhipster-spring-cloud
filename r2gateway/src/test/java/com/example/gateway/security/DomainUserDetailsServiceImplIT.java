@@ -4,7 +4,6 @@ import com.example.gateway.R2GatewayApp;
 import com.example.gateway.config.Constants;
 import com.example.gateway.domain.User;
 import com.example.gateway.repository.UserRepository;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,10 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
- * Integrations tests for {@link DomainUserDetailsService}.
+ * Integrations tests for {@link DomainUserDetailsServiceImpl}.
  */
 @SpringBootTest(classes = R2GatewayApp.class)
-public class DomainUserDetailsServiceIT {
+public class DomainUserDetailsServiceImplIT {
 
     private static final String USER_ONE_LOGIN = "test-user-one";
     private static final String USER_ONE_EMAIL = "test-user-one@localhost";

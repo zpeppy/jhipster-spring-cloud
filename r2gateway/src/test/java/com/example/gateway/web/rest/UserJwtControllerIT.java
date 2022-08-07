@@ -14,11 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 /**
- * Integration tests for the {@link UserJWTController} REST controller.
+ * Integration tests for the {@link UserJwtController} REST controller.
  */
 @AutoConfigureWebTestClient
 @SpringBootTest(classes = R2GatewayApp.class)
-public class UserJWTControllerIT {
+public class UserJwtControllerIT {
 
     @Autowired
     private UserRepository userRepository;

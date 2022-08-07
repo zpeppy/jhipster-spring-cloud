@@ -1,7 +1,8 @@
 package com.example.gateway.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,7 +16,8 @@ import java.time.Instant;
  *
  * @author peppy
  */
-@Data
+@Setter
+@Getter
 public abstract class AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

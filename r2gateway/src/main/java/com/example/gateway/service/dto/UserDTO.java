@@ -3,6 +3,8 @@ package com.example.gateway.service.dto;
 import com.example.gateway.config.Constants;
 import com.example.gateway.domain.Authority;
 import com.example.gateway.domain.User;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,33 +22,42 @@ import java.util.stream.Collectors;
  *
  * @author peppy
  */
+@ApiModel(value = "用户信息", description = "用户信息")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class UserDTO {
 
+    @ApiModelProperty("ID")
     private Long id;
 
-    @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
+    @ApiModelProperty(value = "账号", required = true)
+    @NotBlank(message = "账号不能为空")
+    @Pattern(regexp = Constants.LOGIN_REGEX, message = "账号格式不匹配")
+    @Size(min = 1, max = 50, message = "账号长度为1至50")
     private String login;
 
+    @ApiModelProperty(value = "姓")
     @Size(max = 50)
     private String firstName;
 
+    @ApiModelProperty(value = "名")
     @Size(max = 50)
     private String lastName;
 
+    @ApiModelProperty(value = "邮箱")
     @Email
     @Size(min = 5, max = 254)
     private String email;
 
+    @ApiModelProperty(value = "头像")
     @Size(max = 256)
     private String imageUrl;
 
+    @ApiModelProperty(value = "是否启用")
     private boolean activated = false;
 
+    @ApiModelProperty(value = "语言")
     @Size(min = 2, max = 10)
     private String langKey;
 

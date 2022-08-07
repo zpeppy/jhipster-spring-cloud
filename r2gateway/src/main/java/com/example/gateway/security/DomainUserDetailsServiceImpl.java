@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
  * @author peppy
  */
 @Component("userDetailsService")
-public class DomainUserDetailsService implements ReactiveUserDetailsService {
+public class DomainUserDetailsServiceImpl implements ReactiveUserDetailsService {
 
-    private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
+    private final Logger log = LoggerFactory.getLogger(DomainUserDetailsServiceImpl.class);
 
     private final UserRepository userRepository;
 
-    public DomainUserDetailsService(UserRepository userRepository) {
+    public DomainUserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

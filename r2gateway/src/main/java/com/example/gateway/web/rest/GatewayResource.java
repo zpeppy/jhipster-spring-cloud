@@ -2,6 +2,7 @@ package com.example.gateway.web.rest;
 
 import com.example.gateway.security.AuthoritiesConstants;
 import com.example.gateway.web.rest.vm.RouteVM;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.route.Route;
@@ -21,6 +22,7 @@ import java.util.List;
  *
  * @author peppy
  */
+@Api(value = "路由信息", tags = "路由信息")
 @RestController
 @RequestMapping("/api/gateway")
 public class GatewayResource {

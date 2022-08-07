@@ -1,10 +1,12 @@
 package com.example.gateway.security.jwt;
 
 import com.example.gateway.security.AuthoritiesConstants;
-
-import java.security.Key;
-import java.util.*;
-
+import com.example.gateway.web.rest.vm.LoginVM;
+import io.github.jhipster.config.JHipsterProperties;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,11 +15,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import io.github.jhipster.config.JHipsterProperties;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +31,7 @@ public class TokenProviderTest {
 
     @BeforeEach
     public void setup() {
-        tokenProvider = new TokenProvider( new JHipsterProperties());
+        tokenProvider = new TokenProvider(new JHipsterProperties());
         key = Keys.hmacShaKeyFor(Decoders.BASE64
             .decode("fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8"));
 
@@ -48,7 +49,8 @@ public class TokenProviderTest {
     @Test
     public void testReturnFalseWhenJWTisMalformed() {
         Authentication authentication = createAuthentication();
-        String token = tokenProvider.createToken(authentication, false);
+        LoginVM loginVm = new LoginVM();
+        String token = tokenProvider.createToken(authentication, loginVm);
         String invalidToken = token.substring(1);
         boolean isTokenValid = tokenProvider.validateToken(invalidToken);
 
@@ -60,7 +62,8 @@ public class TokenProviderTest {
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -ONE_MINUTE);
 
         Authentication authentication = createAuthentication();
-        String token = tokenProvider.createToken(authentication, false);
+        LoginVM loginVm = new LoginVM();
+        String token = tokenProvider.createToken(authentication, loginVm);
 
         boolean isTokenValid = tokenProvider.validateToken(token);
 

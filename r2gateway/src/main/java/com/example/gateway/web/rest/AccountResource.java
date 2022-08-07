@@ -11,6 +11,7 @@ import com.example.gateway.web.rest.errors.InvalidPasswordException;
 import com.example.gateway.web.rest.errors.LoginAlreadyUsedException;
 import com.example.gateway.web.rest.vm.KeyAndPasswordVM;
 import com.example.gateway.web.rest.vm.ManagedUserVM;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import java.util.Objects;
  *
  * @author peppy
  */
+@Api(value = "账号信息", tags = "账号信息")
 @RestController
 @RequestMapping("/api")
 public class AccountResource {

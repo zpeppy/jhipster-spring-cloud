@@ -52,13 +52,13 @@ public class WebConfigurer implements WebFluxConfigurer {
 
     // TODO: remove when this is supported in spring-boot
     @Bean
-    HandlerMethodArgumentResolver reactivePageableHandlerMethodArgumentResolver() {
+    public HandlerMethodArgumentResolver reactivePageableHandlerMethodArgumentResolver() {
         return new ReactivePageableHandlerMethodArgumentResolver();
     }
 
     // TODO: remove when this is supported in spring-boot
     @Bean
-    HandlerMethodArgumentResolver reactiveSortHandlerMethodArgumentResolver() {
+    public HandlerMethodArgumentResolver reactiveSortHandlerMethodArgumentResolver() {
         return new ReactiveSortHandlerMethodArgumentResolver();
     }
 

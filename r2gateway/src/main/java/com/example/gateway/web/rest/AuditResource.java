@@ -2,6 +2,7 @@ package com.example.gateway.web.rest;
 
 import com.example.gateway.service.AuditEventService;
 import io.github.jhipster.web.util.PaginationUtil;
+import io.swagger.annotations.Api;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
  *
  * @author peppy
  */
+@Api(value = "审计信息", tags = "审计信息")
 @RestController
 @RequestMapping("/management/audits")
 public class AuditResource {
