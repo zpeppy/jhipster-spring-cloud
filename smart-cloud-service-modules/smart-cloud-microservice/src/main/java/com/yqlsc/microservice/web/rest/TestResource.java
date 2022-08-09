@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 测试动态更新配置
+ * <p>
+ * 如需实时拉取配置中心配置需加 {@code @RefreshScope} 注解标注
  *
  * @author peppy
  */
