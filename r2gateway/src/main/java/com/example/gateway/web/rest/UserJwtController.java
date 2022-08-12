@@ -29,7 +29,7 @@ import static com.example.gateway.security.jwt.JwtFilter.BEARER;
  *
  * @author peppy
  */
-@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "false", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "application", value = "use-uaa", havingValue = "false", matchIfMissing = true)
 @Api(value = "认证授权管理", tags = "认证授权管理")
 @RestController
 @RequestMapping("/api")

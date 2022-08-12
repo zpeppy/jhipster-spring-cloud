@@ -41,7 +41,7 @@ import java.util.Optional;
  * @author peppy
  */
 @Slf4j
-@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "true")
+@ConditionalOnProperty(prefix = "application", value = "use-uaa", havingValue = "true")
 @Component
 public class TokenUaaProvider extends TokenProvider {
 
@@ -74,7 +74,7 @@ public class TokenUaaProvider extends TokenProvider {
             ).orElseGet(Maps::newHashMap).get("value");
             verifier = new RsaVerifier(key);
         } catch (IllegalStateException ex) {
-            log.warn("could not contact UAA to get public key");
+            log.warn("could not contact UAA to get public key", ex);
         }
     }
 

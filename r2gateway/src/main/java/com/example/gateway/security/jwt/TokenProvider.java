@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 /**
  * @author peppy
  */
-@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "false", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "application", value = "use-uaa", havingValue = "false", matchIfMissing = true)
 @Component
 public class TokenProvider {
 

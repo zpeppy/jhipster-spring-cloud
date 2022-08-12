@@ -25,7 +25,7 @@ import javax.validation.Valid;
  * @author peppy
  */
 @Slf4j
-@ConditionalOnProperty(prefix = "application", value = "useUaa", havingValue = "true")
+@ConditionalOnProperty(prefix = "application", value = "use-uaa", havingValue = "true")
 @Api(value = "认证授权管理", tags = "认证授权管理")
 @RestController
 @RequestMapping("/api")
